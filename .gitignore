@@ -25,3 +25,14 @@ server-php/user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+
+# Android studio
+*.iml
+AndroidFarmer/.gradle
+AndroidFarmer/local.properties
+AndroidFarmer/.idea/workspace.xml
+AndroidFarmer/.idea/libraries
+AndroidFarmer.DS_Store
+AndroidFarmer/build
+AndroidFarmer/captures
+AndroidFarmer/.externalNativeBuild
