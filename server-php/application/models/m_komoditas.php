@@ -49,6 +49,22 @@ class M_komoditas extends CI_Model {
 
 	}
 
+	public function komoditasByFarmer($farmerId)
+	{
+		$sql = "SELECT k.nama, k.harga, t.id_petani 
+			FROM tb_penanaman p 
+			INNER JOIN tb_petani t 
+			 ON p.id_petani = t.id_petani 
+			INNER JOIN tb_komoditas k 
+			 ON p.id_komoditas = k.id_komoditas 
+			WHERE t.id_petani = '".$farmerId."'";
+
+		$sql = $this->db->query($sql)->result_array();
+
+		return $sql;
+
+	}
+
 }
 
 /* End of file m_komoditas.php */

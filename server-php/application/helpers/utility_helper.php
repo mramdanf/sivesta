@@ -104,6 +104,9 @@ function utCheckFarmers($username, $password)
 	           ->get()
 	           ->row_array();
 
+	if ($query)
+		$query['password'] = $password;
+
 	return $query;
 
 }
@@ -156,4 +159,11 @@ function utPrintResponse($http_code, $tag, $data)
 	);
 
 	utPrintJson($response, $http_code);
+}
+
+function utLog($data)
+{
+	$ci =& get_instance();
+
+	//$ci->log_message('error', print_r($data, TRUE));
 }
