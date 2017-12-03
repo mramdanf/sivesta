@@ -19,8 +19,6 @@ class Komoditas extends CI_Controller {
 	{
 		$post = $this->input->post();
 
-		log_message('error', print_r($post, TRUE));
-
 		$res_add = $this->m_komoditas->add($post);
 
 		if ($res_add)
@@ -37,19 +35,30 @@ class Komoditas extends CI_Controller {
 	public function gets()
 	{
 		$idPetani = $this->input->get('id_petani');
-		
-		log_message('error', 'id_petani: '.$idPetani);
 
 		$komoditas = $this->m_komoditas->komoditasByFarmer($idPetani);
 
-		if ($komoditas)
-			utPrintResponse(self::HTTP_OK, 'komoditas', $komoditas);
+		utPrintResponse(self::HTTP_OK, 'komoditas', $komoditas);
+	}
+
+	public function update()
+	{
+		$post = $this->input->post();
+
+		$res_add = $this->m_komoditas->update($post);
+
+		if ($res_add)
+		{
+			$msg = 'Data komoditas berhasil dirubah.';
+			utPrintResponse(self::HTTP_OK, 'msg', $msg);
+		}
 		else
 			utPrintResponse(
 				self::HTTP_INTERNAL_SERVER_ERROR, 
-				'komoditas', 
-				array()
+				'msg', 
+				'Terjadi error, data gagal dirubah.'
 			);
+
 	}
 
 }

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements
     private KomoditasEndPoint mKomoditasService;
 
     private final String LOG_TAG = this.getClass().getSimpleName();
+    private final int REQ_UPDATE_KOMODITAS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +117,26 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void komoditasFragmentListener(Bundle args) {
         int viewId = args.getInt(AppConst.VIEW_ID);
+        Intent formKomoditas = new Intent(MainActivity.this, FormKomoditasActivity.class);
+        formKomoditas.putExtra(AppConst.OBJ_FARMER, mLogedInFarmer);
+
         switch (viewId) {
             case R.id.btn_add_komoditas:
-                Intent FormKomoditas = new Intent(MainActivity.this, FormKomoditasActivity.class);
-                FormKomoditas.putExtra(AppConst.OBJ_FARMER, mLogedInFarmer);
-                startActivity(FormKomoditas);
+                startActivityForResult(formKomoditas, REQ_UPDATE_KOMODITAS);
                 break;
+            case AppConst.LIST_CLICK_ID:
+                Komoditas komoditas = args.getParcelable(AppConst.OBJ_KOMODITAS);
+                formKomoditas.putExtra(AppConst.OBJ_KOMODITAS, komoditas);
+                startActivityForResult(formKomoditas, REQ_UPDATE_KOMODITAS);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_UPDATE_KOMODITAS) {
+            getKomoditasByFarmer();
         }
     }
 }

@@ -49,17 +49,90 @@ class M_komoditas extends CI_Model {
 
 	}
 
+	public function update($data)
+	{
+		$this->load->helper('utility_helper');
+
+		$komoditas['nama']      = $data['nama'];
+		$komoditas['harga']     = $data['harga'];
+		$komoditas['stock']     = $data['stock'];
+		$komoditas['lokasi']    = $data['lokasi'];
+		$komoditas['latitude']  = $data['latitude'];
+		$komoditas['longitude'] = $data['longitude'];
+
+		// update ke table komoditas
+		$in_komoditas = $this->db
+		        ->update('tb_komoditas', $komoditas, array('id_komoditas'=>$data['id_komoditas']));
+
+
+		// Delete first
+		$this->db->delete('tb_komoditas_perenial', array('id_komoditas'=>$data['id_komoditas']));
+		$this->db->delete('tb_komoditas_tahunan', array('id_komoditas'=>$data['id_komoditas']));
+
+		// update ke table perenial atau tahunan
+		// 1=komoditas parenial, 2=komoditas tahunan
+		$in_sub_komoditas = FALSE;
+		if ($data['type'] == 1)
+		{
+			$parenial['id_komoditas'] = $data['id_komoditas'];
+			$parenial['jumlah_phon']  = $data['jumlah_pohon'];
+			$in_sub_komoditas = $this->db
+			       ->insert('tb_komoditas_perenial', $parenial);
+		}
+		else if ($data['type'] == 2)
+		{
+			$tahunan['id_komoditas'] = $data['id_komoditas'];
+			$tahunan['panjang'] = $data['panjang'];
+			$tahunan['lebar']   = $data['lebar'];
+			$in_sub_komoditas = $this->db
+			   		->insert('tb_komoditas_tahunan', $tahunan);			
+		}
+
+		return $in_komoditas && $in_sub_komoditas;
+
+	}
+
 	public function komoditasByFarmer($farmerId)
 	{
-		$sql = "SELECT k.nama, k.harga, t.id_petani 
+		$sql = "SELECT k.nama, k.harga, k.stock, k.lokasi, 
+				kp.jumlah_phon, kt.panjang, kt.lebar, t.id_petani, k.id_komoditas
 			FROM tb_penanaman p 
 			INNER JOIN tb_petani t 
 			 ON p.id_petani = t.id_petani 
 			INNER JOIN tb_komoditas k 
-			 ON p.id_komoditas = k.id_komoditas 
+			 ON p.id_komoditas = k.id_komoditas
+			LEFT JOIN tb_komoditas_perenial kp
+             ON k.id_komoditas = kp.id_komoditas
+            LEFT JOIN tb_komoditas_tahunan kt
+             ON k.id_komoditas = kt.id_komoditas 
 			WHERE t.id_petani = '".$farmerId."'";
 
-		$sql = $this->db->query($sql)->result_array();
+		$sql = $this->db
+		            ->query($sql)
+		            ->result_array();
+
+		if (count($sql) > 0)
+		{
+			foreach ($sql as $key => $komoditas) 
+			{
+				// 1=parenial 2=tahunan
+				if (empty($komoditas['lebar']))
+				{
+					$parenial = array(
+						'jumlah_pohon' => $komoditas['jumlah_phon']
+					);
+					$sql[$key]['parenial'] = $parenial;
+				}
+				else
+				{
+					$tahunan = array(
+						'panjang' => $komoditas['panjang'],
+						'lebar' => $komoditas['lebar']
+					);
+					$sql[$key]['tahunan'] = $tahunan;
+				}
+			}
+		}
 
 		return $sql;
 

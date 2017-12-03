@@ -3,19 +3,15 @@ package com.sivesta.androidfarmer.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Ramdan Firdaus on 3/12/2017.
  */
 
 public class Komoditas implements Parcelable {
     private KomoditasPerenial parenial;
-    private String nama;
-    private int harga;
-    private int stok;
-    private String lokasi;
-    private int komoditasType;
-    private double latitude;
-    private double longitude;
+    private KomoditasTahunan tahunan;
 
     public KomoditasPerenial getParenial() {
         return parenial;
@@ -23,6 +19,14 @@ public class Komoditas implements Parcelable {
 
     public void setParenial(KomoditasPerenial parenial) {
         this.parenial = parenial;
+    }
+
+    public KomoditasTahunan getTahunan() {
+        return tahunan;
+    }
+
+    public void setTahunan(KomoditasTahunan tahunan) {
+        this.tahunan = tahunan;
     }
 
     public String getNama() {
@@ -81,6 +85,27 @@ public class Komoditas implements Parcelable {
         this.longitude = longitude;
     }
 
+    public String getIdKomoditas() {
+        return idKomoditas;
+    }
+
+    public void setIdKomoditas(String idKomoditas) {
+        this.idKomoditas = idKomoditas;
+    }
+
+    private String nama;
+    private int harga;
+    @SerializedName("stock")
+    private int stok;
+    private String lokasi;
+    @SerializedName("kom_type")
+    private int komoditasType;
+    private double latitude;
+    private double longitude;
+    @SerializedName("id_komoditas")
+    private String idKomoditas;
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -89,6 +114,7 @@ public class Komoditas implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.parenial, flags);
+        dest.writeParcelable(this.tahunan, flags);
         dest.writeString(this.nama);
         dest.writeInt(this.harga);
         dest.writeInt(this.stok);
@@ -96,6 +122,7 @@ public class Komoditas implements Parcelable {
         dest.writeInt(this.komoditasType);
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
+        dest.writeString(this.idKomoditas);
     }
 
     public Komoditas() {
@@ -103,6 +130,7 @@ public class Komoditas implements Parcelable {
 
     protected Komoditas(Parcel in) {
         this.parenial = in.readParcelable(KomoditasPerenial.class.getClassLoader());
+        this.tahunan = in.readParcelable(KomoditasTahunan.class.getClassLoader());
         this.nama = in.readString();
         this.harga = in.readInt();
         this.stok = in.readInt();
@@ -110,6 +138,7 @@ public class Komoditas implements Parcelable {
         this.komoditasType = in.readInt();
         this.latitude = in.readDouble();
         this.longitude = in.readDouble();
+        this.idKomoditas = in.readString();
     }
 
     public static final Creator<Komoditas> CREATOR = new Creator<Komoditas>() {

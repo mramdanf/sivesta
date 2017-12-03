@@ -59,6 +59,7 @@ public class KomoditasFragment extends Fragment implements
 
         ButterKnife.bind(this, rootView);
         mContext = getActivity();
+        getActivity().setTitle("Komoditas");
 
         return rootView;
     }
@@ -95,7 +96,10 @@ public class KomoditasFragment extends Fragment implements
 
     @Override
     public void onItemClick(View childView, int position) {
-
+        Bundle args = new Bundle();
+        args.putParcelable(AppConst.OBJ_KOMODITAS, komoditasList.get(position));
+        args.putInt(AppConst.VIEW_ID, AppConst.LIST_CLICK_ID);
+        mCallback.komoditasFragmentListener(args);
     }
 
     @Override

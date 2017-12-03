@@ -3,11 +3,14 @@ package com.sivesta.androidfarmer.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Ramdan Firdaus on 3/12/2017.
  */
 
 public class KomoditasPerenial implements Parcelable {
+    @SerializedName("jumlah_pohon")
     int jmlPohon;
 
     public int getJmlPohon() {

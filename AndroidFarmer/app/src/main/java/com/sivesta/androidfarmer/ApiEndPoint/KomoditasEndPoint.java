@@ -27,11 +27,30 @@ public interface KomoditasEndPoint {
             @Field("jumlah_pohon") int jmlPohon,
             @Field("id_petani") String idPetani,
             @Field("latitude") double latitude,
-            @Field("longitude") double longitude
+            @Field("longitude") double longitude,
+            @Field("panjang") int panjang,
+            @Field("lebar") int lebar
+
     );
 
     @GET("komoditas/gets")
     Observable<ListKomoditasResp> getKomoditasByFarmerService(
             @Query("id_petani") String idPetani
+    );
+
+    @FormUrlEncoded
+    @POST("komoditas/update")
+    Observable<ModifyResp> updateKomoditasService(
+            @Field("nama") String nama,
+            @Field("harga") int harga,
+            @Field("stock") int stock,
+            @Field("lokasi") String lokasi,
+            @Field("type") int komoditasType,
+            @Field("jumlah_pohon") int jmlPohon,
+            @Field("id_komoditas") String idKomoditas,
+            @Field("latitude") double latitude,
+            @Field("longitude") double longitude,
+            @Field("panjang") int panjang,
+            @Field("lebar") int lebar
     );
 }
