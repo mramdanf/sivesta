@@ -10,3 +10,6 @@ Si-vesta adalah aplikasi investasi pertanian dengan tujuan untuk membantu invest
   - Melakukan investasi bidang pertanian
   - Lihat simulasi invest
   - Baca artikel pertanian terkini
+  
+ # Progress Dokumentasi
+  - 3 Desember 2017 https://github.com/mramdanf/sivesta/blob/master/LKP9.docx
