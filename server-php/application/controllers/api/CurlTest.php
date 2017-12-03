@@ -8,9 +8,14 @@ class CurlTest extends CI_Controller {
 		parent::__construct();
 	}
 
+	public function index()
+	{
+		echo "string";
+	}
+
 	public function curlAddKom()
 	{
-		$url = 'http://localhost/sivesta/server-php/api/komoditas/add';
+		$url = 'http://localhost/sivesta/server-php/api/farmer/komoditas/add';
 
 		$fields['nama']      = urlencode('Jambu Biji');
 		$fields['harga']     = urlencode('1000000');

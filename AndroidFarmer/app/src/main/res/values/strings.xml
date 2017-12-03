@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">AndroidFarmer</string>
+    <string name="app_name">Sivesta Farmer</string>
+    <string name="uname_tex">Username</string>
+    <string name="password_tex">Password</string>
+    <string name="login_tex">Login</string>
+    <string name="please_wait_tex">Please wait..</string>
+    <string name="login_failed_tex">Login gagal, username atau password salah.</string>
+
+    <string-array name="komoditas_type">
+        <item>Jenis Komoditas</item>
+        <item>Komoditas Perenial</item>
+        <item>Komoditas Tahunan</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
