@@ -96,6 +96,41 @@ class CurlTest extends CI_Controller {
 		curl_close($ch);
 	}
 
+	public function curlDelKom()
+	{
+		$url = 'http://localhost/sivesta/server-php/api/farmer/komoditas/delete';
+		
+		$fields['id_petani']    = urlencode('P001');
+		$fields['id_komoditas']    = urlencode('K00001');
+		$fields['kom_type']    = urlencode('1');
+
+		//url-ify the data for the POST
+		$fields_string = '';
+		foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+		rtrim($fields_string, '&');
+
+		//open connection
+		$ch = curl_init();
+
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, count($fields));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+
+		// Curl Header
+		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); 
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		curl_setopt($ch, CURLOPT_USERPWD, 'messi' . ":" . 'messi');
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, FALSE);  
+
+		//execute post
+		$result = curl_exec($ch);
+
+		//close connection
+		curl_close($ch);
+	}
+
 }
 
 /* End of file CurlTest.php */

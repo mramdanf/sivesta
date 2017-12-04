@@ -94,7 +94,7 @@ class M_komoditas extends CI_Model {
 
 	public function komoditasByFarmer($farmerId)
 	{
-		$sql = "SELECT k.nama, k.harga, k.stock, k.lokasi, 
+		$sql = "SELECT k.nama, k.harga, k.stock, k.lokasi, k.latitude, k.longitude,
 				kp.jumlah_phon, kt.panjang, kt.lebar, t.id_petani, k.id_komoditas
 			FROM tb_penanaman p 
 			INNER JOIN tb_petani t 
@@ -135,6 +135,39 @@ class M_komoditas extends CI_Model {
 		}
 
 		return $sql;
+
+	}
+
+	public function delete($data)
+	{
+		$kom_type = $data['kom_type'];
+
+		// Delete parenial or tahunan
+		$del_sub_komoditas = FALSE;
+		if ($kom_type == 1)
+		{
+			$del_sub_komoditas = $this->db
+				->delete('tb_komoditas_perenial', array('id_komoditas'=>$data['id_komoditas']));
+		}
+		else if ($kom_type == 2)
+		{
+			$del_sub_komoditas = $this->db
+				->delete('tb_komoditas_tahunan', array('id_komoditas'=>$data['id_komoditas']));	
+		}
+
+		// Delete from tb_penanaman
+		$del_penanaman = $this->db
+		        ->delete('tb_penanaman', 
+		        	array(
+		        		'id_komoditas'=>$data['id_komoditas'], 
+		        		'id_petani'=>$data['id_petani'])
+		        );
+
+		// Delete from tb_komoditas
+		$del_komoditas = $this->db
+		        ->delete('tb_komoditas', array('id_komoditas'=>$data['id_komoditas']));
+
+		return $del_sub_komoditas && $del_penanaman && $del_komoditas;
 
 	}
 

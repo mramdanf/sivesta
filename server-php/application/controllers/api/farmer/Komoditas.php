@@ -61,6 +61,24 @@ class Komoditas extends CI_Controller {
 
 	}
 
+	public function delete()
+	{
+		$data['id_komoditas'] = $this->input->post('id_komoditas');
+		$data['id_petani'] = $this->input->post('id_petani');
+		$data['kom_type'] = $this->input->post('kom_type');
+
+		$res_delete = $this->m_komoditas->delete($data);
+
+		if ($res_delete)
+			utPrintResponse(self::HTTP_OK, 'msg', 'Data komoditas berhasil dihapus.');
+		else
+			utPrintResponse(
+				self::HTTP_INTERNAL_SERVER_ERROR, 
+				'msg', 
+				'Terjadi error, data komoditas gagal dihapus.'
+			);
+	}
+
 }
 
 /* End of file Komoditas.php */
