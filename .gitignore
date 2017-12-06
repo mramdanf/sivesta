@@ -36,3 +36,12 @@ AndroidFarmer.DS_Store
 AndroidFarmer/build
 AndroidFarmer/captures
 AndroidFarmer/.externalNativeBuild
+
+SivestaFunder/.gradle
+SivestaFunder/local.properties
+SivestaFunder/.idea/workspace.xml
+SivestaFunder/.idea/libraries
+SivestaFunder.DS_Store
+SivestaFunder/build
+SivestaFunder/captures
+SivestaFunder/.externalNativeBuild

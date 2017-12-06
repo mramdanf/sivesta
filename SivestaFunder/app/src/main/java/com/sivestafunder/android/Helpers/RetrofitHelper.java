@@ -1,20 +1,19 @@
-package com.sivesta.androidfarmer.Helpers;
+package com.sivestafunder.android.Helpers;
 
 import android.util.Base64;
 
-import com.sivesta.androidfarmer.ApiEndPoint.FarmerEndPoint;
-import com.sivesta.androidfarmer.ApiEndPoint.KomoditasEndPoint;
+import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
+import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
 
 import java.io.IOException;
 
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Ramdan Firdaus on 3/12/2017.
@@ -22,9 +21,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitHelper {
 
-    public FarmerEndPoint getFarmerService(String username, String password) {
+    public FunderEndPoint getFunderService(String username, String password) {
         final Retrofit retrofit = createRetrofit(username, password);
-        return retrofit.create(FarmerEndPoint.class);
+        return retrofit.create(FunderEndPoint.class);
     }
 
     public KomoditasEndPoint komoditasService(String uname, String pass) {
@@ -63,7 +62,7 @@ public class RetrofitHelper {
 
     private Retrofit createRetrofit(String username, String password) {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.8/sivesta/server-php/api/farmer/")
+                .baseUrl("http://192.168.137.250/sivesta/server-php/api/funder/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
                 .client(createOkHttpClient(username, password))

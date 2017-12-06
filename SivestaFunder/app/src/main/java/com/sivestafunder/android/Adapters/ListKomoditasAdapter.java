@@ -1,4 +1,4 @@
-package com.sivesta.androidfarmer.Adapters;
+package com.sivestafunder.android.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sivesta.androidfarmer.Models.Komoditas;
-import com.sivesta.androidfarmer.R;
+import com.sivestafunder.android.Models.Komoditas;
+import com.sivestafunder.android.R;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         Komoditas k = komoditasList.get(position);
         holder.namaKomoditas.setText(k.getNama());
-        //holder.hargaKom.setText(String.valueOf(k.getHarga()));
+        holder.hargaKom.setText(String.valueOf(k.getHarga()));
     }
 
     @Override

@@ -171,6 +171,15 @@ class M_komoditas extends CI_Model {
 
 	}
 
+	public function get_komoditas()
+	{
+		$kom = $this->db
+		            ->get('tb_komoditas')
+		            ->result_array();
+
+		return $kom;
+	}
+
 }
 
 /* End of file m_komoditas.php */
