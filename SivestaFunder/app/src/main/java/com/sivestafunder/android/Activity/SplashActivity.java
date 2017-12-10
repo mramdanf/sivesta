@@ -46,13 +46,34 @@ public class SplashActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                Funder farmer = Utility.getFunderPrefs(SplashActivity.this);
-                if (farmer.getUsername() != null && !farmer.getUsername().equals("")) {
-                    checkLoginApi(farmer);
+                Funder savedFunder = Utility.getFunderPrefs(SplashActivity.this);
+                if (savedFunder.getUsername() != null && !savedFunder.getUsername().equals("")) {
+                    Funder f = new Funder();
+                    f.checkLoginApi(
+                            savedFunder.getUsername(),
+                            savedFunder.getPassword(),
+                            new Funder.FunderModelInf() {
+                                @Override
+                                public void checkLoginApiCallback(Bundle args) {
+                                    Funder funderFromApi = args.getParcelable(AppConst.OBJ_FUNDER);
+                                    if (args.getString(AppConst.TAG_MSG).equals(AppConst.TAG_SUCCESS)) {
+                                        Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                                        i.putExtra(AppConst.OBJ_FUNDER, funderFromApi);
+                                        startActivity(i);
+                                        finish();
+                                    }else {
+                                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                                        finish();
+                                    }
+                                }
+                            }
+                    );
+
                 } else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 }
+
 
             }
         }, SPLASH_DISPLAY_LENGTH);
@@ -66,43 +87,5 @@ public class SplashActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
-    }
-
-    private void checkLoginApi(Funder funder) {
-        FunderEndPoint mFunderService = new RetrofitHelper()
-                .getFunderService(funder.getUsername(), funder.getPassword());
-        Observable<Funder> loginFarmer = mFunderService.checkLogin();
-        loginFarmer
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Funder>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull Funder farmer) {
-                        Intent mainActIntent = new Intent(SplashActivity.this, MainActivity.class);
-                        mainActIntent.putExtra(AppConst.OBJ_FUNDER, farmer);
-                        startActivity(mainActIntent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        e.printStackTrace();
-                        if (e.getMessage().equals("HTTP 401 Unauthorized"))
-                            Utility.displayAlert(SplashActivity.this, getString(R.string.login_failed_tex));
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
     }
 }

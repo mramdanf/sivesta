@@ -48,6 +48,9 @@ function utCheckFunders($username, $password)
 
 	$query = $CI->db->get('tb_funders')->row_array();
 
+	if ($query)
+		$query['password'] = $password;
+
 	return $query;
 
 }

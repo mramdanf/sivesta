@@ -3,10 +3,12 @@ package com.sivestafunder.android.Helpers;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sivestafunder.android.Activity.LoginActivity;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
@@ -54,5 +56,19 @@ public class Utility {
         editor.putString(AppConst.PRF_TAG_UNAME, f.getUsername());
         editor.putString(AppConst.PRF_TAG_PASS, f.getPassword());
         editor.apply();
+    }
+
+    public static void displayUnAuthorize(Context c, String msg) {
+        if (msg.equals("HTTP 401 Unauthorized"))
+            displayAlert(c, c.getString(R.string.login_failed_tex));
+    }
+
+    public static String getSafeSubstring(String s, int maxLength){
+        if(!TextUtils.isEmpty(s)){
+            if(s.length() >= maxLength){
+                return s.substring(0, maxLength) + "...";
+            }
+        }
+        return s;
     }
 }

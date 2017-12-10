@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"/>
 
@@ -20,6 +20,8 @@
             android:id="@+id/nm_kom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
             android:text="Mangga Super"
             android:layout_marginBottom="5dp"/>
 
@@ -27,9 +29,8 @@
             android:id="@+id/harga_kom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2,000,000"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_gravity="center_horizontal"
+            android:text="2,000,000"/>
 
     </LinearLayout>
 

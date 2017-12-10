@@ -1,19 +1,40 @@
 package com.sivestafunder.android.Models;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.google.gson.annotations.SerializedName;
+import com.sivestafunder.android.Activity.LoginActivity;
+import com.sivestafunder.android.Activity.MainActivity;
+import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
+import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.RetrofitHelper;
+import com.sivestafunder.android.Helpers.Utility;
+import com.sivestafunder.android.R;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Ramdan Firdaus on 6/12/2017.
  */
 
 public class Funder implements Parcelable {
+    @SerializedName("nama")
     private String name;
     private String alamat;
     private String phone;
     private String email;
     private String username;
     private String password;
+    private Context mContext;
 
     public String getName() {
         return name;
@@ -78,9 +99,6 @@ public class Funder implements Parcelable {
         dest.writeString(this.password);
     }
 
-    public Funder() {
-    }
-
     protected Funder(Parcel in) {
         this.name = in.readString();
         this.alamat = in.readString();
@@ -101,4 +119,54 @@ public class Funder implements Parcelable {
             return new Funder[size];
         }
     };
+
+    /* Interfacing */
+    private FunderModelInf mCallback;
+
+    public Funder() {
+    }
+
+    public interface FunderModelInf {
+        void checkLoginApiCallback(Bundle args);
+    }
+
+    /* Fungsi spesifik dari objek */
+    public void checkLoginApi(String username, String password, FunderModelInf fInf) {
+        mCallback = fInf;
+        FunderEndPoint mFunderService = new RetrofitHelper()
+                .getFunderService(username, password);
+        Observable<Funder> loginFarmer = mFunderService.checkLogin();
+        loginFarmer
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Funder>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull Funder funder) {
+                        Bundle args = new Bundle();
+                        args.putParcelable(AppConst.OBJ_FUNDER, funder);
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        mCallback.checkLoginApiCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.checkLoginApiCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+    }
 }

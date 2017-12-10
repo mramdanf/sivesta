@@ -12,5 +12,8 @@ public interface AppConst {
     String OBJ_KOMODITAS = "obj_komoditas";
     String VIEW_ID = "view_id";
     String LIST_OBJ_KOMODITAS = "list_obj_komoditas";
+    String LIST_OBJ_ARTIKEL = "list_obj_artikel";
+    String TAG_MSG = "tag_msg";
+    String TAG_SUCCESS = "tag_success";
     int LIST_CLICK_ID = 11;
 }

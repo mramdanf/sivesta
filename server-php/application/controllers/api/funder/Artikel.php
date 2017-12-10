@@ -10,12 +10,15 @@ class Artikel extends CI_Controller {
 		parent::__construct();
 		$this->load->model('m_artikel');
 		$this->load->helper('utility_helper');
-		utCredFunders();
 	}
 
 	public function gets()
 	{
 		$articles = $this->m_artikel->gets();
+		foreach ($articles as $key => $article) 
+		{
+			$articles[$key]['tgl_posting_text'] = date('M d, Y', strtotime($article['tgl_posting']));
+		}
 		utPrintResponse(self::HTTP_OK, 'articles', $articles);
 
 	}

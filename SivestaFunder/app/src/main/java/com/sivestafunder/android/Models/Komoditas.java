@@ -1,9 +1,22 @@
 package com.sivestafunder.android.Models;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
+import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.RetrofitHelper;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Ramdan Firdaus on 3/12/2017.
@@ -125,9 +138,6 @@ public class Komoditas implements Parcelable {
         dest.writeString(this.idKomoditas);
     }
 
-    public Komoditas() {
-    }
-
     protected Komoditas(Parcel in) {
         this.parenial = in.readParcelable(KomoditasPerenial.class.getClassLoader());
         this.tahunan = in.readParcelable(KomoditasTahunan.class.getClassLoader());
@@ -152,4 +162,56 @@ public class Komoditas implements Parcelable {
             return new Komoditas[size];
         }
     };
+
+    /* Interfacing */
+    private KomoditasModelInf mCallback;
+
+    public interface KomoditasModelInf {
+        void getPopularKomoditasCallback(Bundle args);
+    }
+
+    public Komoditas() {
+    }
+
+    /* Fungsi spesifik dari objek */
+    public void getPopularKomoditasApi(String username, String password, KomoditasModelInf komInf) {
+        mCallback = komInf;
+        KomoditasEndPoint mKomoditasService = new RetrofitHelper()
+                .getKomoditasService(username, password);
+        Observable<ListKomoditasResp> listKomoditas = mKomoditasService
+                .getPopularKomoditasService();
+        listKomoditas
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListKomoditasResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListKomoditasResp listKomoditasResp) {
+                        Bundle args = new Bundle();
+                        args.putParcelable(AppConst.LIST_OBJ_KOMODITAS, listKomoditasResp);
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        mCallback.getPopularKomoditasCallback(args);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.getPopularKomoditasCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 }

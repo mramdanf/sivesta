@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Komoditas;
 import com.sivestafunder.android.R;
 
@@ -49,7 +50,7 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         Komoditas k = komoditasList.get(position);
-        holder.namaKomoditas.setText(k.getNama());
+        holder.namaKomoditas.setText(Utility.getSafeSubstring(k.getNama(), 12));
         holder.hargaKom.setText(String.valueOf(k.getHarga()));
     }
 

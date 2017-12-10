@@ -30,7 +30,7 @@ public interface KomoditasEndPoint {
 //    );
 
     @GET("komoditas/get_komoditas")
-    Observable<ListKomoditasResp> getKomoditasService();
+    Observable<ListKomoditasResp> getPopularKomoditasService();
 
 //    @FormUrlEncoded
 //    @POST("komoditas/update")

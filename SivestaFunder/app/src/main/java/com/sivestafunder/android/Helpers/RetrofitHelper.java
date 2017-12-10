@@ -2,6 +2,7 @@ package com.sivestafunder.android.Helpers;
 
 import android.util.Base64;
 
+import com.sivestafunder.android.ApiEndPoint.ArtikelEndPoint;
 import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
 import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
 
@@ -26,17 +27,23 @@ public class RetrofitHelper {
         return retrofit.create(FunderEndPoint.class);
     }
 
-    public KomoditasEndPoint komoditasService(String uname, String pass) {
+    public KomoditasEndPoint getKomoditasService(String uname, String pass) {
         final Retrofit retrofit = createRetrofit(uname, pass);
         return retrofit.create(KomoditasEndPoint.class);
     }
 
+    public KomoditasEndPoint getKomoditasServiceNoAuth() {
+        final Retrofit retrofit = retrofitNoAuth();
+        return retrofit.create(KomoditasEndPoint.class);
+    }
+
+    public ArtikelEndPoint getArtikelService() {
+        final Retrofit retrofit = retrofitNoAuth();
+        return retrofit.create(ArtikelEndPoint.class);
+    }
+
     private OkHttpClient createOkHttpClient(final String username, final String password) {
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-        /*HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        httpClient.addNetworkInterceptor(httpLoggingInterceptor);*/
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -62,10 +69,21 @@ public class RetrofitHelper {
 
     private Retrofit createRetrofit(String username, String password) {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.137.250/sivesta/server-php/api/funder/")
+                .baseUrl("http://192.168.1.5/sivesta/server-php/api/funder/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
                 .client(createOkHttpClient(username, password))
+                .build();
+    }
+
+    private Retrofit retrofitNoAuth() {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient = httpClient.build();
+        return new Retrofit.Builder()
+                .baseUrl("http://192.168.1.5/sivesta/server-php/api/funder/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
+                .client(okHttpClient)
                 .build();
     }
 }
