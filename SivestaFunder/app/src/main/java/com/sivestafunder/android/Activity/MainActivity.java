@@ -2,10 +2,13 @@ package com.sivestafunder.android.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -14,6 +17,8 @@ import com.sivestafunder.android.ApiEndPoint.ArtikelEndPoint;
 import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.Fragmets.ArticleFragment;
+import com.sivestafunder.android.Fragmets.CatalogFragment;
 import com.sivestafunder.android.Fragmets.HomeFragment;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
@@ -33,11 +38,17 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements
-        HomeFragment.HomeFragmentInf {
+        HomeFragment.HomeFragmentInf,
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        ArticleFragment.ArticleFragmentInf,
+        CatalogFragment.CataglogFragmentInf {
 
     private ProgressDialog mProgressDialog;
     private KomoditasEndPoint mKomoditasService;
     private Funder mLoggedInFunder;
+
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
 
     private final String LOG_TAG = this.getClass().getSimpleName();
@@ -57,7 +68,10 @@ public class MainActivity extends AppCompatActivity implements
         mProgressDialog.setMessage(getString(R.string.please_wait_tex));
         mProgressDialog.setCancelable(false);
 
-        setUpFragment(new HomeFragment(), false);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        //setUpFragment(new HomeFragment(), false);
+        setUpFragment(new CatalogFragment(), false);
 
     }
 
@@ -69,11 +83,25 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onNavigationItemSelected(@android.support.annotation.NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.act_home:
+                setUpFragment(new HomeFragment(), false);
+                break;
+            case R.id.act_article:
+                setUpFragment(new ArticleFragment(), false);
+                break;
+            case R.id.act_catalog:
+                setUpFragment(new CatalogFragment(), false);
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public void reqListKomoditas() {
         Komoditas km = new Komoditas();
         km.getPopularKomoditasApi(
-                mLoggedInFunder.getUsername(),
-                mLoggedInFunder.getPassword(),
                 new Komoditas.KomoditasModelInf() {
                     @Override
                     public void getPopularKomoditasCallback(Bundle args) {
@@ -90,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements
     public void reqListArtikel() {
         Artikel a = new Artikel();
         a.getArtikelFromApi(
-                mLoggedInFunder.getUsername(),
-                mLoggedInFunder.getPassword(),
                 new Artikel.ArtikelModelInterface() {
                     @Override
                     public void getArtikelCallback(Bundle args) {
@@ -100,6 +126,38 @@ public class MainActivity extends AppCompatActivity implements
                                 .findFragmentById(R.id.fragment_container);
                         hf.showArtikel(respListArtikel);
 
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void reqFullListArticle() {
+        Artikel fullArticle = new Artikel();
+        fullArticle.getArtikelFromApi(
+                new Artikel.ArtikelModelInterface() {
+                    @Override
+                    public void getArtikelCallback(Bundle args) {
+                        ListArtikelResp respListArtikel = args.getParcelable(AppConst.LIST_OBJ_ARTIKEL);
+                        ArticleFragment af = (ArticleFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.fragment_container);
+                        af.showFullArtikel(respListArtikel);
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void reqFullListKomoditas() {
+        Komoditas fullKomoditas = new Komoditas();
+        fullKomoditas.getAllKomoditasApi(
+                new Komoditas.KomoditasModelInf() {
+                    @Override
+                    public void getPopularKomoditasCallback(Bundle args) {
+                        CatalogFragment cf = (CatalogFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.fragment_container);
+                        ListKomoditasResp respListKom = args.getParcelable(AppConst.LIST_OBJ_KOMODITAS);
+                        cf.showAllKomoditas(respListKom);
                     }
                 }
         );
@@ -117,7 +175,5 @@ public class MainActivity extends AppCompatActivity implements
 
         fragmentTransaction.commitAllowingStateLoss();
     }
-
-
 
 }

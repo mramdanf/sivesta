@@ -18,18 +18,18 @@
 
         <TextView
             android:id="@+id/nm_kom"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:textStyle="bold"
             android:text="Mangga Super"
             android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/harga_kom"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:text="2,000,000"/>
 
     </LinearLayout>

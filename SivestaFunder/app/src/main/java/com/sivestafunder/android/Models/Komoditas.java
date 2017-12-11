@@ -174,12 +174,51 @@ public class Komoditas implements Parcelable {
     }
 
     /* Fungsi spesifik dari objek */
-    public void getPopularKomoditasApi(String username, String password, KomoditasModelInf komInf) {
+    public void getPopularKomoditasApi(KomoditasModelInf komInf) {
         mCallback = komInf;
         KomoditasEndPoint mKomoditasService = new RetrofitHelper()
-                .getKomoditasService(username, password);
+                .getKomoditasServiceNoAuth();
         Observable<ListKomoditasResp> listKomoditas = mKomoditasService
                 .getPopularKomoditasService();
+        listKomoditas
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListKomoditasResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListKomoditasResp listKomoditasResp) {
+                        Bundle args = new Bundle();
+                        args.putParcelable(AppConst.LIST_OBJ_KOMODITAS, listKomoditasResp);
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        mCallback.getPopularKomoditasCallback(args);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.getPopularKomoditasCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void getAllKomoditasApi(KomoditasModelInf komInf) {
+        mCallback = komInf;
+        KomoditasEndPoint mKomoditasService = new RetrofitHelper()
+                .getKomoditasServiceNoAuth();
+        Observable<ListKomoditasResp> listKomoditas = mKomoditasService
+                .getAllKomoditasService();
         listKomoditas
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

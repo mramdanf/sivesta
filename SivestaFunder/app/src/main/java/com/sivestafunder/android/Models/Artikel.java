@@ -126,7 +126,7 @@ public class Artikel implements Parcelable {
     }
 
     /* rmd */
-    public void getArtikelFromApi(String username, String password, ArtikelModelInterface ainf) {
+    public void getArtikelFromApi(ArtikelModelInterface ainf) {
         mCallback = ainf;
         ArtikelEndPoint artikelService = new RetrofitHelper()
                 .getArtikelService();
