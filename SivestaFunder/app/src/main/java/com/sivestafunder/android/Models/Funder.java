@@ -30,6 +30,7 @@ public class Funder implements Parcelable {
     @SerializedName("nama")
     private String name;
     private String alamat;
+    @SerializedName("telepon")
     private String phone;
     private String email;
     private String username;

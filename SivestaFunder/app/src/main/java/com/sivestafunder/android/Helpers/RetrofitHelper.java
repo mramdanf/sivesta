@@ -69,9 +69,9 @@ public class RetrofitHelper {
 
     private Retrofit createRetrofit(String username, String password) {
         return new Retrofit.Builder()
-                .baseUrl("http://10.99.226.213/sivesta/server-php/api/funder/")
+                .baseUrl("http://192.168.1.5/sivesta/server-php/api/funder/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(createOkHttpClient(username, password))
                 .build();
     }
@@ -80,9 +80,9 @@ public class RetrofitHelper {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         OkHttpClient okHttpClient = httpClient.build();
         return new Retrofit.Builder()
-                .baseUrl("http://10.99.226.213/sivesta/server-php/api/funder/")
+                .baseUrl("http://192.168.1.5/sivesta/server-php/api/funder/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // <- add this
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
     }

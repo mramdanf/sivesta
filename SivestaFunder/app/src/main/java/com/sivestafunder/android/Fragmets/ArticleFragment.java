@@ -57,6 +57,8 @@ public class ArticleFragment extends Fragment implements
 
         mContext = getActivity();
 
+        getActivity().setTitle("Articles");
+
         return rootView;
     }
 

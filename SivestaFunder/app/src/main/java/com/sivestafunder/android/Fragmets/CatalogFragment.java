@@ -52,6 +52,8 @@ public class CatalogFragment extends Fragment {
 
         mContext = getActivity();
 
+        getActivity().setTitle("Catalog");
+
         return rootView;
     }
 

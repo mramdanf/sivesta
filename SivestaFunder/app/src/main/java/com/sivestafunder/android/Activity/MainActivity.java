@@ -20,6 +20,7 @@ import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
 import com.sivestafunder.android.Fragmets.ArticleFragment;
 import com.sivestafunder.android.Fragmets.CatalogFragment;
 import com.sivestafunder.android.Fragmets.HomeFragment;
+import com.sivestafunder.android.Fragmets.ProfileFragment;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 import com.sivestafunder.android.Helpers.Utility;
@@ -70,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        //setUpFragment(new HomeFragment(), false);
-        setUpFragment(new CatalogFragment(), false);
+        setUpFragment(new HomeFragment(), false);
 
     }
 
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@android.support.annotation.NonNull MenuItem item) {
+        Bundle args = new Bundle();
         switch (item.getItemId()) {
             case R.id.act_home:
                 setUpFragment(new HomeFragment(), false);
@@ -93,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.act_catalog:
                 setUpFragment(new CatalogFragment(), false);
+                break;
+            case R.id.act_profile:
+                ProfileFragment pf = new ProfileFragment();
+                args.putParcelable(AppConst.OBJ_FUNDER, mLoggedInFunder);
+                pf.setArguments(args);
+                setUpFragment(pf, false);
                 break;
         }
         return true;
