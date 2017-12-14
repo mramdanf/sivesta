@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment implements
         ButterKnife.bind(this, rootView);
 
         mContext = getActivity();
-        getActivity().setTitle("Home");
+        //getActivity().setTitle("Home");
 
         return rootView;
     }

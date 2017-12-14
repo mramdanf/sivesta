@@ -117,6 +117,8 @@ public class Komoditas implements Parcelable {
     private double longitude;
     @SerializedName("id_komoditas")
     private String idKomoditas;
+    @SerializedName("img_url")
+    private String imgUrl;
 
 
     @Override
@@ -136,6 +138,15 @@ public class Komoditas implements Parcelable {
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
         dest.writeString(this.idKomoditas);
+        dest.writeString(this.imgUrl);
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     protected Komoditas(Parcel in) {
@@ -149,6 +160,7 @@ public class Komoditas implements Parcelable {
         this.latitude = in.readDouble();
         this.longitude = in.readDouble();
         this.idKomoditas = in.readString();
+        this.imgUrl = in.readString();
     }
 
     public static final Creator<Komoditas> CREATOR = new Creator<Komoditas>() {
