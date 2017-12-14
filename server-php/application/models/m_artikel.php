@@ -7,7 +7,8 @@ class M_artikel extends CI_Model {
 	{
 		parent::__construct();
 	}
-
+	
+	// testing
 	public function gets()
 	{
 		$articles = $this->db->get('tb_artikel')->result_array();
