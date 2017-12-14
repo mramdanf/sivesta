@@ -13,6 +13,7 @@ class Komoditas extends CI_Controller {
 		$this->load->helper('utility_helper');
 	}
 
+	// testing
 	public function add()
 	{
 		$post = $this->input->post();
