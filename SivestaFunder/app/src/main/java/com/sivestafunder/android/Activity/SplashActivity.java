@@ -42,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
 
         changeStatusBarColor();
 
-        int SPLASH_DISPLAY_LENGTH = 3000;
+        int SPLASH_DISPLAY_LENGTH = 2000;
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
