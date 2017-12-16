@@ -30,6 +30,6 @@ class Petani extends CI_Controller {
 			$petani_perorangan = array('id_petani' => $id_petani,'nama'=>$this->input->post('nama'));
 			$this->Petani->insert_perorangan($petani_perorangan);
 		}
-		redirect('Petani','refresh')
+		redirect('Petani','refresh');
 	}
 }
