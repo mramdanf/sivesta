@@ -171,6 +171,20 @@ class M_komoditas extends CI_Model {
 
 	}
 
+	public function get_komoditas()
+	{
+		$kom = $this->db
+		            ->get('tb_komoditas')
+		            ->result_array();
+
+		foreach ($kom as $key => $k) 
+		{
+			$kom[$key]['img_url'] = base_url('app_assets/img').'/'.$k['image'];
+		}
+
+		return $kom;
+	}
+
 }
 
 /* End of file m_komoditas.php */

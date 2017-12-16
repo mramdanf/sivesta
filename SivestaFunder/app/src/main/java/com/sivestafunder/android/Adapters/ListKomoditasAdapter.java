@@ -1,14 +1,18 @@
-package com.sivesta.androidfarmer.Adapters;
+package com.sivestafunder.android.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sivesta.androidfarmer.Models.Komoditas;
-import com.sivesta.androidfarmer.R;
+import com.sivestafunder.android.Helpers.Utility;
+import com.sivestafunder.android.Models.Komoditas;
+import com.sivestafunder.android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
         TextView namaKomoditas;
         @BindView(R.id.harga_kom)
         TextView hargaKom;
+        @BindView(R.id.img_komoditas)
+        ImageView imgKomoditas;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -41,6 +47,7 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_komoditas_item, parent, false);
         return new RecyclerViewHolder(itemView);
@@ -49,8 +56,14 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         Komoditas k = komoditasList.get(position);
-        holder.namaKomoditas.setText(k.getNama());
-        //holder.hargaKom.setText(String.valueOf(k.getHarga()));
+        holder.namaKomoditas.setText(Utility.getSafeSubstring(k.getNama(), 12));
+        holder.hargaKom.setText(String.valueOf(k.getHarga()));
+        Log.d(this.getClass().getSimpleName(), "imgurl: " + k.getImgUrl());
+        Picasso
+                .with(context)
+                .load(k.getImgUrl())
+                .into(holder.imgKomoditas);
+
     }
 
     @Override

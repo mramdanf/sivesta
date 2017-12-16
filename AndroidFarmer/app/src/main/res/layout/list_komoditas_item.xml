@@ -17,13 +17,13 @@
             android:text="Mangga Super"
             android:layout_marginBottom="5dp"/>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/harga_kom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2,000,000"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"/>-->
 
     </RelativeLayout>
 
