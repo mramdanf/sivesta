@@ -154,6 +154,21 @@ function utLKomoditasId()
 	
 	return $new_id;
 }
+function utPetaniId()
+{
+	$ci =& get_instance();
+	$last_id = $ci->db
+	            ->select('MAX(id_petani) last_id')
+	            ->get('tb_petani')
+	            ->row_array();
+
+	$last_id = $last_id['last_id'];
+	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
+	$new_id = str_pad($new_id, 3, '0', STR_PAD_LEFT);
+	$new_id = 'P'.$new_id;
+	
+	return $new_id;
+}
 
 function utPrintResponse($http_code, $tag, $data)
 {

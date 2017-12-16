@@ -8,7 +8,7 @@ class Komoditas extends CI_Controller {
 	{
 		$this->load->view('header');
 		$this->load->view('sidebar');
-		$this->load->view('petani');
+		$this->load->view('komoditas');
 		$this->load->view('footer');
 	}
 	public function tambah($value='')
