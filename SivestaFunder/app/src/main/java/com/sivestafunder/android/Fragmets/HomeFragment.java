@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment implements
         wrapperPopSeed.setVisibility(View.VISIBLE);
 
         List<Komoditas> komoditasList = lk.getKomoditasList();
-        listKomoditasAdapter = new ListKomoditasAdapter(komoditasList, mContext);
+        listKomoditasAdapter = new ListKomoditasAdapter(komoditasList, mContext, true);
         setUpRVPopKomoditas();
     }
 
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment implements
         wrapperArtikel.setVisibility(View.VISIBLE);
 
         List<Artikel> artikelList = la.getArtikelList();
-        listArtikelAdapter = new ListArtikelAdapter(artikelList);
+        listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
         setUpRVArticles();
     }
 }

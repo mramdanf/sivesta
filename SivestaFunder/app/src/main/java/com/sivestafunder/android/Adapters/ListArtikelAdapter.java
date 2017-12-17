@@ -1,14 +1,18 @@
 package com.sivestafunder.android.Adapters;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Artikel;
 import com.sivestafunder.android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,6 +26,7 @@ import butterknife.ButterKnife;
 public class ListArtikelAdapter extends RecyclerView.Adapter<ListArtikelAdapter.RecyclerViewHolder> {
 
     private List<Artikel> artikelList;
+    private Context mContext;
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,6 +38,8 @@ public class ListArtikelAdapter extends RecyclerView.Adapter<ListArtikelAdapter.
         TextView artAuthor;
         @BindView(R.id.art_content)
         TextView artContent;
+        @BindView(R.id.img_artikel)
+        ImageView imageArtikel;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -40,7 +47,8 @@ public class ListArtikelAdapter extends RecyclerView.Adapter<ListArtikelAdapter.
         }
     }
 
-    public ListArtikelAdapter(List<Artikel> artikelList) {
+    public ListArtikelAdapter(List<Artikel> artikelList, Context c) {
+        this.mContext = c;
         this.artikelList = artikelList;
     }
 
@@ -59,6 +67,11 @@ public class ListArtikelAdapter extends RecyclerView.Adapter<ListArtikelAdapter.
         holder.artContent.setText(Utility.getSafeSubstring(a.getKonten(), 60));
         holder.artDate.setText(a.getTglPosting());
         holder.artTitle.setText(a.getJudul());
+
+        Picasso
+                .with(mContext)
+                .load(a.getImgArtikel())
+                .into(holder.imageArtikel);
     }
 
     @Override

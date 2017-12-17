@@ -1,11 +1,13 @@
 package com.sivestafunder.android.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
 
     private List<Komoditas> komoditasList;
     private Context context;
+    private boolean isHorizontal;
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,6 +36,9 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
         TextView hargaKom;
         @BindView(R.id.img_komoditas)
         ImageView imgKomoditas;
+        @BindView(R.id.card_komoditas)
+        CardView cardKomoditas;
+
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -40,9 +46,10 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
         }
     }
 
-    public ListKomoditasAdapter(List<Komoditas> komoditasList, Context context) {
+    public ListKomoditasAdapter(List<Komoditas> komoditasList, Context context, boolean isHorizontal) {
         this.komoditasList = komoditasList;
         this.context = context;
+        this.isHorizontal = isHorizontal;
     }
 
     @Override
@@ -58,11 +65,22 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
         Komoditas k = komoditasList.get(position);
         holder.namaKomoditas.setText(Utility.getSafeSubstring(k.getNama(), 12));
         holder.hargaKom.setText(String.valueOf(k.getHarga()));
-        Log.d(this.getClass().getSimpleName(), "imgurl: " + k.getImgUrl());
         Picasso
                 .with(context)
                 .load(k.getImgUrl())
                 .into(holder.imgKomoditas);
+        if (isHorizontal) {
+            final float scale = context.getResources().getDisplayMetrics().density;
+
+            CardView.LayoutParams cardLayoutParams = new CardView.LayoutParams(
+                    (int) (130 * scale + 0.5f),
+                    CardView.LayoutParams.MATCH_PARENT
+            );
+            cardLayoutParams.setMargins(0, 0, (int) (10 * scale + 0.5f), 0);
+            holder.cardKomoditas.setLayoutParams(cardLayoutParams);
+
+        }
+
 
     }
 

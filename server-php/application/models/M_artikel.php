@@ -13,6 +13,11 @@ class M_artikel extends CI_Model {
 	{
 		$articles = $this->db->get('tb_artikel')->result_array();
 
+		foreach ($articles as $key => $art) 
+		{
+			$articles[$key]['img_url'] = base_url('app_assets/img/artikel').'/'.$art['image'];
+		}
+
 		return $articles;
 	}
 

@@ -29,8 +29,8 @@ public class Artikel implements Parcelable {
     private String penulis;
     @SerializedName("tgl_posting_text")
     private String tglPosting;
-    @SerializedName("image")
-    private String imgArtike;
+    @SerializedName("img_url")
+    private String imgArtikel;
 
     public String getIdArtikel() {
         return idArtikel;
@@ -72,12 +72,12 @@ public class Artikel implements Parcelable {
         this.tglPosting = tglPosting;
     }
 
-    public String getImgArtike() {
-        return imgArtike;
+    public String getImgArtikel() {
+        return imgArtikel;
     }
 
-    public void setImgArtike(String imgArtike) {
-        this.imgArtike = imgArtike;
+    public void setImgArtikel(String imgArtikel) {
+        this.imgArtikel = imgArtikel;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Artikel implements Parcelable {
         dest.writeString(this.konten);
         dest.writeString(this.penulis);
         dest.writeString(this.tglPosting);
-        dest.writeString(this.imgArtike);
+        dest.writeString(this.imgArtikel);
     }
 
     public Artikel() {
@@ -104,7 +104,7 @@ public class Artikel implements Parcelable {
         this.konten = in.readString();
         this.penulis = in.readString();
         this.tglPosting = in.readString();
-        this.imgArtike = in.readString();
+        this.imgArtikel = in.readString();
     }
 
     public static final Creator<Artikel> CREATOR = new Creator<Artikel>() {

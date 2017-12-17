@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:text="ramdan"
+            android:text="jhon"
             android:hint="@string/uname_tex"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:text="ramdan"
+            android:text="jhon"
             android:inputType="textPassword"
             android:hint="@string/password_tex"/>
 

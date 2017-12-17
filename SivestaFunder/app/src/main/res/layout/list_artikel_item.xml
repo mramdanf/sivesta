@@ -8,19 +8,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/small_padding"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/img_artikel"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/medium_top_margin"
-
+            android:scaleType="centerCrop"
+            android:layout_marginRight="@dimen/small_margin"
             android:src="@mipmap/ic_launcher"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/art_title"

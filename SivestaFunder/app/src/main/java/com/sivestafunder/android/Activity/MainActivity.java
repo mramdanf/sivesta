@@ -1,6 +1,7 @@
 package com.sivestafunder.android.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +33,15 @@ import com.sivestafunder.android.Fragmets.HomeFragment;
 import com.sivestafunder.android.Fragmets.MySeedsFragment;
 import com.sivestafunder.android.Fragmets.ProfileFragment;
 import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.CircleTransform;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
+import com.sivestafunder.android.Helpers.RoundedTransformation;
 import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Artikel;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.Models.Komoditas;
 import com.sivestafunder.android.R;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +51,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements
         HomeFragment.HomeFragmentInf,
@@ -67,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements
     AppBarLayout appBarLayout;
     @BindView(R.id.header_nameof_user)
     TextView tvUserFullName;
+    @BindView(R.id.profile_pic)
+    ImageView imgviewProfilePic;
 
 
     private final String LOG_TAG = this.getClass().getSimpleName();
@@ -100,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Intent i = getIntent();
         mLoggedInFunder = i.getParcelableExtra(AppConst.OBJ_FUNDER);
-        tvUserFullName.setText(mLoggedInFunder.getName());
+        populateHeaderData();
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.please_wait_tex));
@@ -143,6 +151,11 @@ public class MainActivity extends AppCompatActivity implements
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
@@ -234,6 +247,15 @@ public class MainActivity extends AppCompatActivity implements
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    private void populateHeaderData() {
+        tvUserFullName.setText(mLoggedInFunder.getName());
+        Picasso
+                .with(this)
+                .load(mLoggedInFunder.getProfilePic())
+                .transform(new CircleTransform())
+                .into(imgviewProfilePic);
     }
 
 }

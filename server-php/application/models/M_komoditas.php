@@ -179,7 +179,7 @@ class M_komoditas extends CI_Model {
 
 		foreach ($kom as $key => $k) 
 		{
-			$kom[$key]['img_url'] = base_url('app_assets/img').'/'.$k['image'];
+			$kom[$key]['img_url'] = base_url('app_assets/img/komoditas').'/'.$k['image'];
 		}
 
 		return $kom;

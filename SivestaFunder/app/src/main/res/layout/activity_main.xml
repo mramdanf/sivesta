@@ -36,13 +36,17 @@
                     android:layout_marginBottom="@dimen/small_margin"
                     android:textStyle="bold"
                     android:textSize="10pt"
-                    android:text="Welcome to Sivesta"/>
+                    fontPath="@string/alegreya_sans_bold"
+                    android:text="Welcome to Sivesta"
+                    tools:ignore="MissingPrefix" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_pic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginBottom="10dp"
                     android:src="@mipmap/ic_launcher"/>
 
                 <TextView
@@ -71,7 +75,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="17dp"
                 app:layout_collapseMode="pin" />
 
         </android.support.design.widget.CollapsingToolbarLayout>

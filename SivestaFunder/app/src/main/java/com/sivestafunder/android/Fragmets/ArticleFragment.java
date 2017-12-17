@@ -99,7 +99,7 @@ public class ArticleFragment extends Fragment implements
 
     public void showFullArtikel(ListArtikelResp la) {
         List<Artikel> artikelList = la.getArtikelList();
-        listArtikelAdapter = new ListArtikelAdapter(artikelList);
+        listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
         setUpRVArticles();
     }
 }

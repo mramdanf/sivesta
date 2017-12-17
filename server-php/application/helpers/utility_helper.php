@@ -48,8 +48,14 @@ function utCheckFunders($username, $password)
 
 	$query = $CI->db->get('tb_funders')->row_array();
 
+
 	if ($query)
+	{
+		$CI->load->helper('url');
 		$query['password'] = $password;
+		$query['profile_image_url'] 
+		 = base_url('app_assets/img/user') .'/'.$query['profile_image'];
+	}
 
 	return $query;
 

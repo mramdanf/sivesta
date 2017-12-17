@@ -18,7 +18,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">MORE</item>
-
+        <item name="fontPath">@string/alegreya_sans_bold</item>
     </style>
 
 </resources>
