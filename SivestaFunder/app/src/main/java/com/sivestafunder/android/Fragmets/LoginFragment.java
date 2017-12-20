@@ -7,15 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.sivestafunder.android.Activity.LoginActivity;
 import com.sivestafunder.android.Activity.MainActivity;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Models.Funder;
@@ -34,8 +30,8 @@ public class LoginFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private Context mContext;
 
-    @BindView(R.id.in_username)
-    EditText etUsernmae;
+    @BindView(R.id.in_email_login)
+    EditText etEmail;
     @BindView(R.id.in_password)
     EditText etPassword;
 
@@ -81,7 +77,7 @@ public class LoginFragment extends Fragment {
         Bundle args = new Bundle();
 
         args.putInt(AppConst.VIEW_ID, v.getId());
-        args.putString(AppConst.PRF_TAG_UNAME, etUsernmae.getText().toString());
+        args.putString(AppConst.PRF_TAG_EMAIL, etEmail.getText().toString());
         args.putString(AppConst.PRF_TAG_PASS, etPassword.getText().toString());
 
         mCallback.loginFragmentClickListerner(args);

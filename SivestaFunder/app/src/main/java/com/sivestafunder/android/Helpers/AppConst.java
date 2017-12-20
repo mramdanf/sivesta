@@ -6,7 +6,7 @@ package com.sivestafunder.android.Helpers;
 
 public interface AppConst {
     String PRF_FUNDER = "prf_funder";
-    String PRF_TAG_UNAME = "prf_tag_uname";
+    String PRF_TAG_EMAIL = "prf_tag_email";
     String PRF_TAG_PASS = "prf_tag_pass";
     String OBJ_FUNDER = "obj_funder";
     String OBJ_KOMODITAS = "obj_komoditas";

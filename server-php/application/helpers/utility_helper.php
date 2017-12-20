@@ -17,10 +17,10 @@ function utCredFunders()
 		exit;
 	} else 
 	{
-	    $username = $_SERVER['PHP_AUTH_USER'];
+	    $email = $_SERVER['PHP_AUTH_USER'];
 	    $password =  $_SERVER['PHP_AUTH_PW'];
 
-	    $result = utCheckFunders($username, $password);
+	    $result = utCheckFunders($email, $password);
 		
 		if (!empty($result)) 
 		{
@@ -37,13 +37,13 @@ function utCredFunders()
 	}
 }
 
-function utCheckFunders($username, $password)
+function utCheckFunders($email, $password)
 {
 	$CI =& get_instance();
 	
 	$CI->load->database();
 
-	$CI->db->where('username', $username);
+	$CI->db->where('email', $email);
 	$CI->db->where('password', md5($password));
 
 	$query = $CI->db->get('tb_funders')->row_array();
@@ -190,4 +190,32 @@ function utLog($data)
 	$ci =& get_instance();
 
 	//$ci->log_message('error', print_r($data, TRUE));
+}
+
+function utLFunderId()
+{
+	$ci =& get_instance();
+	$last_id = $ci->db
+	            ->select('MAX(id_funders) last_id')
+	            ->get('tb_funders')
+	            ->row_array();
+
+	$last_id = $last_id['last_id'];
+	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
+	$new_id = str_pad($new_id, 5, '0', STR_PAD_LEFT);
+	$new_id = 'F'.$new_id;
+	
+	return $new_id;
+}
+
+function utFormatRupiah($bil, $i = FALSE)
+{
+	$prefix = $i === FALSE ? '' : $i.'. ';
+	// $prefix = '';
+	if($bil == 0){
+		return $prefix.'-';
+	}
+	// $bil = preg_replace('[^0-9]', '', $bil);
+	$bil = intval($bil);
+	return $prefix.'Rp. '.number_format($bil, 0, ',', '.');
 }

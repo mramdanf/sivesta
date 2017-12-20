@@ -64,7 +64,8 @@ public class ListKomoditasAdapter extends RecyclerView.Adapter<ListKomoditasAdap
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         Komoditas k = komoditasList.get(position);
         holder.namaKomoditas.setText(Utility.getSafeSubstring(k.getNama(), 12));
-        holder.hargaKom.setText(String.valueOf(k.getHarga()));
+//        holder.hargaKom.setText(String.valueOf(k.getHarga()));
+        holder.hargaKom.setText(k.getHargaText());
         Picasso
                 .with(context)
                 .load(k.getImgUrl())

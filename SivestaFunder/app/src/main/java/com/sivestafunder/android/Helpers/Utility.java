@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sivestafunder.android.Activity.LoginActivity;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
@@ -45,7 +44,7 @@ public class Utility {
     public static Funder getFunderPrefs(Context c) {
         SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
         Funder f = new Funder(c);
-        f.setUsername(prfs.getString(AppConst.PRF_TAG_UNAME, ""));
+        f.setUsername(prfs.getString(AppConst.PRF_TAG_EMAIL, ""));
         f.setPassword(prfs.getString(AppConst.PRF_TAG_PASS, ""));
         return f;
     }
@@ -60,7 +59,7 @@ public class Utility {
     public static void setFarmerPrefs(Context c, Funder f) {
         SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prfs.edit();
-        editor.putString(AppConst.PRF_TAG_UNAME, f.getUsername());
+        editor.putString(AppConst.PRF_TAG_EMAIL, f.getEmail());
         editor.putString(AppConst.PRF_TAG_PASS, f.getPassword());
         editor.apply();
     }

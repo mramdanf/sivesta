@@ -106,6 +106,14 @@ public class Komoditas implements Parcelable {
         this.idKomoditas = idKomoditas;
     }
 
+    public String getHargaText() {
+        return hargaText;
+    }
+
+    public void setHargaText(String hargaText) {
+        this.hargaText = hargaText;
+    }
+
     private String nama;
     private int harga;
     @SerializedName("stock")
@@ -119,6 +127,8 @@ public class Komoditas implements Parcelable {
     private String idKomoditas;
     @SerializedName("img_url")
     private String imgUrl;
+    @SerializedName("format_rupiah")
+    private String hargaText;
 
 
     @Override
@@ -139,6 +149,7 @@ public class Komoditas implements Parcelable {
         dest.writeDouble(this.longitude);
         dest.writeString(this.idKomoditas);
         dest.writeString(this.imgUrl);
+        dest.writeString(this.hargaText);
     }
 
     public String getImgUrl() {
@@ -161,6 +172,7 @@ public class Komoditas implements Parcelable {
         this.longitude = in.readDouble();
         this.idKomoditas = in.readString();
         this.imgUrl = in.readString();
+        this.hargaText = in.readString();
     }
 
     public static final Creator<Komoditas> CREATOR = new Creator<Komoditas>() {

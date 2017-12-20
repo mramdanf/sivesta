@@ -19,6 +19,7 @@ import com.sivestafunder.android.R;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -146,10 +147,10 @@ public class Funder implements Parcelable {
     }
 
     /* Fungsi spesifik dari objek */
-    public void checkLoginApi(String username, String password, FunderModelInf fInf) {
+    public void checkLoginApi(String email, String password, FunderModelInf fInf) {
         mCallback = fInf;
         FunderEndPoint mFunderService = new RetrofitHelper()
-                .getFunderService(username, password);
+                .getFunderService(email, password);
         Observable<Funder> loginFarmer = mFunderService.checkLogin();
         loginFarmer
                 .subscribeOn(Schedulers.newThread())
@@ -191,5 +192,47 @@ public class Funder implements Parcelable {
 
     public void logout() {
         Utility.removeFunderPrefs(mContext);
+    }
+
+    public void createAccountApi(final Funder funder, FunderModelInf fInf) {
+        mCallback = fInf;
+        FunderEndPoint mFunderService = new RetrofitHelper()
+                .getFunderServiceNoAuth();
+        Observable<SimpleResp> submitAccout = mFunderService.submitCreateAccount(
+                funder.getName(),
+                funder.getEmail(),
+                funder.getPassword()
+        );
+        submitAccout
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SimpleResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull SimpleResp simpleResp) {
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        args.putParcelable(AppConst.OBJ_FUNDER, funder);
+                        mCallback.checkLoginApiCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.checkLoginApiCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 }

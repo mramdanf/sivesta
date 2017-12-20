@@ -297,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements
         Picasso
                 .with(this)
                 .load(mLoggedInFunder.getProfilePic())
+                .error(R.drawable.user_default)
                 .transform(new CircleTransform())
                 .into(imgviewProfilePic);
     }

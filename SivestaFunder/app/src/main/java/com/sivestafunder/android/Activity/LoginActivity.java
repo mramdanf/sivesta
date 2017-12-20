@@ -1,29 +1,18 @@
 package com.sivestafunder.android.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.sivestafunder.android.Fragmets.ArticleFragment;
-import com.sivestafunder.android.Fragmets.CatalogFragment;
 import com.sivestafunder.android.Fragmets.CreateAccountFragment;
-import com.sivestafunder.android.Fragmets.HomeFragment;
 import com.sivestafunder.android.Fragmets.LoginFragment;
-import com.sivestafunder.android.Fragmets.MySeedsFragment;
-import com.sivestafunder.android.Fragmets.ProfileFragment;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity implements
@@ -59,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.btn_submit_login:
                 mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
                 new Funder(this).checkLoginApi(
-                        args.getString(AppConst.PRF_TAG_UNAME),
+                        args.getString(AppConst.PRF_TAG_EMAIL),
                         args.getString(AppConst.PRF_TAG_PASS),
                         this
                 );
@@ -75,6 +64,19 @@ public class LoginActivity extends AppCompatActivity implements
                 setUpFragment(new LoginFragment());
                 break;
             case R.id.btn_submit_create_acc:
+                mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                new Funder(this)
+                        .createAccountApi(mFunder, new Funder.FunderModelInf() {
+                            @Override
+                            public void checkLoginApiCallback(Bundle args) {
+                                String msg = args.getString(AppConst.TAG_MSG);
+                                if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                   CreateAccountFragment ca = (CreateAccountFragment) getSupportFragmentManager()
+                                           .findFragmentById(R.id.login_container);
+                                    ca.showCreateAccountResult(mFunder);
+                                }
+                            }
+                        });
                 break;
         }
     }

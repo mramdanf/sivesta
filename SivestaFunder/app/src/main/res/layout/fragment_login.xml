@@ -13,13 +13,13 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/in_username"
+            android:id="@+id/in_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="text"
-            android:text="ramdan"
-            android:hint="@string/uname_tex"/>
+            android:inputType="textEmailAddress"
+            android:text="murdi@sivesta.com"
+            android:hint="Email"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:text="ramdan"
+            android:text="murdi"
             android:inputType="textPassword"
             android:hint="@string/password_tex"/>
 
