@@ -16,6 +16,7 @@ public interface AppConst {
     String TAG_MSG = "tag_msg";
     String TAG_SUCCESS = "tag_success";
     String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";
+//    String BASE_URL_DEV = "http://192.168.1.8/sivesta/server-php/api/funder/";
     String BASE_URL_DEV = "http://10.99.226.213/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
 }

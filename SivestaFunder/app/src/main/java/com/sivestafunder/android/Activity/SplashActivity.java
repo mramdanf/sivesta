@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Funder savedFunder = Utility.getFunderPrefs(SplashActivity.this);
                 if (savedFunder.getUsername() != null && !savedFunder.getUsername().equals("")) {
-                    Funder f = new Funder();
+                    Funder f = new Funder(SplashActivity.this);
                     f.checkLoginApi(
                             savedFunder.getUsername(),
                             savedFunder.getPassword(),

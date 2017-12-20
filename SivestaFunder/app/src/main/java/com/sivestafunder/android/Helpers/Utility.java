@@ -44,10 +44,17 @@ public class Utility {
 
     public static Funder getFunderPrefs(Context c) {
         SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
-        Funder f = new Funder();
+        Funder f = new Funder(c);
         f.setUsername(prfs.getString(AppConst.PRF_TAG_UNAME, ""));
         f.setPassword(prfs.getString(AppConst.PRF_TAG_PASS, ""));
         return f;
+    }
+
+    public static void removeFunderPrefs(Context c) {
+        SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prfs.edit();
+        editor.clear();
+        editor.apply();
     }
 
     public static void setFarmerPrefs(Context c, Funder f) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="@dimen/medium_top_margin">
 
     <LinearLayout
@@ -27,7 +27,8 @@
                 android:id="@+id/art_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                fontPath="@string/alegreya_sans_bold"
+                tools:ignore="MissingPrefix"
                 android:layout_marginBottom="3dp"
                 android:text="Peluang di Circular Economy"/>
 
@@ -36,7 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/art_title"
+                android:gravity="center"
                 android:layout_marginBottom="3dp"
+                android:drawablePadding="3dp"
+                android:drawableLeft="@drawable/cal_spring"
                 android:text="Dec 04"/>
 
             <TextView
@@ -46,6 +50,8 @@
                 android:layout_toRightOf="@id/art_date"
                 android:layout_below="@id/art_title"
                 android:layout_marginLeft="@dimen/medium_top_margin"
+                android:drawableLeft="@drawable/man_user_48"
+                android:drawablePadding="3dp"
                 android:text="Muhaimin"/>
 
             <TextView

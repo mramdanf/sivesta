@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
     private KomoditasEndPoint mKomoditasService;
     private Funder mLoggedInFunder;
+    private String mCollapsingTitle;
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
@@ -75,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements
     TextView tvUserFullName;
     @BindView(R.id.profile_pic)
     ImageView imgviewProfilePic;
+    @BindView(R.id.wrapper_profile_btn)
+    LinearLayout wrapperProfileBtn;
+    @BindView(R.id.tv_planted_info)
+    TextView tvPlantedInfo;
+    @BindView(R.id.tv_welcome)
+    TextView tvWelcome;
 
 
     private final String LOG_TAG = this.getClass().getSimpleName();
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mCollapsingTitle = "Home";
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -95,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle("Home");
+                    collapsingToolbarLayout.setTitle(mCollapsingTitle);
                     isShow = true;
                 } else if(isShow) {
                     collapsingToolbarLayout.setTitle(" ");
@@ -208,6 +218,20 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void homeFragmentClickListener(Bundle args) {
+        int viewId = args.getInt(AppConst.VIEW_ID);
+        switch (viewId) {
+            case R.id.more_btn_artikel:
+                bottomNavigationView.setSelectedItemId(R.id.act_article);
+                setUpFragment(new ArticleFragment(), false);
+                break;
+            case R.id.more_btn_komoditas:
+                bottomNavigationView.setSelectedItemId(R.id.act_catalog);
+                setUpFragment(new CatalogFragment(), false);
+        }
+    }
+
+    @Override
     public void reqFullListKomoditas() {
         Komoditas fullKomoditas = new Komoditas();
         fullKomoditas.getAllKomoditasApi(
@@ -223,7 +247,26 @@ public class MainActivity extends AppCompatActivity implements
         );
     }
 
+    @OnClick(R.id.btn_logout) public void doLogout() {
+        new Funder(this).logout();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
+    }
+
     private void setUpFragment(Fragment f, boolean addToBack) {
+        toggleBtnProfile(2);
+        if (f instanceof HomeFragment) {
+            mCollapsingTitle = "Home";
+        } else if (f instanceof ArticleFragment) {
+            mCollapsingTitle = "Articles";
+        } else if (f instanceof CatalogFragment) {
+            mCollapsingTitle = "Catalog";
+        } else if (f instanceof MySeedsFragment) {
+            mCollapsingTitle = "My Seed";
+        } else if (f instanceof ProfileFragment) {
+            toggleBtnProfile(1);
+            mCollapsingTitle = "My Profile";
+        }
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -256,6 +299,19 @@ public class MainActivity extends AppCompatActivity implements
                 .load(mLoggedInFunder.getProfilePic())
                 .transform(new CircleTransform())
                 .into(imgviewProfilePic);
+    }
+
+    private void toggleBtnProfile(int show) {
+        if (show == 1) {
+            wrapperProfileBtn.setVisibility(View.VISIBLE);
+            tvPlantedInfo.setVisibility(View.GONE);
+            tvWelcome.setText("My Profile");
+        } else if (show == 2) {
+            wrapperProfileBtn.setVisibility(View.GONE);
+            tvPlantedInfo.setVisibility(View.VISIBLE);
+            tvWelcome.setText("Welcome to Sivesta");
+        }
+
     }
 
 }

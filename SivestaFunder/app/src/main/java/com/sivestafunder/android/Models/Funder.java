@@ -137,7 +137,8 @@ public class Funder implements Parcelable {
     /* Interfacing */
     private FunderModelInf mCallback;
 
-    public Funder() {
+    public Funder(Context context) {
+        this.mContext = context;
     }
 
     public interface FunderModelInf {
@@ -164,6 +165,10 @@ public class Funder implements Parcelable {
                         Bundle args = new Bundle();
                         args.putParcelable(AppConst.OBJ_FUNDER, funder);
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+
+                        // Simpan data funder di prf
+                        Utility.setFarmerPrefs(mContext, funder);
+
                         mCallback.checkLoginApiCallback(args);
                     }
 
@@ -182,5 +187,9 @@ public class Funder implements Parcelable {
                 });
 
 
+    }
+
+    public void logout() {
+        Utility.removeFunderPrefs(mContext);
     }
 }
