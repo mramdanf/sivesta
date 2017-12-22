@@ -6,7 +6,7 @@ package com.sivestafunder.android.Helpers;
 
 public interface AppConst {
     String PRF_FUNDER = "prf_funder";
-    String PRF_TAG_UNAME = "prf_tag_uname";
+    String PRF_TAG_EMAIL = "prf_tag_email";
     String PRF_TAG_PASS = "prf_tag_pass";
     String OBJ_FUNDER = "obj_funder";
     String OBJ_KOMODITAS = "obj_komoditas";
@@ -16,6 +16,7 @@ public interface AppConst {
     String TAG_MSG = "tag_msg";
     String TAG_SUCCESS = "tag_success";
     String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";
+//    String BASE_URL_DEV = "http://192.168.1.8/sivesta/server-php/api/funder/";
     String BASE_URL_DEV = "http://10.99.226.213/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
 }

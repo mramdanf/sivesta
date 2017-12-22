@@ -22,8 +22,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    public FunderEndPoint getFunderService(String username, String password) {
-        final Retrofit retrofit = createRetrofit(username, password);
+    public FunderEndPoint getFunderService(String email, String password) {
+        final Retrofit retrofit = createRetrofit(email, password);
+        return retrofit.create(FunderEndPoint.class);
+    }
+
+    public FunderEndPoint getFunderServiceNoAuth() {
+        final Retrofit retrofit = retrofitNoAuth();
         return retrofit.create(FunderEndPoint.class);
     }
 

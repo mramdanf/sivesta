@@ -25,6 +25,7 @@ public class Artikel implements Parcelable {
     @SerializedName("id_artikel")
     private String idArtikel;
     private String judul;
+    @SerializedName("content_strip")
     private String konten;
     private String penulis;
     @SerializedName("tgl_posting_text")

@@ -3,6 +3,7 @@ package com.sivestafunder.android.Fragmets;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sivestafunder.android.Activity.NewsDetailActivity;
 import com.sivestafunder.android.Adapters.ListArtikelAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
 import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
@@ -81,7 +83,7 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onItemClick(View childView, int position) {
-
+        startActivity(new Intent(mContext, NewsDetailActivity.class));
     }
 
     @Override

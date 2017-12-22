@@ -19,6 +19,7 @@ import com.sivestafunder.android.Adapters.ListArtikelAdapter;
 import com.sivestafunder.android.Adapters.ListKomoditasAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
 import com.sivestafunder.android.Models.Artikel;
 import com.sivestafunder.android.Models.Komoditas;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment implements
     public interface HomeFragmentInf {
         void reqListKomoditas();
         void reqListArtikel();
+        void homeFragmentClickListener(Bundle args);
     }
 
 
@@ -74,7 +77,6 @@ public class HomeFragment extends Fragment implements
         ButterKnife.bind(this, rootView);
 
         mContext = getActivity();
-        //getActivity().setTitle("Home");
 
         return rootView;
     }
@@ -105,6 +107,19 @@ public class HomeFragment extends Fragment implements
         } catch (ClassCastException e) {
             throw new ClassCastException(context + " activity must implement HomeFragmentInf");
         }
+    }
+
+    @OnClick(R.id.more_btn_artikel) public void moreArtikelClickHandle(View v) {
+        Bundle args = new Bundle();
+        args.putInt(AppConst.VIEW_ID, v.getId());
+        mCallback.homeFragmentClickListener(args);
+
+    }
+
+    @OnClick(R.id.more_btn_komoditas) public void moreKomoditasClickHandle(View v) {
+        Bundle args = new Bundle();
+        args.putInt(AppConst.VIEW_ID, v.getId());
+        mCallback.homeFragmentClickListener(args);
     }
 
     private void setUpRVPopKomoditas(){

@@ -15,12 +15,17 @@ class Artikel extends CI_Controller {
 	public function gets()
 	{
 		$articles = $this->m_artikel->gets();
-		foreach ($articles as $key => $article) 
-		{
-			$articles[$key]['tgl_posting_text'] = date('M d, Y', strtotime($article['tgl_posting']));
-		}
 		utPrintResponse(self::HTTP_OK, 'articles', $articles);
 
+	}
+
+	public function artikel_webview($id_artikel)
+	{
+		
+		$artikel = $this->m_artikel->view_artikel($id_artikel);
+		$content['artikel'] = $artikel;
+		
+		$this->load->view('android_view_artikel', $content);
 	}
 
 }

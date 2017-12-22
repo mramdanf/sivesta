@@ -1,38 +1,26 @@
 package com.sivestafunder.android.Activity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
+import com.sivestafunder.android.Fragmets.CreateAccountFragment;
+import com.sivestafunder.android.Fragmets.LoginFragment;
 import com.sivestafunder.android.Helpers.AppConst;
-import com.sivestafunder.android.Helpers.RetrofitHelper;
-import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity implements
-        Funder.FunderModelInf {
-
-    @BindView(R.id.in_username) EditText etUsername;
-    @BindView(R.id.in_password) EditText etPassword;
+        Funder.FunderModelInf,
+        LoginFragment.LoginFragmentInf,
+        CreateAccountFragment.CreateAccountFragmentInf {
 
     private final String LOG_TAG = this.getClass().getSimpleName();
-    private ProgressDialog mProgressDialog;
     private Funder mFunder;
 
     @Override
@@ -40,46 +28,81 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setTitle("Login");
-
         ButterKnife.bind(this);
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(getString(R.string.please_wait_tex));
-        mProgressDialog.setCancelable(false);
-    }
-
-    @OnClick(R.id.btn_submit_login)
-    public void submitLogin(View v) {
-        mProgressDialog.show();
-        new Funder().checkLoginApi(
-                etUsername.getText().toString(),
-                etPassword.getText().toString(),
-                this
-        );
+        setUpFragment(new LoginFragment());
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (mProgressDialog != null)
-            mProgressDialog.dismiss();
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void loginFragmentClickListerner(Bundle args) {
+        int viewId = args.getInt(AppConst.VIEW_ID);
+        switch (viewId) {
+            case R.id.btn_create_account:
+                setUpFragment(new CreateAccountFragment());
+                break;
+            case R.id.btn_submit_login:
+                mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                new Funder(this).checkLoginApi(
+                        args.getString(AppConst.PRF_TAG_EMAIL),
+                        args.getString(AppConst.PRF_TAG_PASS),
+                        this
+                );
+                break;
+        }
+    }
+
+    @Override
+    public void createAccountClickListener(Bundle args) {
+        int viewId = args.getInt(AppConst.VIEW_ID);
+        switch (viewId) {
+            case R.id.btn_back_login:
+                setUpFragment(new LoginFragment());
+                break;
+            case R.id.btn_submit_create_acc:
+                mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                new Funder(this)
+                        .createAccountApi(mFunder, new Funder.FunderModelInf() {
+                            @Override
+                            public void checkLoginApiCallback(Bundle args) {
+                                String msg = args.getString(AppConst.TAG_MSG);
+                                if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                   CreateAccountFragment ca = (CreateAccountFragment) getSupportFragmentManager()
+                                           .findFragmentById(R.id.login_container);
+                                    ca.showCreateAccountResult(mFunder);
+                                }
+                            }
+                        });
+                break;
+        }
     }
 
     /* Funder Model - CheckLogin Callback */
     @Override
     public void checkLoginApiCallback(Bundle args) {
-        mProgressDialog.dismiss();
+
         mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
         if (args.getString(AppConst.TAG_MSG).equals(AppConst.TAG_SUCCESS)) {
-            // Simpan data funder di prf
-            Utility.setFarmerPrefs(this, mFunder);
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            i.putExtra(AppConst.OBJ_FUNDER, mFunder);
-            startActivity(i);
-            finish();
+
+            LoginFragment lf = (LoginFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.login_container);
+            lf.displayLoginResult(mFunder);
+
         } else {
             Toast.makeText(this, getString(R.string.login_failed_tex), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void setUpFragment(Fragment f) {
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.login_container, f);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
 }
