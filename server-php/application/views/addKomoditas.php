@@ -33,20 +33,39 @@
               </div>
               <!-- /. tools -->
             </div>
+            <script>
+              $(document).ready(function(){
+                  $("#i_tahunan_panjang").hide();
+                  $("#i_tahunan_lebar").hide();
+                  $("#i_parenial_jumlah").hide();
+                  $("#double-pj").hide();
+                      $("#double-jml").hide();
+                  $("#optionsRadios1").click(function(){
+                      // alert("The paragraph was clicked.");
+                      $("#double").hide();
+                      $("#double-pj").hide();
+                      $("#double-jml").hide();
+                      $("#single").show();
+                      $("#i_tahunan_panjang").hide();
+                      $("#i_parenial_jumlah").show();
+                  $("#i_tahunan_lebar").hide();
+                  });
+                  $("#optionsRadios2").click(function(){
+                      $("#single").hide();
+                      $("#double").show();
+                       $("#double-pj").show();
+                      $("#double-jml").show();
+                      $("#i_tahunan_panjang").show();
+                  $("#i_tahunan_lebar").show();
+                  $("#i_parenial_jumlah").hide();
+                  });
+              });
+              </script>
             <div class="box-body">
               <form action="#" method="post">
-                <div class="form-group">
-                  <input type="text" class="form-control" name="nama" placeholder="Nama Komoditas">
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="harga" placeholder="Harga Satuan">
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="stock" placeholder="Jumlah Stock">
-                </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
                     Komoditas Perenial
                   </label>
                 </div>
@@ -56,9 +75,53 @@
                     Komoditas Tahunan
                   </label>
                 </div>
-                <div>
-                  <textarea class="textarea" placeholder="Message"
-                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="nama_komoditas" placeholder="Nama Komoditas">
+                </div>
+                <div class="form-group">
+                  <select name="id_petani" class="form-control">
+                    <?php 
+                    foreach ($petani as $key) {
+                      ?><option value="<?php echo $key->id_petani;?>"><?php echo $key->name;?></option><?php
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="harga" placeholder="Harga Satuan">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="stock" placeholder="Jumlah Stock">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="min_kontrak" placeholder="Minimum Kontrak">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="persentase" placeholder="Persentase Keuntungan
+                  ">
+                </div>
+                <div class="form-group" id="i_parenial_jumlah">
+                  <input type="number" class="form-control" name="jumlah" placeholder="Jumlah Pohon">
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><a href="">Geolocation</a></span>
+                    <!-- <button class="input-group-addon" id="basic-addon1"></button> -->
+                    <input type="text" class="form-control" placeholder="Alamat" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
+                    <input type="text" id="longitude" class="form-control" name="" disabled="true">
+                    <input type="text" id="latitude" class="form-control" name="" disabled="true">
+                  </div>
+                </div>
+                <div class="form-group" id="i_tahunan_panjang">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Panjang" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1"><span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
+                  </div>
+                </div>
+                <div class="form-group" id="i_tahunan_lebar">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Lebar" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
+                    <span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
+                  </div>
                 </div>
               </form>
             </div>
@@ -94,26 +157,28 @@
             <!-- /.box-body -->
             <div class="box-footer no-border">
               <div class="row">
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Mail-Orders</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Online</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">In-Store</div>
-                </div>
+                <div id="somecomponent" style="width: 500px; height: 400px;"></div>
+<script>
+    $('#somecomponent').locationpicker({
+      location: {
+            latitude: 46.15242437752303,
+            longitude: 2.7470703125
+        },
+        radius: 300,
+        inputBinding: {
+            latitudeInput: $('#us3-lat'),
+            longitudeInput: $('#us3-lon'),
+            radiusInput: $('#us3-radius'),
+            locationNameInput: $('#us3-address')
+        },
+        enableAutocomplete: true,
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+            $('#longitude').val(currentLocation.longitude)
+            $('#latitude').val(currentLocation.latitude)
+            alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+        }
+        });
+</script>
                 <!-- ./col -->
               </div>
               <!-- /.row -->
