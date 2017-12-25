@@ -33,7 +33,86 @@
               </div>
               <!-- /. tools -->
             </div>
-            <script>
+            
+            
+            <div class="box-body">
+              <form action="<?php echo base_url();?>admin/Komoditas/add" method="post">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="pilihan" id="optionsRadios1" value="perenial" required="true">
+                    Komoditas Perenial
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="pilihan" id="optionsRadios2" value="tahunan" required="true">
+                    Komoditas Tahunan
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="nama_komoditas" placeholder="Nama Komoditas">
+                </div>
+                <div class="form-group">
+                  <select name="id_petani" class="form-control">
+                    <?php 
+                    foreach ($petani as $key) {
+                      ?><option value="<?php echo $key->id_petani;?>"><?php echo $key->name;?></option><?php
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><a href="">Rp.</a></span>
+                    <input class="form-control" onkeyup="getharga()" id="test1" placeholder="Harga Satuan" aria-describedby="basic-addon1">
+                  </div>
+                  <input type="hidden" name="harga"  id="harga">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="stock"  placeholder="Jumlah Stock">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="min_kontrak" placeholder="Minimum Kontrak">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="persentase" placeholder="Persentase Keuntungan
+                  ">
+                </div>
+                <div class="form-group" id="i_parenial_jumlah">
+                  <input type="number" class="form-control" name="jumlah" placeholder="Jumlah Pohon">
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><a href="">Geolocation</a></span>
+                    <!-- <button class="input-group-addon" id="basic-addon1"></button> -->
+                    <input type="text" class="form-control" placeholder="Alamat" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
+                    <input type="hidden" id="longitude" class="form-control" name="longitude" >
+                    <input type="hidden" id="latitude" class="form-control" name="latitude" >
+                  </div>
+                </div>
+                <div class="form-group" id="i_tahunan_panjang">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Panjang" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1"><span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
+                  </div>
+                </div>
+                <div class="form-group" id="i_tahunan_lebar">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Lebar" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
+                    <span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
+                  </div>
+                </div>
+                <div class="box-footer clearfix">
+                  <input type="submit" value="Submit" class="pull-right btn btn-default">
+                </div>
+              </form>
+            </div>
+            
+          </div>
+          <script>
+                console.log(navigator.userAgent);
+                $("#test1").inputmask({ 'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'placeholder': 'HARGA 10.000', rightAlign : false,clearMaskOnLostFocus: !1 });
+              </script>
+              <script>
               $(document).ready(function(){
                   $("#i_tahunan_panjang").hide();
                   $("#i_tahunan_lebar").hide();
@@ -59,78 +138,9 @@
                   $("#i_tahunan_lebar").show();
                   $("#i_parenial_jumlah").hide();
                   });
+                  
               });
               </script>
-            <div class="box-body">
-              <form action="#" method="post">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-                    Komoditas Perenial
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Komoditas Tahunan
-                  </label>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" name="nama_komoditas" placeholder="Nama Komoditas">
-                </div>
-                <div class="form-group">
-                  <select name="id_petani" class="form-control">
-                    <?php 
-                    foreach ($petani as $key) {
-                      ?><option value="<?php echo $key->id_petani;?>"><?php echo $key->name;?></option><?php
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="harga" placeholder="Harga Satuan">
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="stock" placeholder="Jumlah Stock">
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="min_kontrak" placeholder="Minimum Kontrak">
-                </div>
-                <div class="form-group">
-                  <input type="number" class="form-control" name="persentase" placeholder="Persentase Keuntungan
-                  ">
-                </div>
-                <div class="form-group" id="i_parenial_jumlah">
-                  <input type="number" class="form-control" name="jumlah" placeholder="Jumlah Pohon">
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><a href="">Geolocation</a></span>
-                    <!-- <button class="input-group-addon" id="basic-addon1"></button> -->
-                    <input type="text" class="form-control" placeholder="Alamat" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
-                    <input type="text" id="longitude" class="form-control" name="" disabled="true">
-                    <input type="text" id="latitude" class="form-control" name="" disabled="true">
-                  </div>
-                </div>
-                <div class="form-group" id="i_tahunan_panjang">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Panjang" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1"><span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
-                  </div>
-                </div>
-                <div class="form-group" id="i_tahunan_lebar">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Lebar" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
-                    <span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="box-footer clearfix">
-              <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
-                <i class="fa fa-arrow-circle-right"></i></button>
-            </div>
-          </div>
-
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -142,7 +152,7 @@
             <div class="box-header">
               <i class="fa fa-th"></i>
 
-              <h3 class="box-title">Sales Graph</h3>
+              <h3 class="box-title">Choose Map</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -152,17 +162,35 @@
               </div>
             </div>
             <div class="box-body border-radius-none">
-              <div class="chart" id="line-chart" style="height: 250px;"></div>
+              <!-- <div class="chart" id="line-chart" style="height: 250px;"></div> -->
+              <div id="somecomponent" style=" height: 250px;"></div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer no-border">
               <div class="row">
-                <div id="somecomponent" style="width: 500px; height: 400px;"></div>
+                
 <script>
+  var long = 0;
+  var lat = 0;
+  navigator.geolocation.getCurrentPosition(showPosition);
+  function showPosition(position) {
+     
+     long = position.coords.latitude;
+     lat = position.coords.longitude;
+     $('#longitude').val(long)
+    $('#latitude').val(lat)
+
+  }
+  function getharga() {
+                    var string = $("#test1").val();
+                    console.log('string : ',string)
+                    console.log(string.replace(/,/g , ""));
+                    $('#harga').val(string)
+                  }
     $('#somecomponent').locationpicker({
       location: {
-            latitude: 46.15242437752303,
-            longitude: 2.7470703125
+            latitude: lat,
+            longitude: long
         },
         radius: 300,
         inputBinding: {
@@ -172,6 +200,10 @@
             locationNameInput: $('#us3-address')
         },
         enableAutocomplete: true,
+        autocompleteOptions: {
+            types: ['(cities)'],
+            componentRestrictions: {country: 'fr'}
+        },
         onchanged: function (currentLocation, radius, isMarkerDropped) {
             $('#longitude').val(currentLocation.longitude)
             $('#latitude').val(currentLocation.latitude)
