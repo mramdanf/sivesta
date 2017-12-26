@@ -7,14 +7,17 @@ class Komoditas extends CI_Controller {
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('admin/Petani_m','Petani');
+		$this->load->model('admin/Komoditas_m','Komoditas');
 		$this->load->helper('utility_helper');
 	}
 	
 	public function index()
 	{
+		$data['komoditas'] = $this->Komoditas->get_union()->result();
+		// print_r($data);die();
 		$this->load->view('header');
 		$this->load->view('sidebar');
-		$this->load->view('komoditas');
+		$this->load->view('komoditas',$data);
 		$this->load->view('footer');
 	}
 	public function tambah($value='')
@@ -40,12 +43,14 @@ class Komoditas extends CI_Controller {
 			'latitude' => $this->input->post('latitude'),
 			'longitude' => $this->input->post('longitude'),
 			 );
-		print_r($komoditas);die();
-		if ($this->input->post('pilihan') == 'perenial') {
-			$perenial = array('id_komoditas'=>$id_komoditas,'panjang'=>$this->input->post('panjang'),'lebar'=>$this->input->post('lebar'));
-			$this->Komoditas->insert();
+		// print_r($komoditas);die();
+		if ($this->input->post('pilihan') == 'tahunan') {
+			$side = array('id_komoditas'=>$id_komoditas,'panjang'=>$this->input->post('panjang'),'lebar'=>$this->input->post('lebar'));
+			$this->Komoditas->insert($komoditas,$side,'tahunan');
 		}else{
-
+			$side = array('id_komoditas'=>$id_komoditas,'jumlah_phon'=>$this->input->post('jumlah'));
+			$this->Komoditas->insert($komoditas,$side,'perenial');
 		}
+		redirect('admin/Komoditas','refresh');
 	}
 }

@@ -92,12 +92,12 @@
                 </div>
                 <div class="form-group" id="i_tahunan_panjang">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Panjang" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1"><span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
+                    <input type="text" class="form-control" placeholder="Panjang" name="panjang" aria-label="Alamat" aria-describedby="basic-addon1"><span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
                   </div>
                 </div>
                 <div class="form-group" id="i_tahunan_lebar">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Lebar" name="alamat" aria-label="Alamat" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" placeholder="Lebar" name="lebar" aria-label="Alamat" aria-describedby="basic-addon1">
                     <span class="input-group-addon" id="basic-addon1"><a href="">Meter</a></span>
                   </div>
                 </div>

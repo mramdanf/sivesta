@@ -15,54 +15,16 @@
             <section class="content">
                <div class="row">
                   <div class="col-lg-12">
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Deputi Bidang Koordinasi Sumber Daya Alam dan Jasa</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Sekretaris Deputi Bidang Koordinasi Sumber Daya Alam dan Jasa</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumberdaya Alam dan Jasa</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumber Daya Mineral, Energi dan Non Konvensional</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumber Daya Mineral, Energi dan Non Konvensional</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumber Daya Mineral, Energi dan Non Konvensional</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumber Daya Mineral, Energi dan Non Konvensional</p>
-                     </div>
-                     <div class="col-lg-3 col-md-3 col-xs-6">
-                        <a href="#" class="d-block mb-4 h-100">
-                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                        </a>
-                        <p style="text-align: center;">Asisten Deputi Sumber Daya Mineral, Energi dan Non Konvensional</p>
-                     </div>
+                     <?php foreach($komoditas as $key){
+                        ?>
+                        <div class="col-lg-3 col-md-3 col-xs-6">
+                           <a href="#" class="d-block mb-4 h-100">
+                           <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                           </a>
+                           <p style="text-align: center;"><?php echo $key->nama; ?></p>
+                        </div>
+                        <?php
+                     }?>
                   </div>
                </div>
             </section>
