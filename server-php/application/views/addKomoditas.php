@@ -36,7 +36,7 @@
             
             
             <div class="box-body">
-              <form action="<?php echo base_url();?>admin/Komoditas/add" method="post">
+              <form action="<?php echo base_url();?>admin/Komoditas/add" enctype="multipart/form-data" method="post">
                 <div class="radio">
                   <label>
                     <input type="radio" name="pilihan" id="optionsRadios1" value="perenial" required="true">
@@ -77,6 +77,14 @@
                 <div class="form-group">
                   <input type="number" class="form-control" name="persentase" placeholder="Persentase Keuntungan
                   ">
+                </div>
+                <div class="form-group">
+                  <textarea class="textarea" name="deskripsi" placeholder="Place some text here"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+                 <div class="form-group" >
+                    <input type="file" class="form-control"  name="image" aria-label="Alamat" >
+                  
                 </div>
                 <div class="form-group" id="i_parenial_jumlah">
                   <input type="number" class="form-control" name="jumlah" placeholder="Jumlah Pohon">

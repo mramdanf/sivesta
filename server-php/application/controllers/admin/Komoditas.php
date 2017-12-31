@@ -31,6 +31,20 @@ class Komoditas extends CI_Controller {
 	public function add($value='')
 	{
 		// echo $this->input->post('id_petani');die();
+		$config['upload_path'] = 'app_assets/img/komoditas';
+        $config['allowed_types'] = 'png|jpg|jpeg';
+        // load library upload
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('image')) {
+            $error = $this->upload->display_errors();
+            echo $error;
+            // $this->session->set_flashdata('info',$error);
+            // redirect('Artikel/tambah');
+        	$image = 'default.png';
+        } else {
+            $result = $this->upload->data();
+            $image = $result['orig_name'];
+        }
 		$id_komoditas=utLKomoditasId();
 		$komoditas = array(
 			'id_komoditas' => $id_komoditas,
@@ -38,12 +52,14 @@ class Komoditas extends CI_Controller {
 			'harga' => $this->input->post('harga'),
 			'stock' => $this->input->post('stock'),
 			'lokasi' => $this->input->post('alamat'),
+			'image' => $image,
+			'deskripsi' => $this->input->post('deskripsi'),
 			'min_kontrak' => $this->input->post('min_kontrak'),
 			'profit' => $this->input->post('persentase'),
 			'latitude' => $this->input->post('latitude'),
 			'longitude' => $this->input->post('longitude'),
 			 );
-		// print_r($komoditas);die();
+		print_r($komoditas);die();
 		if ($this->input->post('pilihan') == 'tahunan') {
 			$side = array('id_komoditas'=>$id_komoditas,'panjang'=>$this->input->post('panjang'),'lebar'=>$this->input->post('lebar'));
 			$this->Komoditas->insert($komoditas,$side,'tahunan');
