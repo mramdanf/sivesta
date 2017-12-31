@@ -76,6 +76,12 @@
                   <input type="text" class="form-control" name="nama_kelompok" id="double" placeholder="Nama Kelompok">
                 </div>
                 <div class="form-group">
+                  <input type="text" class="form-control" name="username" placeholder="Username Petani">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" name="password"  placeholder="Password Petani">
+                </div>
+                <div class="form-group">
                   <input type="text" class="form-control" name="nama_pj" id="double-pj" placeholder="Nama Penanggung Jawab">
                 </div>
                 <div class="form-group">
