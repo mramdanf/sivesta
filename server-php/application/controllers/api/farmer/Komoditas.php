@@ -18,7 +18,7 @@ class Komoditas extends CI_Controller {
 	public function add()
 	{
 		$post = $this->input->post();
-
+		
 		$res_add = $this->m_komoditas->add($post);
 
 		if ($res_add)

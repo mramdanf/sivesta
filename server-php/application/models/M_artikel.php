@@ -23,6 +23,11 @@ class M_artikel extends CI_Model {
 		return $articles;
 	}
 
+	public function insert($object)
+	{
+		$this->db->insert('tb_artikel', $object);
+	}
+
 	public function view_artikel($id_artikel)
 	{
 		return $this->db->get_where('tb_artikel', array('id_artikel'=>$id_artikel))->row_array();
