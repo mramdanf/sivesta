@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 
 /**
  * Created by Ramdan Firdaus on 3/12/2017.
@@ -44,8 +47,9 @@ public class Utility {
     public static Funder getFunderPrefs(Context c) {
         SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
         Funder f = new Funder(c);
-        f.setUsername(prfs.getString(AppConst.PRF_TAG_EMAIL, ""));
+        f.setEmail(prfs.getString(AppConst.PRF_TAG_EMAIL, ""));
         f.setPassword(prfs.getString(AppConst.PRF_TAG_PASS, ""));
+        f.setIdFunder(prfs.getString(AppConst.PRF_TAG_IDFUNDER, ""));
         return f;
     }
 
@@ -61,6 +65,7 @@ public class Utility {
         SharedPreferences.Editor editor = prfs.edit();
         editor.putString(AppConst.PRF_TAG_EMAIL, f.getEmail());
         editor.putString(AppConst.PRF_TAG_PASS, f.getPassword());
+        editor.putString(AppConst.PRF_TAG_IDFUNDER, f.getIdFunder());
         editor.apply();
     }
 
@@ -76,5 +81,19 @@ public class Utility {
             }
         }
         return s;
+    }
+
+    public static String formRupiah(int value) {
+        double harga = value;
+
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(harga);
     }
 }

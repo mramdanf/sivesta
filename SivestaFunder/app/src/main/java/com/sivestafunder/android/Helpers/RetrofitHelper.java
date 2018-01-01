@@ -5,6 +5,7 @@ import android.util.Base64;
 import com.sivestafunder.android.ApiEndPoint.ArtikelEndPoint;
 import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
 import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
+import com.sivestafunder.android.ApiEndPoint.KontrakEndPoint;
 
 import java.io.IOException;
 
@@ -30,6 +31,11 @@ public class RetrofitHelper {
     public FunderEndPoint getFunderServiceNoAuth() {
         final Retrofit retrofit = retrofitNoAuth();
         return retrofit.create(FunderEndPoint.class);
+    }
+
+    public KontrakEndPoint getKontrakService(String email, String password) {
+        final Retrofit retrofit = createRetrofit(email, password);
+        return retrofit.create(KontrakEndPoint.class);
     }
 
     public KomoditasEndPoint getKomoditasService(String uname, String pass) {

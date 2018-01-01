@@ -39,6 +39,8 @@ public class Funder implements Parcelable {
     private Context mContext;
     @SerializedName("profile_image_url")
     private String profilePic;
+    @SerializedName("id_funders")
+    private String idFunder;
 
     public String getName() {
         return name;
@@ -96,6 +98,14 @@ public class Funder implements Parcelable {
         this.profilePic = profilePic;
     }
 
+    public String getIdFunder() {
+        return idFunder;
+    }
+
+    public void setIdFunder(String idFunder) {
+        this.idFunder = idFunder;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,6 +120,7 @@ public class Funder implements Parcelable {
         dest.writeString(this.username);
         dest.writeString(this.password);
         dest.writeString(this.profilePic);
+        dest.writeString(this.idFunder);
     }
 
 
@@ -121,6 +132,7 @@ public class Funder implements Parcelable {
         this.username = in.readString();
         this.password = in.readString();
         this.profilePic = in.readString();
+        this.idFunder = in.readString();
     }
 
     public static final Creator<Funder> CREATOR = new Creator<Funder>() {

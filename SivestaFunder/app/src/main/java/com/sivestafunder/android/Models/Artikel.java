@@ -32,6 +32,10 @@ public class Artikel implements Parcelable {
     private String tglPosting;
     @SerializedName("img_url")
     private String imgArtikel;
+    @SerializedName("web_view_url")
+    private String webViewUrl;
+    @SerializedName("konten")
+    private String fullContent;
 
     public String getIdArtikel() {
         return idArtikel;
@@ -81,6 +85,22 @@ public class Artikel implements Parcelable {
         this.imgArtikel = imgArtikel;
     }
 
+    public String getWebViewUrl() {
+        return webViewUrl;
+    }
+
+    public void setWebViewUrl(String webViewUrl) {
+        this.webViewUrl = webViewUrl;
+    }
+
+    public String getFullContent() {
+        return fullContent;
+    }
+
+    public void setFullContent(String fullContent) {
+        this.fullContent = fullContent;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -94,6 +114,8 @@ public class Artikel implements Parcelable {
         dest.writeString(this.penulis);
         dest.writeString(this.tglPosting);
         dest.writeString(this.imgArtikel);
+        dest.writeString(this.webViewUrl);
+        dest.writeString(this.fullContent);
     }
 
     public Artikel() {
@@ -106,6 +128,8 @@ public class Artikel implements Parcelable {
         this.penulis = in.readString();
         this.tglPosting = in.readString();
         this.imgArtikel = in.readString();
+        this.webViewUrl = in.readString();
+        this.fullContent = in.readString();
     }
 
     public static final Creator<Artikel> CREATOR = new Creator<Artikel>() {

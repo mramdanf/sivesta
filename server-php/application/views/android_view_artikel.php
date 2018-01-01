@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="<?=base_url('app_assets/css/style.css')?>">
 </head>
 <body>
-	<div class="container">
-		<p><?=$artikel['konten']?></p>
+	<div class="container article">
+		<?=$artikel['konten']?>
 	</div>
 </body>
 </html>
