@@ -37,7 +37,7 @@
                   ?>
                   <tr>
                   <td><?php echo $i;?></td>
-                  <td><?php echo $key->nama;?></td>
+                  <td><?php echo $key->nama_petani;?></td>
                   <td><?php echo $key->nama_funders;?></td>
                   <td><?php echo $key->biaya_total;?></td>
                   <td><?php echo $key->jumlah;?></td>

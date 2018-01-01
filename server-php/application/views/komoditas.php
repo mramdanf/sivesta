@@ -22,6 +22,10 @@
                            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
                            </a>
                            <p style="text-align: center;"><?php echo $key->nama; ?></p>
+                           <span class="text-center" style="padding-right: 10px;padding-left: 10px;">
+                              <a href="" class="btn btn-sm btn-danger pull-left">Delete</a>
+                              <a href="" class="btn btn-sm btn-info pull-right">Update</a>
+                           </span>
                         </div>
                         <?php
                      }?>

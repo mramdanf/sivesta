@@ -175,7 +175,21 @@ function utPetaniId()
 	
 	return $new_id;
 }
+function utArtikelId()
+{
+	$ci =& get_instance();
+	$last_id = $ci->db
+	            ->select('MAX(id_artikel) last_id')
+	            ->get('tb_artikel')
+	            ->row_array();
 
+	$last_id = $last_id['last_id'];
+	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
+	$new_id = str_pad($new_id, 4, '0', STR_PAD_LEFT);
+	$new_id = 'A'.$new_id;
+	
+	return $new_id;
+}
 function utPrintResponse($http_code, $tag, $data)
 {
 	$response = array(
