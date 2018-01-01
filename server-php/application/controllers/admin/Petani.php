@@ -30,7 +30,7 @@ class Petani extends CI_Controller {
 		
 		$id_petani = utPetaniId();
 		// echo $this->input->post('nama');die();
-		$petani = array('id_petani'=>$id_petani,'kontak' => $this->input->post('kontak'),'alamat' => $this->input->post('alamat') );
+		$petani = array('id_petani'=>$id_petani,'kontak' => $this->input->post('kontak'),'alamat' => $this->input->post('alamat'),'username'=>$this->input->post('username'),'password'=>md5($this->input->post('password')) );
 		// print_r($petani);die();
 		$this->Petani->insert($petani);
 		if ($this->input->post('optionsRadios') == 'Kelompok') {

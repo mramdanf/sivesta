@@ -45,6 +45,19 @@
             </span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url();?>admin/Investasi">
+            <i class="fa fa-th"></i> <span>Investasi</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">new</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url();?>api/funder/Artikel">
+            <i class="fa fa-th"></i> <span>Artikel</span>
+          </a>
+        </li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>
     </section>
