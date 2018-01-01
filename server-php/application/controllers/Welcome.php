@@ -18,11 +18,26 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	function __construct() {
+		parent::__construct();
+		date_default_timezone_set("Asia/Jakarta");
+		$this->load->model('admin/Petani_m','Petani');
+		$this->load->model('admin/Komoditas_m','Komoditas');
+		$this->load->model('admin/Investasi_m','Investasi');
+		$this->load->model('M_funder','Funders');
+		$this->load->helper('utility_helper');
+	}
+
 	public function index()
 	{
+		$data['investasi'] = $this->Investasi->getData()->num_rows();
+		$data['petani'] = $this->Petani->get_union()->num_rows();
+		$data['komoditas'] = $this->Komoditas->get_union()->num_rows();
+		$data['funder'] = $this->Funders->getData()->num_rows();
 		$this->load->view('header');
 		$this->load->view('sidebar');
-		$this->load->view('welcome_message');
+		$this->load->view('welcome_message',$data);
 		$this->load->view('footer');
 	}
 }

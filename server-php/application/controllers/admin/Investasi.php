@@ -14,9 +14,9 @@ class Investasi extends CI_Controller {
 	
 	public function index()
 	{
-		$data['investasi'] = $this->Investasi->getData();
+		$data['investasi'] = $this->Investasi->getData()->result();
 		// $data['komoditas'] = $this->Komoditas->get_union()->result();
-		print_r($data);die();
+		// print_r($data);die();
 		$this->load->view('header');
 		$this->load->view('sidebar');
 		$this->load->view('investasi',$data);
