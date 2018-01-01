@@ -182,9 +182,18 @@ class M_komoditas extends CI_Model {
 		{
 			$kom[$key]['img_url'] = base_url('app_assets/img/komoditas').'/'.$k['image'];
 			$kom[$key]['format_rupiah'] = utFormatRupiah($k['harga']);
+			$kom[$key]['planted'] = "Planted 100 supported by 10 people";
+
 		}
 
 		return $kom;
+	}
+
+	public function get_kom_byid($id_komoditas)
+	{
+		return $this->db
+		            ->get_where('tb_komoditas', array('id_komoditas'=>$id_komoditas))
+		            ->row_array();
 	}
 
 }

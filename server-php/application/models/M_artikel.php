@@ -18,6 +18,7 @@ class M_artikel extends CI_Model {
 			$articles[$key]['tgl_posting_text'] = date('M d, Y', strtotime($art['tgl_posting']));
 			$articles[$key]['img_url'] = base_url('app_assets/img/artikel').'/'.$art['image'];
 			$articles[$key]['content_strip'] = strip_tags($art['konten']);
+			$articles[$key]['web_view_url'] = base_url('api/funder/artikel/artikel_webview').'/'.$art['id_artikel'];
 		}
 
 		return $articles;

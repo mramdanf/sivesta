@@ -2,12 +2,17 @@
 <resources>
     <color name="colorPrimary">#388E3C</color>
     <color name="colorPrimaryDark">#2E7D32</color>
-    <color name="colorAccent">#ecee27</color>
+    <color name="colorAccent">#ffffff</color>
 
 
     <color name="white">#fff</color>
     <color name="grey">#787575</color>
     <color name="grey_2">#efefef</color>
+    <color name="black">#000</color>
+    <color name="black_muda">#5e5e5e</color>
+
+    <!-- icon color flaticon -->
+    <color name="flat_icon">#333333</color>
 
 
 </resources>

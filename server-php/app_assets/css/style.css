@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html, body {
-	padding: 10px 5px;
+	padding: 10px 0;
 	font-family: 'Roboto', sans-serif;
+}
+.article p {
+	text-align: justify;
+}
+@media (max-width: 400px) {
+	.container {
+		padding-right: 0px;
+		padding-left: 0px;
+	}
 }

@@ -2,6 +2,7 @@ package com.sivestafunder.android.Fragmets;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.sivestafunder.android.Activity.KomoditasDetailActivity;
+import com.sivestafunder.android.Activity.NewsDetailActivity;
 import com.sivestafunder.android.Adapters.ListArtikelAdapter;
 import com.sivestafunder.android.Adapters.ListKomoditasAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
@@ -35,12 +38,13 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements
-        RecyclerItemClickListener.OnItemClickListener {
+public class HomeFragment extends Fragment {
 
     private Context mContext;
     private ListKomoditasAdapter listKomoditasAdapter;
     private ListArtikelAdapter listArtikelAdapter;
+    private List<Artikel> mArtikelList;
+    private List<Komoditas> mKomoditasList;
 
     @BindView(R.id.rec_home_kom)
     RecyclerView recyclerKomoditas;
@@ -90,16 +94,6 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void onItemClick(View childView, int position) {
-
-    }
-
-    @Override
-    public void onItemLongPress(View childView, int position) {
-
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -126,7 +120,19 @@ public class HomeFragment extends Fragment implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         recyclerKomoditas.setLayoutManager(layoutManager);
         recyclerKomoditas.setItemAnimator(new DefaultItemAnimator());
-        recyclerKomoditas.addOnItemTouchListener(new RecyclerItemClickListener(mContext, this));
+        recyclerKomoditas.addOnItemTouchListener(new RecyclerItemClickListener(mContext, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View childView, int position) {
+                Intent i = new Intent(getActivity(), KomoditasDetailActivity.class);
+                i.putExtra(AppConst.OBJ_KOMODITAS, mKomoditasList.get(position));
+                startActivity(i);
+            }
+
+            @Override
+            public void onItemLongPress(View childView, int position) {
+
+            }
+        }));
         recyclerKomoditas.setAdapter(listKomoditasAdapter);
     }
 
@@ -134,7 +140,19 @@ public class HomeFragment extends Fragment implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
         recyclerArticles.setLayoutManager(layoutManager);
         recyclerArticles.setItemAnimator(new DefaultItemAnimator());
-        recyclerArticles.addOnItemTouchListener(new RecyclerItemClickListener(mContext, this));
+        recyclerArticles.addOnItemTouchListener(new RecyclerItemClickListener(mContext, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View childView, int position) {
+                Intent i = new Intent(getActivity(), NewsDetailActivity.class);
+                i.putExtra(AppConst.OBJ_FUNDER, mArtikelList.get(position));
+                startActivity(i);
+            }
+
+            @Override
+            public void onItemLongPress(View childView, int position) {
+
+            }
+        }));
         recyclerArticles.setAdapter(listArtikelAdapter);
     }
 
@@ -142,8 +160,8 @@ public class HomeFragment extends Fragment implements
         loaderPopSeed.setVisibility(View.GONE);
         wrapperPopSeed.setVisibility(View.VISIBLE);
 
-        List<Komoditas> komoditasList = lk.getKomoditasList();
-        listKomoditasAdapter = new ListKomoditasAdapter(komoditasList, mContext, true);
+        mKomoditasList = lk.getKomoditasList();
+        listKomoditasAdapter = new ListKomoditasAdapter(mKomoditasList, mContext, true);
         setUpRVPopKomoditas();
     }
 
@@ -151,8 +169,8 @@ public class HomeFragment extends Fragment implements
         loaderArticles.setVisibility(View.GONE);
         wrapperArtikel.setVisibility(View.VISIBLE);
 
-        List<Artikel> artikelList = la.getArtikelList();
-        listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
+        mArtikelList = la.getArtikelList();
+        listArtikelAdapter = new ListArtikelAdapter(mArtikelList, mContext);
         setUpRVArticles();
     }
 }

@@ -20,13 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.LoginActivity"/>
+        <activity android:name=".Activity.LoginActivity" />
         <activity
             android:name=".Activity.MainActivity"
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
+        <activity
+            android:name=".Activity.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.NewsDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.KomoditasDetailActivity"
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
+        <activity android:name=".Activity.SimulationActivity" />
+        <activity android:name=".Activity.InvestNowActivity"></activity>
     </application>
 
 </manifest>

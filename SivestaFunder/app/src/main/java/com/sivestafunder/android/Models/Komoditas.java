@@ -114,6 +114,38 @@ public class Komoditas implements Parcelable {
         this.hargaText = hargaText;
     }
 
+    public int getMinKontrak() {
+        return minKontrak;
+    }
+
+    public void setMinKontrak(int minKontrak) {
+        this.minKontrak = minKontrak;
+    }
+
+    public float getProfit() {
+        return profit;
+    }
+
+    public void setProfit(float profit) {
+        this.profit = profit;
+    }
+
+    public String getPlanted() {
+        return planted;
+    }
+
+    public void setPlanted(String planted) {
+        this.planted = planted;
+    }
+
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
+
     private String nama;
     private int harga;
     @SerializedName("stock")
@@ -129,6 +161,12 @@ public class Komoditas implements Parcelable {
     private String imgUrl;
     @SerializedName("format_rupiah")
     private String hargaText;
+    @SerializedName("min_kontrak")
+    private int minKontrak;
+    private float profit;
+    private String planted;
+    @SerializedName("deskripsi")
+    private String deskripsi;
 
 
     @Override
@@ -150,6 +188,10 @@ public class Komoditas implements Parcelable {
         dest.writeString(this.idKomoditas);
         dest.writeString(this.imgUrl);
         dest.writeString(this.hargaText);
+        dest.writeFloat(this.profit);
+        dest.writeInt(this.minKontrak);
+        dest.writeString(this.planted);
+        dest.writeString(this.deskripsi);
     }
 
     public String getImgUrl() {
@@ -173,6 +215,10 @@ public class Komoditas implements Parcelable {
         this.idKomoditas = in.readString();
         this.imgUrl = in.readString();
         this.hargaText = in.readString();
+        this.profit = in.readFloat();
+        this.minKontrak = in.readInt();
+        this.planted = in.readString();
+        this.deskripsi = in.readString();
     }
 
     public static final Creator<Komoditas> CREATOR = new Creator<Komoditas>() {
