@@ -24,6 +24,10 @@ class M_artikel extends CI_Model {
 		return $articles;
 	}
 
+	public function delete($value='')
+	{
+		$this->db->delete('tb_artikel',$value);
+	}
 	public function insert($object)
 	{
 		$this->db->insert('tb_artikel', $object);

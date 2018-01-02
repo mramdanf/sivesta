@@ -28,6 +28,12 @@ class Komoditas extends CI_Controller {
 		$this->load->view('addKomoditas',$data);
 		$this->load->view('footer');
 	}
+	public function delete($value,$kategori)
+	{
+		// echo $value;
+		$this->Komoditas->delete($value,$kategori);
+		redirect('admin/Komoditas','refresh');
+	}
 	public function add($value='')
 	{
 		// echo $this->input->post('id_petani');die();
@@ -59,7 +65,7 @@ class Komoditas extends CI_Controller {
 			'latitude' => $this->input->post('latitude'),
 			'longitude' => $this->input->post('longitude'),
 			 );
-		print_r($komoditas);die();
+		// print_r($komoditas);die();
 		if ($this->input->post('pilihan') == 'tahunan') {
 			$side = array('id_komoditas'=>$id_komoditas,'panjang'=>$this->input->post('panjang'),'lebar'=>$this->input->post('lebar'));
 			$this->Komoditas->insert($komoditas,$side,'tahunan');

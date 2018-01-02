@@ -27,6 +27,12 @@ class Artikel extends CI_Controller {
 		$this->load->view('addArtikel');
 		$this->load->view('footer');
 	}
+	public function delete($value='')
+	{
+		$where = array('id_artikel'=>$value);
+		$this->m_artikel->delete($where);
+		redirect('api/funder/Artikel','refresh');
+	}
 	public function add($value='')
 	{
 		$image = 'default.png';
