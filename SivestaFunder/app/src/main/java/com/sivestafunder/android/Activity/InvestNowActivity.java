@@ -107,10 +107,13 @@ public class InvestNowActivity extends AppCompatActivity {
     public void onInvSubmitInvestClicked() {
         Kontrak kontrak = new Kontrak();
 
-        kontrak.setIdKomoditas(mKomoditas.getIdKomoditas());
-        kontrak.setIdFunder(mFunder.getIdFunder());
-        kontrak.setStatusPembayaran(1); // blm bayar
+        kontrak.setKomoditas(mKomoditas);
+        kontrak.setFunder(mFunder);
+        kontrak.setStatusKontrak(1); // blm bayar
         kontrak.setBiayaTotal(countJmlItem * mKomoditas.getHarga());
+
+        /*Gson gson = new Gson();
+        Log.d(this.getClass().getSimpleName(), "json: " + gson.toJson(kontrak));*/
 
         mProgressDialog.show();
         new Kontrak().createKontrakApi(
@@ -119,7 +122,7 @@ public class InvestNowActivity extends AppCompatActivity {
                 mFunder.getPassword(),
                 new Kontrak.KontrakModelInf() {
                     @Override
-                    public void createKontrakApiCallback(Bundle args) {
+                    public void kontrakModelInfCallback(Bundle args) {
                         mProgressDialog.dismiss();
                         Kontrak resKontrak = args.getParcelable(AppConst.OBJ_KONTRAK);
                         if (resKontrak != null) {

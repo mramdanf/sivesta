@@ -1,20 +1,15 @@
 package com.sivestafunder.android.Models;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-import com.sivestafunder.android.Activity.LoginActivity;
-import com.sivestafunder.android.Activity.MainActivity;
 import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 import com.sivestafunder.android.Helpers.Utility;
-import com.sivestafunder.android.R;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -36,12 +31,12 @@ public class Funder implements Parcelable {
     private String email;
     private String username;
     private String password;
-    private Context mContext;
     @SerializedName("profile_image_url")
     private String profilePic;
     @SerializedName("id_funders")
     private String idFunder;
 
+    /* ============= SETTER GETTRE =================== */
     public String getName() {
         return name;
     }
@@ -106,6 +101,7 @@ public class Funder implements Parcelable {
         this.idFunder = idFunder;
     }
 
+    /* ====================== PARSCALABLE =========================== */
     @Override
     public int describeContents() {
         return 0;
@@ -123,7 +119,6 @@ public class Funder implements Parcelable {
         dest.writeString(this.idFunder);
     }
 
-
     protected Funder(Parcel in) {
         this.name = in.readString();
         this.alamat = in.readString();
@@ -133,6 +128,10 @@ public class Funder implements Parcelable {
         this.password = in.readString();
         this.profilePic = in.readString();
         this.idFunder = in.readString();
+    }
+
+    public Funder(Context context) {
+        this.mContext = context;
     }
 
     public static final Creator<Funder> CREATOR = new Creator<Funder>() {
@@ -147,12 +146,11 @@ public class Funder implements Parcelable {
         }
     };
 
-    /* Interfacing */
-    private FunderModelInf mCallback;
 
-    public Funder(Context context) {
-        this.mContext = context;
-    }
+    /* ===================== Interfacing ============================ */
+    private transient Context mContext;
+
+    private transient FunderModelInf mCallback;
 
     public interface FunderModelInf {
         void checkLoginApiCallback(Bundle args);

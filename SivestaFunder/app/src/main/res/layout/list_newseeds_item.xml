@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/medium_top_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ns_img"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="@dimen/small_margin"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/ns_nama_kom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontPath="@string/alegreya_sans_bold"
+                tools:ignore="MissingPrefix"
+                android:layout_marginBottom="7dp"
+                android:text="Peluang di Circular Economy"/>
+
+            <TextView
+                android:id="@+id/ns_order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:drawableRight="@drawable/jam_red_48"
+                android:gravity="center_vertical"
+                android:drawablePadding="3dp"
+                android:text="Payment Pendng"/>
+
+            <TextView
+                android:id="@+id/ns_order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/cal_spring"
+                android:drawablePadding="3dp"
+                android:text="Ordered : 10 Dec, 2017"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

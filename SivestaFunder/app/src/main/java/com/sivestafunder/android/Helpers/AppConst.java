@@ -15,6 +15,7 @@ public interface AppConst {
     String VIEW_ID = "view_id";
     String LIST_OBJ_KOMODITAS = "list_obj_komoditas";
     String LIST_OBJ_ARTIKEL = "list_obj_artikel";
+    String LIST_OBJ_KONTRAK = "list_obj_kontrak";
     String TAG_MSG = "tag_msg";
     String TAG_SUCCESS = "tag_success";
     String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";

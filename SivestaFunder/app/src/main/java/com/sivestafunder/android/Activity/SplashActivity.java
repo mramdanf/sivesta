@@ -10,21 +10,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-import com.sivestafunder.android.ApiEndPoint.FunderEndPoint;
 import com.sivestafunder.android.Helpers.AppConst;
-import com.sivestafunder.android.Helpers.RetrofitHelper;
 import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class SplashActivity extends AppCompatActivity {

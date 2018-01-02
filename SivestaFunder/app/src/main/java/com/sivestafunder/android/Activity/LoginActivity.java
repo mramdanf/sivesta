@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity implements
                             public void checkLoginApiCallback(Bundle args) {
                                 String msg = args.getString(AppConst.TAG_MSG);
                                 if (msg.equals(AppConst.TAG_SUCCESS)) {
-                                   CreateAccountFragment ca = (CreateAccountFragment) getSupportFragmentManager()
-                                           .findFragmentById(R.id.login_container);
+                                    CreateAccountFragment ca = (CreateAccountFragment) getSupportFragmentManager()
+                                            .findFragmentById(R.id.login_container);
                                     ca.showCreateAccountResult(mFunder);
                                 }
                             }

@@ -10,6 +10,7 @@
     <color name="grey_2">#efefef</color>
     <color name="black">#000</color>
     <color name="black_muda">#5e5e5e</color>
+    <color name="red">#ff0000</color>
 
     <!-- icon color flaticon -->
     <color name="flat_icon">#333333</color>

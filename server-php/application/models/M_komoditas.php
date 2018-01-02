@@ -191,9 +191,12 @@ class M_komoditas extends CI_Model {
 
 	public function get_kom_byid($id_komoditas)
 	{
-		return $this->db
+		$komoditas = $this->db
 		            ->get_where('tb_komoditas', array('id_komoditas'=>$id_komoditas))
 		            ->row_array();
+		
+		$komoditas['img_url'] = base_url('app_assets/img/komoditas/'.$komoditas['image']);
+		return $komoditas;
 	}
 
 }
