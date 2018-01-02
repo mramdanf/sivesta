@@ -13,6 +13,10 @@ class M_funder extends CI_Model {
 
 		return $res;
 	}
+	public function getData()
+	{
+		return $this->db->get('tb_funders');
+	}
 
 	public function create_account($post)
 	{

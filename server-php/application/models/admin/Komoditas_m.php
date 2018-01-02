@@ -22,6 +22,20 @@ class Komoditas_m extends CI_Model {
 			ORDER BY id_komoditas DESC';
 		return $this->db->query($query);
 	}
+	public function delete($value,$kategori)
+	{
+		$where = array('id_komoditas'=>$value);
+		$this->db->delete('tb_penanaman',$where);
+		if ($kategori == 'Perenial') {
+			$this->db->delete('tb_komoditas_perenial',$where);
+			echo "asd";
+		}else{
+			$this->db->delete('tb_komoditas_tahunan',$where);
+			echo "string";
+		}
+		$this->db->delete('tb_komoditas',$where);
+
+	}
 	function simpanPenanaman($array)
 	{
 		$this->db->insert('tb_penanaman', $array);
