@@ -19,7 +19,7 @@
                         ?>
                         <div class="col-lg-3 col-md-3 col-xs-6">
                            <a href="#" class="d-block mb-4 h-100">
-                           <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                           <img class="img-fluid img-thumbnail" style="height: 160px;" src="<?php echo base_url('app_assets/img/komoditas/'.$key->image);?>" alt="">
                            </a>
                            <p style="text-align: center;"><?php echo $key->nama; ?></p>
                            <span class="text-center" style="padding-right: 10px;padding-left: 10px;">

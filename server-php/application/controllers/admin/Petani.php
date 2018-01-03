@@ -7,6 +7,7 @@ class Petani extends CI_Controller {
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('admin/Petani_m','Petani');
+		$this->load->model('admin/Komoditas_m','Komoditas');
 		$this->load->helper('utility_helper');
 	}
 	
@@ -24,6 +25,20 @@ class Petani extends CI_Controller {
 		$this->load->view('sidebar');
 		$this->load->view('addPetani');
 		$this->load->view('footer');
+	}
+	public function delete($id,$kategori)
+	{
+		$find_in_komoditas = $this->Komoditas->getKomoditas_petani($id)->num_rows();
+		if ($find_in_komoditas == 0) {
+			$where =  array('id_petani'=>$id);
+			$this->Petani->delete($where,$kategori);
+			// redirect('admin/Petani','refresh');
+		}else{
+			$this->session->set_flashdata('info', '<div class="alert alert-danger">Petani masih memiliki kmoditas.</div>');
+			// redirect('admin/Petani','refresh');
+		}
+		// die();
+		redirect('admin/Petani','refresh');
 	}
 	public function insert($value='')
 	{

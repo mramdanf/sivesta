@@ -21,6 +21,15 @@ class Petani_m extends CI_Model {
 		$this->db->insert('tb_petani_perorangan', $data);
    		// return $this->db->insert_id();
 	}
+	public function delete($where,$kategori)
+	{
+		if ($kategori == 'Perorangan') {
+			$this->db->delete('tb_petani_perorangan',$where);
+		}else{
+			$this->db->delete('tb_petani_kelompok',$where);
+		}
+		$this->db->where('tb_petani', $where);
+	}
 	function get_union($value='')
 	{
 		$query = 'SELECT tb_petani.* , tb_petani_perorangan.nama as name, "Perorangan" as kategori FROM `tb_petani` inner JOIN `tb_petani_perorangan` ON tb_petani_perorangan.id_petani = tb_petani.id_petani
