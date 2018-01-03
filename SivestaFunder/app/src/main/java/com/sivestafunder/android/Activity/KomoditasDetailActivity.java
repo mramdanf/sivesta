@@ -83,7 +83,7 @@ public class KomoditasDetailActivity extends AppCompatActivity {
         /*Kontrak kontrak = new Kontrak();
         kontrak.setIdKomoditas(mKomoditas.getIdKomoditas());
         kontrak.setIdFunder(mFunder.getIdFunder());
-        kontrak.setStatusPembayaran(1); // blm bayar
+        kontrak.setStatusKontrak(1); // blm bayar
         kontrak.setBiayaTotal(1000000);
         new Kontrak().createKontrakApi(
                 kontrak,
@@ -91,7 +91,7 @@ public class KomoditasDetailActivity extends AppCompatActivity {
                 mFunder.getPassword(),
                 new Kontrak.KontrakModelInf() {
                     @Override
-                    public void createKontrakApiCallback(Bundle args) {
+                    public void kontrakModelInfCallback(Bundle args) {
                         String msg = args.getString(AppConst.TAG_MSG);
                         Log.d(KomoditasDetailActivity.class.getSimpleName(), "tag msg: " + msg);
                     }

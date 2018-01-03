@@ -7,3 +7,7 @@ ALTER TABLE `tb_kontrak` ADD `virtual_account` VARCHAR(100) NULL;
 # Change enum for status_pembayaran
 # 1=belum bayar, 2=assign_surveyor
 ALTER TABLE `tb_kontrak` CHANGE `status_kontrak` `status_kontrak` ENUM('1','2') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+# Add enum for status_pembayaran
+ALTER TABLE `tb_kontrak` CHANGE `status_kontrak` `status_kontrak` ENUM('1','2','3') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `tb_kontrak` CHANGE `status_kontrak` `status_kontrak` ENUM('1','2','3') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;

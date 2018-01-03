@@ -2,17 +2,41 @@ package com.sivestafunder.android.Fragmets;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sivestafunder.android.Adapters.ListNewSeedsAdapter;
+import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
+import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
+import com.sivestafunder.android.Helpers.Utility;
+import com.sivestafunder.android.Models.Funder;
+import com.sivestafunder.android.Models.Kontrak;
 import com.sivestafunder.android.R;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewSeedFragment extends Fragment {
+public class NewSeedFragment extends Fragment implements
+    RecyclerItemClickListener.OnItemClickListener {
+
+    @BindView(R.id.rec_new_seed)
+    RecyclerView recNewSeed;
+
+    private Funder mFunder;
+    private ListNewSeedsAdapter listNewSeedsAdapter;
 
 
     public NewSeedFragment() {
@@ -23,8 +47,65 @@ public class NewSeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_seed, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_new_seed, container, false);
+        ButterKnife.bind(this, rootView);
+
+        return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mFunder = Utility.getFunderPrefs(getActivity());
+        getNewSeedFromApi();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void getNewSeedFromApi() {
+        new Kontrak().getKontrakNewSeeds(
+                mFunder.getIdFunder(),
+                mFunder.getEmail(),
+                mFunder.getPassword(),
+                new Kontrak.KontrakModelInf() {
+                    @Override
+                    public void kontrakModelInfCallback(Bundle args) {
+                        ListNewSeeds listNewSeeds = args.getParcelable(AppConst.LIST_OBJ_KONTRAK);
+                        if (listNewSeeds != null) {
+                            Log.d(NewSeedFragment.class.getSimpleName(), "size: " + listNewSeeds.getKontrakList().size());
+                            List<Kontrak> kontrakList = listNewSeeds.getKontrakList();
+                            Log.d(NewSeedFragment.class.getSimpleName(), "kontrak: " + String.valueOf(kontrakList.get(0).getTglMulaiKontrak()));
+                            listNewSeedsAdapter = new ListNewSeedsAdapter(kontrakList, getActivity());
+                            setUpRecyclerView();
+                        } else {
+                            Log.d(NewSeedFragment.class.getSimpleName(), "no new seeds");
+                        }
+
+
+                    }
+                });
+    }
+
+    private void setUpRecyclerView() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recNewSeed.setLayoutManager(layoutManager);
+        recNewSeed.setItemAnimator(new DefaultItemAnimator());
+        recNewSeed.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
+        recNewSeed.setAdapter(listNewSeedsAdapter);
+    }
+
+    @Override
+    public void onItemClick(View childView, int position) {
+
+    }
+
+    @Override
+    public void onItemLongPress(View childView, int position) {
+
+    }
 }

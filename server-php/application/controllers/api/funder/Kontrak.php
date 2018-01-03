@@ -35,6 +35,39 @@ class Kontrak extends CI_Controller {
 		
 	}
 
+	public function kontrak_new_seeds()
+	{
+		$id_funder = $this->input->get('id_funders');
+		$this->load->model('M_komoditas');
+		$res = $this->M_kontrak->m_kontrak_newseeds($id_funder);
+
+		if ($res)
+		{
+
+			foreach ($res as $key => $value) 
+			{
+				$res[$key]['komoditas'] = $this->M_komoditas->get_kom_byid($value['id_komoditas']);
+			}
+
+			$response['status']       = TRUE;
+			$response['list_kontrak'] = $res;
+
+			utPrintJson($response, 200);
+		}
+		else 
+		{
+			$res['status'] = FALSE;
+			$res['msg']    = 'Terjadi error, tidak dapat mengambil data new seeds';
+
+			utPrintJson($res, 500);
+		}
+	}
+
+	private function plog($data)
+	{
+		log_message('error', print_r($data, true));
+	}
+
 }
 
 /* End of file Kontrak.php */

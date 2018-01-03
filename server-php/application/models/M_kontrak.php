@@ -9,31 +9,34 @@ class M_kontrak extends CI_Model {
 		
 	}
 
-	/*
-	(
-	    [id_funder] => F00001
-	    [id_komoditas] => K00001
-	    [biaya_total] => 2608000
-	    [status_pembayaran] => 1
-	)
-	*/
 	public function m_create($kontrak)
 	{
 		$this->load->model('M_komoditas');
 
-		$komoditas   = $this->M_komoditas->get_kom_byid($kontrak['id_komoditas']);
-		$min_kontrak = $komoditas['min_kontrak'];
+		$min_kontrak = $kontrak['komoditas']['min_kontrak'];
 
-		$kontrak['tgl_mulai_kontrak'] = date('Y-m-d');
-		$kontrak['tgl_kadaluarsa']    = date('Y-m-d', strtotime(' + '.$min_kontrak.' years'));
-		$kontrak['virtual_account']   = mt_rand();
-		$kontrak['id_petani']         = NULL;
+		$in_kontrak['tgl_mulai_kontrak'] = date('Y-m-d');
+		$in_kontrak['tgl_kadaluarsa']    = date('Y-m-d', strtotime(' + '.$min_kontrak.' years'));
+		$in_kontrak['virtual_account']   = mt_rand();
+		$in_kontrak['id_petani']         = NULL;
+		$in_kontrak['id_funders']        = $kontrak['funder']['id_funders'];
+		$in_kontrak['id_komoditas']      = $kontrak['komoditas']['id_komoditas'];
+		$in_kontrak['status_kontrak']    = $kontrak['status_kontrak'];
+		$in_kontrak['biaya_total']       = $kontrak['biaya_total'];
 
-		$this->db->trans_start();
-		$res = $this->db->insert('tb_kontrak', $kontrak);
-		$this->db->trans_complete();
+		$res = $this->db->insert('tb_kontrak', $in_kontrak);
 
 		return ($res) ? $kontrak : FALSE;
+	}
+
+	public function m_kontrak_newseeds($id_funder)
+	{
+		$res = $this->db
+		            ->where('status_kontrak = 1 OR status_kontrak = 2')
+		            ->where('id_funders', $id_funder)
+		            ->get('tb_kontrak')
+		            ->result_array();
+		return $res;
 	}
 
 	private function plog($data)

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.sivestafunder.android.ApiEndPoint.KontrakEndPoint;
+import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 
@@ -25,14 +26,12 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class Kontrak implements Parcelable {
-    @SerializedName("id_komoditas")
-    private String idKomoditas;
-    @SerializedName("id_funders")
-    private String idFunder;
+    private Komoditas komoditas;
+    private Funder funder;
     @SerializedName("wkt_mulai")
     private Timestamp waktuMulai;
     @SerializedName("status_kontrak")
-    private int statusPembayaran;
+    private int statusKontrak;
     @SerializedName("tgl_kadaluarsa")
     private Date tglKadaluarsa;
     @SerializedName("tgl_mulai_kontrak")
@@ -43,20 +42,21 @@ public class Kontrak implements Parcelable {
     private String virtualAccount;
     private String msg;
 
-    public String getIdKomoditas() {
-        return idKomoditas;
+    /* ============================ SETTER GETTER ========================*/
+    public Komoditas getKomoditas() {
+        return komoditas;
     }
 
-    public void setIdKomoditas(String idKomoditas) {
-        this.idKomoditas = idKomoditas;
+    public void setKomoditas(Komoditas komoditas) {
+        this.komoditas = komoditas;
     }
 
-    public String getIdFunder() {
-        return idFunder;
+    public Funder getFunder() {
+        return funder;
     }
 
-    public void setIdFunder(String idFunder) {
-        this.idFunder = idFunder;
+    public void setFunder(Funder funder) {
+        this.funder = funder;
     }
 
     public Timestamp getWaktuMulai() {
@@ -67,12 +67,12 @@ public class Kontrak implements Parcelable {
         this.waktuMulai = waktuMulai;
     }
 
-    public int getStatusPembayaran() {
-        return statusPembayaran;
+    public int getStatusKontrak() {
+        return statusKontrak;
     }
 
-    public void setStatusPembayaran(int statusPembayaran) {
-        this.statusPembayaran = statusPembayaran;
+    public void setStatusKontrak(int statusKontrak) {
+        this.statusKontrak = statusKontrak;
     }
 
     public Date getTglKadaluarsa() {
@@ -115,6 +115,7 @@ public class Kontrak implements Parcelable {
         this.msg = msg;
     }
 
+    /* ============================ PARSCALABLE ========================*/
     @Override
     public int describeContents() {
         return 0;
@@ -122,10 +123,10 @@ public class Kontrak implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.idKomoditas);
-        dest.writeString(this.idFunder);
+        dest.writeParcelable(this.komoditas, flags);
+        dest.writeParcelable(this.funder, flags);
         dest.writeSerializable(this.waktuMulai);
-        dest.writeInt(this.statusPembayaran);
+        dest.writeInt(this.statusKontrak);
         dest.writeLong(this.tglKadaluarsa != null ? this.tglKadaluarsa.getTime() : -1);
         dest.writeLong(this.tglMulaiKontrak != null ? this.tglMulaiKontrak.getTime() : -1);
         dest.writeInt(this.biayaTotal);
@@ -137,10 +138,10 @@ public class Kontrak implements Parcelable {
     }
 
     protected Kontrak(Parcel in) {
-        this.idKomoditas = in.readString();
-        this.idFunder = in.readString();
+        this.komoditas = in.readParcelable(Komoditas.class.getClassLoader());
+        this.funder = in.readParcelable(Funder.class.getClassLoader());
         this.waktuMulai = (Timestamp) in.readSerializable();
-        this.statusPembayaran = in.readInt();
+        this.statusKontrak = in.readInt();
         long tmpTglKadaluarsa = in.readLong();
         this.tglKadaluarsa = tmpTglKadaluarsa == -1 ? null : new Date(tmpTglKadaluarsa);
         long tmpTglMulaiKontrak = in.readLong();
@@ -162,10 +163,12 @@ public class Kontrak implements Parcelable {
         }
     };
 
-    private KontrakModelInf mCallback;
+    /* ============================ INTERFACING ========================*/
+
+    private transient KontrakModelInf mCallback;
 
     public interface KontrakModelInf {
-        void createKontrakApiCallback(Bundle args);
+        void kontrakModelInfCallback(Bundle args);
     }
 
     public void createKontrakApi(Kontrak kontrak, String email, String password, KontrakModelInf ki) {
@@ -187,7 +190,7 @@ public class Kontrak implements Parcelable {
                         Bundle args = new Bundle();
                         args.putParcelable(AppConst.OBJ_KONTRAK, resKontrak);
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
-                        mCallback.createKontrakApiCallback(args);
+                        mCallback.kontrakModelInfCallback(args);
                     }
 
                     @Override
@@ -195,7 +198,7 @@ public class Kontrak implements Parcelable {
                         e.printStackTrace();
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, e.getMessage());
-                        mCallback.createKontrakApiCallback(args);
+                        mCallback.kontrakModelInfCallback(args);
                     }
 
                     @Override
@@ -204,4 +207,43 @@ public class Kontrak implements Parcelable {
                     }
                 });
     }
+
+    public void getKontrakNewSeeds(String idFunder, String email, String password, KontrakModelInf ki) {
+        Log.d(this.getClass().getSimpleName(), "id funder: " + idFunder);
+        mCallback = ki;
+        KontrakEndPoint kontrakService = new RetrofitHelper()
+                .getKontrakService(email, password);
+        Observable<ListNewSeeds> getListNewSeeds = kontrakService.getKontrakNewSeedsService(idFunder);
+        getListNewSeeds
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListNewSeeds>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListNewSeeds listNewSeeds) {
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        args.putParcelable(AppConst.LIST_OBJ_KONTRAK, listNewSeeds);
+                        mCallback.kontrakModelInfCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.kontrakModelInfCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 }

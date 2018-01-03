@@ -234,7 +234,7 @@ public class Komoditas implements Parcelable {
     };
 
     /* Interfacing */
-    private KomoditasModelInf mCallback;
+    private transient KomoditasModelInf mCallback;
 
     public interface KomoditasModelInf {
         void getPopularKomoditasCallback(Bundle args);
