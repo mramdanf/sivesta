@@ -26,6 +26,11 @@ class M_funder extends CI_Model {
 
 		return $res;
 	}
+
+	public function update_account($post)
+	{
+		return $this->db->update('tb_funders', $post);
+	}
 	
 
 }

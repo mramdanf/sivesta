@@ -208,12 +208,15 @@ public class Kontrak implements Parcelable {
                 });
     }
 
-    public void getKontrakNewSeeds(String idFunder, String email, String password, KontrakModelInf ki) {
-        Log.d(this.getClass().getSimpleName(), "id funder: " + idFunder);
+    public void getKontrakMySeeds(String idFunder, String email, String password,
+                                  String filter, KontrakModelInf ki) {
         mCallback = ki;
         KontrakEndPoint kontrakService = new RetrofitHelper()
                 .getKontrakService(email, password);
-        Observable<ListNewSeeds> getListNewSeeds = kontrakService.getKontrakNewSeedsService(idFunder);
+        Observable<ListNewSeeds> getListNewSeeds = kontrakService.getKontrakNewSeedsService(
+                idFunder,
+                filter
+        );
         getListNewSeeds
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

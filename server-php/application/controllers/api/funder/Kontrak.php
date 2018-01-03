@@ -35,15 +35,13 @@ class Kontrak extends CI_Controller {
 		
 	}
 
-	public function kontrak_new_seeds()
+	public function kontrak_my_seeds()
 	{
-		$id_funder = $this->input->get('id_funders');
 		$this->load->model('M_komoditas');
-		$res = $this->M_kontrak->m_kontrak_newseeds($id_funder);
+		$res = $this->M_kontrak->m_kontrak_newseeds($this->input->get());
 
-		if ($res)
+		if (count($res) >= 0)
 		{
-
 			foreach ($res as $key => $value) 
 			{
 				$res[$key]['komoditas'] = $this->M_komoditas->get_kom_byid($value['id_komoditas']);
@@ -66,6 +64,22 @@ class Kontrak extends CI_Controller {
 	private function plog($data)
 	{
 		log_message('error', print_r($data, true));
+	}
+
+	function utLKontrakId()
+	{
+		$ci =& get_instance();
+		$last_id = $ci->db
+		            ->select('MAX(id_kontrak) last_id')
+		            ->get('tb_kontrak')
+		            ->row_array();
+
+		$last_id = $last_id['last_id'];
+		$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
+		$new_id = str_pad($new_id, 5, '0', STR_PAD_LEFT);
+		$new_id = 'KN'.$new_id;
+		
+		echo $new_id;
 	}
 
 }

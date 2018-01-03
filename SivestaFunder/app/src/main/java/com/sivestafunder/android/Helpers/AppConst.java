@@ -20,7 +20,7 @@ public interface AppConst {
     String TAG_SUCCESS = "tag_success";
     String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";
     String BASE_URL_DEV = "http://192.168.1.7/sivesta/server-php/api/funder/";
-//    String BASE_URL_DEV = "http://10.99.226.213/sivesta/server-php/api/funder/";
+//    String BASE_URL_DEV = "http://10.99.226.171/sivesta/server-php/api/funder/";
 //    String BASE_URL_DEV = "http://172.20.35.26/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
 }

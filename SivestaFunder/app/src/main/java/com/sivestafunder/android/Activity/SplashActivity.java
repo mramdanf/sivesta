@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TabHost;
 
 
 import com.sivestafunder.android.Helpers.AppConst;
@@ -20,6 +22,8 @@ import java.util.TimerTask;
 
 
 public class SplashActivity extends AppCompatActivity {
+
+    private final String LOG_TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +43,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Funder savedFunder = Utility.getFunderPrefs(SplashActivity.this);
-                if (savedFunder.getUsername() != null && !savedFunder.getUsername().equals("")) {
+                Log.d(LOG_TAG, "RUN");
+                if (savedFunder.getEmail() != null && !savedFunder.getEmail().equals("")) {
                     Funder f = new Funder(SplashActivity.this);
                     f.checkLoginApi(
-                            savedFunder.getUsername(),
+                            savedFunder.getEmail(),
                             savedFunder.getPassword(),
                             new Funder.FunderModelInf() {
                                 @Override
-                                public void checkLoginApiCallback(Bundle args) {
+                                public void funderModelApiCallback(Bundle args) {
                                     Funder funderFromApi = args.getParcelable(AppConst.OBJ_FUNDER);
                                     if (args.getString(AppConst.TAG_MSG).equals(AppConst.TAG_SUCCESS)) {
                                         Intent i = new Intent(SplashActivity.this, MainActivity.class);
@@ -54,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                                         startActivity(i);
                                         finish();
                                     }else {
+                                        Log.d(LOG_TAG, "login failed");
                                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                                         finish();
                                     }
@@ -62,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
                     );
 
                 } else {
+                    Log.d(LOG_TAG, "no saved");
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 }

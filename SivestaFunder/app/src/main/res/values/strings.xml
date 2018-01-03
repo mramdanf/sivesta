@@ -5,11 +5,18 @@
     <string name="login_tex">Login</string>
     <string name="please_wait_tex">Please wait..</string>
     <string name="login_failed_tex">Login gagal, username atau password salah.</string>
+    <string name="choose_filter">Choose Filter</string>
 
     <string-array name="komoditas_type">
         <item>Jenis Komoditas</item>
         <item>Komoditas Perenial</item>
         <item>Komoditas Tahunan</item>
+    </string-array>
+
+    <string-array name="filter_myseeds">
+        <item>New Seeds</item>
+        <item>In Progress</item>
+        <item>Harvest</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

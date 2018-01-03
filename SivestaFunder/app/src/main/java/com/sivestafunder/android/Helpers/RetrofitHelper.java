@@ -67,7 +67,6 @@ public class RetrofitHelper {
 
                 Request.Builder requestBuilder = original.newBuilder()
                         .header("Authorization", basic)
-                        .header("Accept", "application/json")
                         .method(original.method(), original.body());
 
                 Request request = requestBuilder.build();

@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="5dp"
+    android:paddingRight="7dp"
+    android:paddingLeft="7dp"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+    <Spinner
+        android:id="@+id/spinner_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:tabGravity="fill"
-        app:tabTextColor="#FFF"
-        app:tabSelectedTextColor="@color/colorAccent"
-        />
+        android:layout_marginBottom="8dp"
+        android:entries="@array/filter_myseeds"
+        android:prompt="@string/choose_filter"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_my_seeds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

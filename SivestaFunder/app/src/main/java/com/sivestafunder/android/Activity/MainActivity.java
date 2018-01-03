@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.design.internal.BottomNavigationItemView;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,14 +21,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.sivestafunder.android.ApiEndPoint.ArtikelEndPoint;
 import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
 import com.sivestafunder.android.Fragmets.ArticleFragment;
 import com.sivestafunder.android.Fragmets.CatalogFragment;
 import com.sivestafunder.android.Fragmets.HomeFragment;
@@ -35,31 +34,24 @@ import com.sivestafunder.android.Fragmets.MySeedsFragment;
 import com.sivestafunder.android.Fragmets.ProfileFragment;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.CircleTransform;
-import com.sivestafunder.android.Helpers.RetrofitHelper;
-import com.sivestafunder.android.Helpers.RoundedTransformation;
-import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Artikel;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.Models.Komoditas;
+import com.sivestafunder.android.Models.Kontrak;
 import com.sivestafunder.android.R;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements
         HomeFragment.HomeFragmentInf,
         BottomNavigationView.OnNavigationItemSelectedListener,
         ArticleFragment.ArticleFragmentInf,
-        CatalogFragment.CataglogFragmentInf {
+        CatalogFragment.CataglogFragmentInf,
+        MySeedsFragment.MySeedsFragmentInf {
 
     private ProgressDialog mProgressDialog;
     private KomoditasEndPoint mKomoditasService;
@@ -107,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbarLayout.setTitle(mCollapsingTitle);
                     isShow = true;
-                } else if(isShow) {
+                } else if (isShow) {
                     collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
@@ -138,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onNavigationItemSelected(@android.support.annotation.NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Bundle args = new Bundle();
         switch (item.getItemId()) {
             case R.id.act_home:
@@ -155,8 +147,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.act_profile:
                 ProfileFragment pf = new ProfileFragment();
-                args.putParcelable(AppConst.OBJ_FUNDER, mLoggedInFunder);
-                pf.setArguments(args);
                 setUpFragment(pf, false);
                 break;
         }
@@ -218,6 +208,25 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void reqListMySeeds(String filter) {
+        new Kontrak().getKontrakMySeeds(
+                mLoggedInFunder.getIdFunder(),
+                mLoggedInFunder.getEmail(),
+                mLoggedInFunder.getPassword(),
+                filter,
+                new Kontrak.KontrakModelInf() {
+                    @Override
+                    public void kontrakModelInfCallback(Bundle args) {
+                        ListNewSeeds myseeds = args.getParcelable(AppConst.LIST_OBJ_KONTRAK);
+                        MySeedsFragment mf = (MySeedsFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.fragment_container);
+                        mf.showMySeedsList(myseeds);
+                    }
+                }
+        );
+    }
+
+    @Override
     public void homeFragmentClickListener(Bundle args) {
         int viewId = args.getInt(AppConst.VIEW_ID);
         switch (viewId) {
@@ -247,10 +256,22 @@ public class MainActivity extends AppCompatActivity implements
         );
     }
 
-    @OnClick(R.id.btn_logout) public void doLogout() {
+    @OnClick(R.id.btn_logout)
+    public void doLogout() {
         new Funder(this).logout();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 2) {
+
+            ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_container);
+            pf.populateUserData();
+        }
     }
 
     private void setUpFragment(Fragment f, boolean addToBack) {
@@ -267,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements
             toggleBtnProfile(1);
             mCollapsingTitle = "My Profile";
         }
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
+        FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         fragmentTransaction.replace(R.id.fragment_container, f);
@@ -315,4 +336,8 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    @OnClick(R.id.btn_edit_profile)
+    public void onViewClicked() {
+        startActivityForResult(new Intent(this, EditProfileActivity.class), 2);
+    }
 }
