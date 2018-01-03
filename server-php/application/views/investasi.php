@@ -30,6 +30,7 @@
                   <th>Total Investasi</th>
                   <th>Waktu Kontrak</th>
                   <th>Status</th>
+                  <th>Opsi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,9 @@
                   <td><?php echo $key->biaya_total;?></td>
                   <td><?php echo date("d M Y",strtotime($key->tgl_mulai_kontrak))." s/d ".date("d M Y",strtotime($key->tgl_kadaluarsa));?></td>
                   <td><?php if($key->status_pembayaran == 'true'){echo "<span class='text-success'>Sudah dibayar</span>";}else{echo "<span class='text-danger'>Belum dibayar</span>";}?></td>
+                  <td>
+                    <a  href="<?php echo base_url('admin/Investasi/progress/'.$key->id_kontrak);?>" class="btn btn-sm btn-danger">Update Progress</a>
+                  </td>
                 </tr>
                   <?php $i++;
                 }
@@ -56,6 +60,7 @@
                   <th>Total Investasi</th>
                   <th>Waktu Kontrak</th>
                   <th>Status</th>
+                  <th>Opsi</th>
                 </tr>
                 </tfoot>
               </table>
@@ -68,4 +73,26 @@
             </section>
             <!-- /.content -->
          </div>
+         <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Apakah anda yakin untuk menghapus salah Petani ?
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok" id="btn-delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+      $('#confirm-delete').on('show.bs.modal', function(e) {
+        console.log($(e.relatedTarget).data('href'));
+          $(this).find('#btn-delete').attr('href', $(e.relatedTarget).data('href'));
+      });
+    </script>
         

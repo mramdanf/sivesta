@@ -9,6 +9,7 @@ class Investasi extends CI_Controller {
 		$this->load->model('admin/Petani_m','Petani');
 		$this->load->model('admin/Komoditas_m','Komoditas');
 		$this->load->model('admin/Investasi_m','Investasi');
+		$this->load->model('admin/Progress_investasi_m','ProgressInvestasi');
 		$this->load->helper('utility_helper');
 	}
 	
@@ -29,6 +30,35 @@ class Investasi extends CI_Controller {
 		$this->load->view('sidebar');
 		$this->load->view('addKomoditas',$data);
 		$this->load->view('footer');
+	}
+	public function progress($value='')
+	{
+		$data['investasi'] = $this->Investasi->getById($value)->result_array()[0];
+		$data['progress'] = $this->ProgressInvestasi->getById($value);
+		// print_r($data);die();
+		$this->load->view('header');
+		$this->load->view('sidebar');
+		$this->load->view('progressPenanaman',$data);
+		$this->load->view('footer');
+	}
+	public function updateProgress($value='')
+	{
+		$config['upload_path'] = 'app_assets/img/progres';
+        $config['allowed_types'] = 'png|jpg|jpeg';
+        // load library upload
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('image')) {
+            $error = $this->upload->display_errors();
+            echo $error;
+        	$image = 'default.png';
+        } else {
+            $result = $this->upload->data();
+            $image = $result['orig_name'];
+        }
+		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'));
+		// print_r($progress);die();
+		$this->ProgressInvestasi->insert($progress);
+		redirect('admin/Investasi','refresh');
 	}
 	public function add($value='')
 	{
