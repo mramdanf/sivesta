@@ -44,9 +44,9 @@ class M_komoditas extends CI_Model {
 		// Insert to table penanaman
 		$penanaman['id_petani'] = $data['id_petani'];
 		$penanaman['id_komoditas'] = $komoditas['id_komoditas'];
-		$in_penanaman = $this->db->insert('tb_penanaman', $penanaman);
+		// $in_penanaman = $this->db->insert('tb_penanaman', $penanaman);
 
-		return $in_komoditas && $in_sub_komoditas && $in_penanaman;
+		return $in_komoditas && $in_sub_komoditas;
 
 	}
 

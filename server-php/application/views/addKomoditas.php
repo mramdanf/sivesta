@@ -118,7 +118,7 @@
           </div>
           <script>
                 console.log(navigator.userAgent);
-                $("#test1").inputmask({ 'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'placeholder': 'HARGA 10.000', rightAlign : false,clearMaskOnLostFocus: !1 });
+                $("#test1").inputmask({ 'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'placeholder': 'Rp. ', rightAlign : false,clearMaskOnLostFocus: !1 });
               </script>
               <script>
               $(document).ready(function(){
@@ -178,46 +178,13 @@
               <div class="row">
                 
 <script>
-  var long = 0;
-  var lat = 0;
-  navigator.geolocation.getCurrentPosition(showPosition);
-  function showPosition(position) {
-     
-     long = position.coords.latitude;
-     lat = position.coords.longitude;
-     $('#longitude').val(long)
-    $('#latitude').val(lat)
-
-  }
   function getharga() {
                     var string = $("#test1").val();
                     console.log('string : ',string)
                     console.log(string.replace(/,/g , ""));
                     $('#harga').val(string)
                   }
-    $('#somecomponent').locationpicker({
-      location: {
-            latitude: lat,
-            longitude: long
-        },
-        radius: 300,
-        inputBinding: {
-            latitudeInput: $('#us3-lat'),
-            longitudeInput: $('#us3-lon'),
-            radiusInput: $('#us3-radius'),
-            locationNameInput: $('#us3-address')
-        },
-        enableAutocomplete: true,
-        autocompleteOptions: {
-            types: ['(cities)'],
-            componentRestrictions: {country: 'fr'}
-        },
-        onchanged: function (currentLocation, radius, isMarkerDropped) {
-            $('#longitude').val(currentLocation.longitude)
-            $('#latitude').val(currentLocation.latitude)
-            alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-        }
-        });
+    
 </script>
                 <!-- ./col -->
               </div>

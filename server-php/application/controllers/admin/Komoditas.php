@@ -62,8 +62,9 @@ class Komoditas extends CI_Controller {
 			'deskripsi' => $this->input->post('deskripsi'),
 			'min_kontrak' => $this->input->post('min_kontrak'),
 			'profit' => $this->input->post('persentase'),
-			'latitude' => $this->input->post('latitude'),
-			'longitude' => $this->input->post('longitude'),
+			'id_petani'=>$this->input->post('id_petani')
+			// 'latitude' => $this->input->post('latitude'),
+			// 'longitude' => $this->input->post('longitude'),
 			 );
 		// print_r($komoditas);die();
 		if ($this->input->post('pilihan') == 'tahunan') {
@@ -73,8 +74,7 @@ class Komoditas extends CI_Controller {
 			$side = array('id_komoditas'=>$id_komoditas,'jumlah_phon'=>$this->input->post('jumlah'));
 			$this->Komoditas->insert($komoditas,$side,'perenial');
 		}
-		$penanaman = array('id_petani'=>$this->input->post('id_petani'),'id_komoditas'=>$id_komoditas);
-		$this->Komoditas->simpanPenanaman($penanaman);
+		// $penanaman = array('id_petani'=>$this->input->post('id_petani'),'id_komoditas'=>$id_komoditas);
 		redirect('admin/Komoditas','refresh');
 	}
 }
