@@ -2,13 +2,14 @@ package com.sivestafunder.android.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,14 +17,8 @@ import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.Models.Komoditas;
-import com.sivestafunder.android.Models.Kontrak;
 import com.sivestafunder.android.R;
 import com.squareup.picasso.Picasso;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,11 +49,16 @@ public class KomoditasDetailActivity extends AppCompatActivity {
     TextView tvKdPlanted;
     @BindView(R.id.kd_kom_detail)
     TextView tvKdDeskripsi;
+    @BindView(R.id.btn_invest_now)
+    Button btnInvestNow;
+    @BindView(R.id.btn_go_simulation)
+    FloatingActionButton btnGoSimulation;
 
 
     private Komoditas mKomoditas;
     private String mCollapsingTitle;
     private Funder mFunder;
+    private String intentSrc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,15 @@ public class KomoditasDetailActivity extends AppCompatActivity {
         mFunder = Utility.getFunderPrefs(this);
         populateKomoditasData();
 
+        if (i.hasExtra(AppConst.TAG_INTENT_SRC)) { // Intent cme from myseeds
+            btnInvestNow.setVisibility(View.GONE);
+            btnGoSimulation.setVisibility(View.GONE);
+        } else {
+            btnInvestNow.setVisibility(View.VISIBLE);
+            btnGoSimulation.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     @Override
@@ -79,24 +88,8 @@ public class KomoditasDetailActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @OnClick(R.id.btn_invest_now) public void btnInvestNowClickHandle(View v) {
-        /*Kontrak kontrak = new Kontrak();
-        kontrak.setIdKomoditas(mKomoditas.getIdKomoditas());
-        kontrak.setIdFunder(mFunder.getIdFunder());
-        kontrak.setStatusKontrak(1); // blm bayar
-        kontrak.setBiayaTotal(1000000);
-        new Kontrak().createKontrakApi(
-                kontrak,
-                mFunder.getEmail(),
-                mFunder.getPassword(),
-                new Kontrak.KontrakModelInf() {
-                    @Override
-                    public void kontrakModelInfCallback(Bundle args) {
-                        String msg = args.getString(AppConst.TAG_MSG);
-                        Log.d(KomoditasDetailActivity.class.getSimpleName(), "tag msg: " + msg);
-                    }
-                }
-        );*/
+    @OnClick(R.id.btn_invest_now)
+    public void btnInvestNowClickHandle(View v) {
         Intent i = new Intent(KomoditasDetailActivity.this, InvestNowActivity.class);
         i.putExtra(AppConst.OBJ_KOMODITAS, mKomoditas);
         startActivity(i);
@@ -104,7 +97,8 @@ public class KomoditasDetailActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.btn_go_simulation) public void btnGoSimulationClickHandle(View v) {
+    @OnClick(R.id.btn_go_simulation)
+    public void btnGoSimulationClickHandle(View v) {
         Intent i = new Intent(KomoditasDetailActivity.this, SimulationActivity.class);
         i.putExtra(AppConst.OBJ_KOMODITAS, mKomoditas);
         startActivity(i);

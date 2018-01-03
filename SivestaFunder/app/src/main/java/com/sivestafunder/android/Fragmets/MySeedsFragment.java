@@ -3,9 +3,11 @@ package com.sivestafunder.android.Fragmets;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Adapters.ListMySeedsAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
+import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
 import com.sivestafunder.android.Models.Kontrak;
 import com.sivestafunder.android.R;
@@ -81,7 +85,10 @@ public class MySeedsFragment extends Fragment implements
 
     @Override
     public void onItemClick(View childView, int position) {
-
+        Intent intent = new Intent(getActivity(), KomoditasDetailActivity.class);
+        intent.putExtra(AppConst.OBJ_KOMODITAS, kontrakList.get(position).getKomoditas());
+        intent.putExtra(AppConst.TAG_INTENT_SRC, this.getClass().getSimpleName());
+        startActivity(intent);
     }
 
     @Override
