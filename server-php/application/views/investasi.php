@@ -36,6 +36,15 @@
                 <tbody>
                 <?php $i = 1;
                 foreach ($investasi as $key) {
+                  // if ($key->status_kontrak == 1) {
+                  //   $status = 'Payment Pending';
+                  // }else if (condition) {
+                  //   $status = 'Assigning Surveyor';
+                  // }else if (condition) {
+                  //   $status = 'In Progress';
+                  // }else{
+                  //   $status = 'Harvested';
+                  // }
                   ?>
                   <tr>
                   <td><?php echo $i;?></td>

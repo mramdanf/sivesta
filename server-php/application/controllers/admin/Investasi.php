@@ -35,6 +35,8 @@ class Investasi extends CI_Controller {
 	{
 		$data['investasi'] = $this->Investasi->getById($value)->result_array()[0];
 		$data['progress'] = $this->ProgressInvestasi->getById($value);
+		// $where['id_funder'] = $value;
+		// $data['funder'] = $this->M_funder->get_details($where);
 		// print_r($data);die();
 		$this->load->view('header');
 		$this->load->view('sidebar');

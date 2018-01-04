@@ -132,7 +132,7 @@
                     ?>
                     <li class="item">
                       <div class="product-img">
-                        <img src="<?php echo base_url('app_assets/img/komoditas/'.$key->image);?>" alt="Product Image">
+                        <img src="<?php echo base_url('app_assets/img/progres/'.$key->image);?>" alt="Product Image">
                       </div>
                       <div class="product-info">
                         <span class="product-description">
