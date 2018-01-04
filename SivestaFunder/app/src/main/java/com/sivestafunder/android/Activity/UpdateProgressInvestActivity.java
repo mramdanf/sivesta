@@ -1,5 +1,6 @@
 package com.sivestafunder.android.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UpdateProgressInvestActivity extends AppCompatActivity implements
         RecyclerItemClickListener.OnItemClickListener {
@@ -109,5 +112,15 @@ public class UpdateProgressInvestActivity extends AppCompatActivity implements
     @Override
     public void onItemLongPress(View childView, int position) {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @OnClick(R.id.btn_progress_selesai)
+    public void onViewClicked() {
+        finish();
     }
 }
