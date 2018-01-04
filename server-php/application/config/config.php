@@ -23,9 +23,9 @@
 |
 */
 // $config['base_url'] = 'http://localhost/sivesta/server-php/';
-$config['base_url'] = 'http://10.99.226.56/sivesta/server-php/';
-// $config['base_url'] = 'http://172.20.35.26/sivesta/server-php/';
-// $config['base_url'] = 'http://192.168.1.7/sivesta/server-php/';
+// $config['base_url'] = 'http://10.99.226.56/sivesta/server-php/';
+$config['base_url'] = 'http://172.20.35.127/sivesta/server-php/';
+// $config['base_url'] = 'http://192.168.1.127/sivesta/server-php/';
 
 
 /*

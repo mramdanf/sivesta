@@ -20,11 +20,13 @@ class M_kontrak extends CI_Model {
 		$in_kontrak['tgl_mulai_kontrak'] = date('Y-m-d');
 		$in_kontrak['tgl_kadaluarsa']    = date('Y-m-d', strtotime(' + '.$min_kontrak.' years'));
 		$in_kontrak['virtual_account']   = mt_rand();
-		$in_kontrak['id_petani']         = NULL;
 		$in_kontrak['id_funders']        = $kontrak['funder']['id_funders'];
 		$in_kontrak['id_komoditas']      = $kontrak['komoditas']['id_komoditas'];
 		$in_kontrak['status_kontrak']    = $kontrak['status_kontrak'];
 		$in_kontrak['biaya_total']       = $kontrak['biaya_total'];
+		$in_kontrak['jumlah_benih']      = $kontrak['jumlah_benih'];
+
+		$this->plog($in_kontrak);
 
 		$res = $this->db->insert('tb_kontrak', $in_kontrak);
 
@@ -48,6 +50,19 @@ class M_kontrak extends CI_Model {
 		            ->get('tb_kontrak')
 		            ->result_array();
 
+		return $res;
+	}
+
+	public function m_progres_investasi($id_kontrak)
+	{
+		$res = $this->db
+		            ->get_where('tb_progres_investasi', array('id_kontrak'=>$id_kontrak))
+		            ->result_array();
+		
+		foreach ($res as $key => $value) 
+		{
+			$res[$key]['img_url'] = base_url('app_assets/img/progress_invest/'.$value['image']);
+		}
 		return $res;
 	}
 

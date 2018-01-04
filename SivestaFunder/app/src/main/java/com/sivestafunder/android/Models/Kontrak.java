@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.sivestafunder.android.ApiEndPoint.KontrakEndPoint;
 import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
+import com.sivestafunder.android.ApiRespWrapper.ListProgressResp;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 
@@ -40,7 +41,11 @@ public class Kontrak implements Parcelable {
     private int biayaTotal;
     @SerializedName("virtual_account")
     private String virtualAccount;
+    @SerializedName("jumlah_benih")
+    private int jmlBenih;
     private String msg;
+    @SerializedName("id_kontrak")
+    private String idKontrak;
 
     /* ============================ SETTER GETTER ========================*/
     public Komoditas getKomoditas() {
@@ -115,6 +120,22 @@ public class Kontrak implements Parcelable {
         this.msg = msg;
     }
 
+    public int getJmlBenih() {
+        return jmlBenih;
+    }
+
+    public void setJmlBenih(int jmlBenih) {
+        this.jmlBenih = jmlBenih;
+    }
+
+    public String getIdKontrak() {
+        return idKontrak;
+    }
+
+    public void setIdKontrak(String idKontrak) {
+        this.idKontrak = idKontrak;
+    }
+
     /* ============================ PARSCALABLE ========================*/
     @Override
     public int describeContents() {
@@ -132,6 +153,8 @@ public class Kontrak implements Parcelable {
         dest.writeInt(this.biayaTotal);
         dest.writeString(this.virtualAccount);
         dest.writeString(this.msg);
+        dest.writeInt(this.jmlBenih);
+        dest.writeString(this.idKontrak);
     }
 
     public Kontrak() {
@@ -149,6 +172,8 @@ public class Kontrak implements Parcelable {
         this.biayaTotal = in.readInt();
         this.virtualAccount = in.readString();
         this.msg = in.readString();
+        this.jmlBenih = in.readInt();
+        this.idKontrak = in.readString();
     }
 
     public static final Creator<Kontrak> CREATOR = new Creator<Kontrak>() {
@@ -231,6 +256,47 @@ public class Kontrak implements Parcelable {
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
                         args.putParcelable(AppConst.LIST_OBJ_KONTRAK, listNewSeeds);
+                        mCallback.kontrakModelInfCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.kontrakModelInfCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void getProgressKontrak(Kontrak kontrak, String email, String password,
+                                   KontrakModelInf ki) {
+        mCallback = ki;
+        KontrakEndPoint kontrakService = new RetrofitHelper()
+                .getKontrakService(email, password);
+
+        Observable<ListProgressResp> listProgress = kontrakService.getProgresKontrakService(
+                kontrak.getIdKontrak()
+        );
+        listProgress
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListProgressResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListProgressResp listProgressResp) {
+                        Bundle args = new Bundle();
+                        args.putParcelable(AppConst.LIST_OBJ_PROGRESS, listProgressResp);
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
                         mCallback.kontrakModelInfCallback(args);
                     }
 

@@ -111,6 +111,7 @@ public class InvestNowActivity extends AppCompatActivity {
         kontrak.setFunder(mFunder);
         kontrak.setStatusKontrak(1); // blm bayar
         kontrak.setBiayaTotal(countJmlItem * mKomoditas.getHarga());
+        kontrak.setJmlBenih(countJmlItem);
 
         /*Gson gson = new Gson();
         Log.d(this.getClass().getSimpleName(), "json: " + gson.toJson(kontrak));*/
