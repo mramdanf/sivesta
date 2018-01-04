@@ -36,15 +36,15 @@
                 <tbody>
                 <?php $i = 1;
                 foreach ($investasi as $key) {
-                  // if ($key->status_kontrak == 1) {
-                  //   $status = 'Payment Pending';
-                  // }else if (condition) {
-                  //   $status = 'Assigning Surveyor';
-                  // }else if (condition) {
-                  //   $status = 'In Progress';
-                  // }else{
-                  //   $status = 'Harvested';
-                  // }
+                  if ($key->status_kontrak == 1) {
+                    $status = 'Payment Pending';
+                  }else if (condition) {
+                    $status = 'Assigning Surveyor';
+                  }else if (condition) {
+                    $status = 'In Progress';
+                  }else{
+                    $status = 'Harvested';
+                  }
                   ?>
                   <tr>
                   <td><?php echo $i;?></td>
@@ -52,7 +52,8 @@
                   <td><?php echo $key->nama_funder;?></td>
                   <td><?php echo $key->biaya_total;?></td>
                   <td><?php echo date("d M Y",strtotime($key->tgl_mulai_kontrak))." s/d ".date("d M Y",strtotime($key->tgl_kadaluarsa));?></td>
-                  <td><?php if($key->status_pembayaran == 'true'){echo "<span class='text-success'>Sudah dibayar</span>";}else{echo "<span class='text-danger'>Belum dibayar</span>";}?></td>
+                  <td><?php echo $status; ?></td>
+                  <!-- <td><?php if($key->status_pembayaran == 'true'){echo "<span class='text-success'>Sudah dibayar</span>";}else{echo "<span class='text-danger'>Belum dibayar</span>";}?></td> -->
                   <td>
                     <a  href="<?php echo base_url('admin/Investasi/progress/'.$key->id_kontrak);?>" class="btn btn-sm btn-danger">Update Progress</a>
                   </td>
