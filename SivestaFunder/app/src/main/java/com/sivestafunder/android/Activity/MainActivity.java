@@ -314,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void populateHeaderData() {
+        tvPlantedInfo.setText("You have " + mLoggedInFunder.getPlanted() + " seeds planted, " + mLoggedInFunder.getHarvestSoon() + " harvest soon");
         tvUserFullName.setText(mLoggedInFunder.getName());
         Picasso
                 .with(this)

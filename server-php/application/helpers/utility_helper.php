@@ -55,6 +55,20 @@ function utCheckFunders($email, $password)
 		$query['password'] = $password;
 		$query['profile_image_url'] 
 		 = base_url('app_assets/img/user') .'/'.$query['profile_image'];
+
+		$planted 
+			= "SELECT COUNT(id_kontrak) as jml_planted FROM tb_kontrak WHERE id_funders = '".$query['id_funders']."'";
+		$planted = $CI->db->query($planted)->row_array();
+		$planted = $planted['jml_planted'];
+
+		$harvest_soon = "SELECT COUNT(id_kontrak) jml_harvest_soon FROM tb_kontrak WHERE id_funders = '".$query['id_funders']."' and status_kontrak = 3";
+		$harvest_soon = $CI->db->query($harvest_soon)->row_array();
+		$harvest_soon = $harvest_soon['jml_harvest_soon'];
+
+		$query['planted'] = $planted;
+		$query['harvest_soon'] = $harvest_soon;
+
+
 	}
 
 	return $query;

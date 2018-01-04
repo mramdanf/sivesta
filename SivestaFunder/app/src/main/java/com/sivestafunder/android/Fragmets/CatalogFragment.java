@@ -1,6 +1,7 @@
 package com.sivestafunder.android.Fragmets;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,7 +9,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Adapters.ListKomoditasAdapter;
@@ -38,11 +38,14 @@ import butterknife.ButterKnife;
 public class CatalogFragment extends Fragment implements
         RecyclerItemClickListener.OnItemClickListener {
 
+    @BindView(R.id.swiper_catalog)
+    SwipeRefreshLayout swiperCatalog;
     private ListKomoditasGridAdapter mListKomoditasGridAdapter;
     private ListKomoditasAdapter mListKomoditasAdapter;
     private List<Komoditas> mKomoditasList;
     private Context mContext;
     private CataglogFragmentInf mCallback;
+    private ProgressDialog progressDialog;
 
     @BindView(R.id.rec_grid_kom)
     RecyclerView recGridKom;
@@ -67,6 +70,18 @@ public class CatalogFragment extends Fragment implements
 
         getActivity().setTitle("Catalog");
 
+        /*swiperCatalog.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progressDialog.show();
+                mCallback.reqFullListKomoditas();
+            }
+        });*/
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage(getString(R.string.please_wait_tex));
+        progressDialog.setCancelable(false);
+
         return rootView;
     }
 
@@ -74,6 +89,7 @@ public class CatalogFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //progressDialog.show();
         mCallback.reqFullListKomoditas();
     }
 

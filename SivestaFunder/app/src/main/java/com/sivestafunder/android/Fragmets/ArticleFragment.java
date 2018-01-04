@@ -1,12 +1,13 @@
 package com.sivestafunder.android.Fragmets;
 
 
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,13 +32,16 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class ArticleFragment extends Fragment implements
-    RecyclerItemClickListener.OnItemClickListener {
+        RecyclerItemClickListener.OnItemClickListener {
 
+    @BindView(R.id.swiper_artikel)
+    SwipeRefreshLayout swiperArtikel;
     private Context mContext;
     private ListArtikelAdapter listArtikelAdapter;
 
     private ArticleFragmentInf mCallback;
     private List<Artikel> artikelList;
+    private ProgressDialog progressDialog;
 
     @BindView(R.id.rec_article)
     RecyclerView recArticle;
@@ -63,6 +67,18 @@ public class ArticleFragment extends Fragment implements
 
         getActivity().setTitle("Articles");
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage(getString(R.string.please_wait_tex));
+        progressDialog.setCancelable(false);
+
+        swiperArtikel.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progressDialog.show();
+                mCallback.reqFullListArticle();
+            }
+        });
+
         return rootView;
     }
 
@@ -70,6 +86,7 @@ public class ArticleFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        progressDialog.show();
         mCallback.reqFullListArticle();
     }
 
@@ -95,7 +112,7 @@ public class ArticleFragment extends Fragment implements
 
     }
 
-    private void setUpRVArticles(){
+    private void setUpRVArticles() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
         recArticle.setLayoutManager(layoutManager);
         recArticle.setItemAnimator(new DefaultItemAnimator());
@@ -104,6 +121,8 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void showFullArtikel(ListArtikelResp la) {
+        progressDialog.dismiss();
+        swiperArtikel.setRefreshing(false);
         artikelList = la.getArtikelList();
         listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
         setUpRVArticles();

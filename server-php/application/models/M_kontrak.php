@@ -26,7 +26,7 @@ class M_kontrak extends CI_Model {
 		$in_kontrak['biaya_total']       = $kontrak['biaya_total'];
 		$in_kontrak['jumlah_benih']      = $kontrak['jumlah_benih'];
 
-		$this->plog($in_kontrak);
+		$kontrak['virtual_account'] = $in_kontrak['virtual_account'];
 
 		$res = $this->db->insert('tb_kontrak', $in_kontrak);
 
@@ -41,9 +41,9 @@ class M_kontrak extends CI_Model {
 		if ($filter == 'new_seeds')
 			$this->db->where('status_kontrak = 1 OR status_kontrak = 2'); // Pending, assigning
 		else if ($filter == 'in_progress')
-			$this->db->where('status_kontrak = 2'); // In Progres
+			$this->db->where('status_kontrak = 3'); // In Progres
 		else if ($filter == 'harvested')
-			$this->db->where('status_kontrak = 3'); // Harvested
+			$this->db->where('status_kontrak = 4'); // Harvested
 
 		$res = $this->db
 		            ->where('id_funders', $id_funder)

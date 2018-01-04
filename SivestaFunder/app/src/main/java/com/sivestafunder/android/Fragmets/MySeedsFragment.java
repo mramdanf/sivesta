@@ -87,13 +87,13 @@ public class MySeedsFragment extends Fragment implements
     @Override
     public void onItemClick(View childView, int position) {
         Kontrak kontrak = kontrakList.get(position);
-        if (kontrak.getStatusKontrak() == 1) {
+        if (kontrak.getStatusKontrak() == 1 || kontrak.getStatusKontrak() == 2 || kontrak.getStatusKontrak() == 4) {
             Intent intentKomDetail = new Intent(getActivity(), KomoditasDetailActivity.class);
             intentKomDetail.putExtra(AppConst.OBJ_KOMODITAS, kontrakList.get(position).getKomoditas());
             intentKomDetail.putExtra(AppConst.TAG_INTENT_SRC, this.getClass().getSimpleName());
 
             startActivity(intentKomDetail);
-        } else if (kontrak.getStatusKontrak() == 2) {
+        } else if (kontrak.getStatusKontrak() == 3) {
             Intent progressIntent = new Intent(getActivity(), UpdateProgressInvestActivity.class);
             progressIntent.putExtra(AppConst.OBJ_KONTRAK, kontrak);
             startActivity(progressIntent);
