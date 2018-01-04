@@ -22,10 +22,10 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = 'http://localhost/sivesta/server-php/';
+$config['base_url'] = 'http://localhost/sivesta/server-php/';
 // $config['base_url'] = 'http://10.99.226.213/sivesta/server-php/';
 // $config['base_url'] = 'http://172.20.35.26/sivesta/server-php/';
-$config['base_url'] = 'http://192.168.1.7/sivesta/server-php/';
+// $config['base_url'] = 'http://192.168.1.7/sivesta/server-php/';
 
 
 /*
