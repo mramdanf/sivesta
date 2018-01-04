@@ -45,7 +45,7 @@ class Investasi extends CI_Controller {
 	}
 	public function updateProgress($value='')
 	{
-		$config['upload_path'] = 'app_assets/img/progres';
+		$config['upload_path'] = 'app_assets/img/progres_invest';
         $config['allowed_types'] = 'png|jpg|jpeg';
         // load library upload
         $this->load->library('upload', $config);
