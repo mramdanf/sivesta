@@ -64,9 +64,9 @@
                 <div class="form-group">
                   <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><a href="">Rp.</a></span>
-                    <input class="form-control" onkeyup="getharga()" id="test1" placeholder="Harga Satuan" aria-describedby="basic-addon1">
+                    <input class="form-control" type="number" onkeyup="getharga()" name="harga" placeholder="Harga Satuan" aria-describedby="basic-addon1">
                   </div>
-                  <input type="hidden" name="harga"  id="harga">
+                  <!-- <input type="hidden" name="harga"  id="harga"> -->
                 </div>
                 <div class="form-group">
                   <input type="number" class="form-control" name="stock"  placeholder="Jumlah Stock">
