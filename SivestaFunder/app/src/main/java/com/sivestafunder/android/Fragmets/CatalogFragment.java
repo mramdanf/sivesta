@@ -2,11 +2,13 @@ package com.sivestafunder.android.Fragmets;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Adapters.ListKomoditasAdapter;
 import com.sivestafunder.android.Adapters.ListKomoditasGridAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
 import com.sivestafunder.android.Models.Komoditas;
 import com.sivestafunder.android.R;
 
@@ -30,7 +35,8 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CatalogFragment extends Fragment {
+public class CatalogFragment extends Fragment implements
+        RecyclerItemClickListener.OnItemClickListener {
 
     private ListKomoditasGridAdapter mListKomoditasGridAdapter;
     private ListKomoditasAdapter mListKomoditasAdapter;
@@ -81,6 +87,16 @@ public class CatalogFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onItemClick(View childView, int position) {
+
+    }
+
+    @Override
+    public void onItemLongPress(View childView, int position) {
+
+    }
+
     public void showAllKomoditas(ListKomoditasResp l) {
         mKomoditasList = l.getKomoditasList();
         mListKomoditasAdapter = new ListKomoditasAdapter(mKomoditasList, mContext, false);
@@ -88,6 +104,22 @@ public class CatalogFragment extends Fragment {
         recGridKom.setLayoutManager(mLayoutManager);
         recGridKom.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recGridKom.setItemAnimator(new DefaultItemAnimator());
+        recGridKom.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View childView, int position) {
+                        Komoditas komoditas = mKomoditasList.get(position);
+                        Intent i = new Intent(getActivity(), KomoditasDetailActivity.class);
+                        i.putExtra(AppConst.OBJ_KOMODITAS, komoditas);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onItemLongPress(View childView, int position) {
+
+                    }
+                })
+        );
         recGridKom.setAdapter(mListKomoditasAdapter);
     }
 
