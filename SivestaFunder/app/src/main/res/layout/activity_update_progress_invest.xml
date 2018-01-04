@@ -51,6 +51,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
@@ -62,7 +63,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn_invest_now"
+        android:id="@+id/btn_progress_selesai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
