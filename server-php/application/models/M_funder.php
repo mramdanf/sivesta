@@ -20,7 +20,7 @@ class M_funder extends CI_Model {
 
 	public function get_details($post)
 	{
-		$query = "SELECT COUNT(id_komoditas) as jumlah_seed, join_at as tanggal_join FROM `tb_kontrak` WHERE id_funders = '".$post['id_funders']."'";
+		$query = "SELECT *,COUNT(id_komoditas) as jumlah_seed, join_at as tanggal_join FROM `tb_kontrak` WHERE id_funders = '".$post['id_funders']."'";
 		return $this->db->queyr($query)->result_array();
 	}
 
