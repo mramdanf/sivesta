@@ -1,6 +1,10 @@
 package com.sivestafunder.android.ApiEndPoint;
 
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.ApiRespWrapper.ListSimulationResp;
+import com.sivestafunder.android.Models.Simulation;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -12,22 +16,6 @@ import retrofit2.http.Query;
 
 public interface KomoditasEndPoint {
 
-//    @FormUrlEncoded
-//    @POST("komoditas/add")
-//    Observable<ModifyResp> addKomoditasService(
-//            @Field("nama") String nama,
-//            @Field("harga") int harga,
-//            @Field("stock") int stock,
-//            @Field("lokasi") String lokasi,
-//            @Field("type") int komoditasType,
-//            @Field("jumlah_pohon") int jmlPohon,
-//            @Field("id_petani") String idPetani,
-//            @Field("latitude") double latitude,
-//            @Field("longitude") double longitude,
-//            @Field("panjang") int panjang,
-//            @Field("lebar") int lebar
-//
-//    );
 
     @GET("komoditas/get_komoditas")
     Observable<ListKomoditasResp> getPopularKomoditasService();
@@ -35,19 +23,9 @@ public interface KomoditasEndPoint {
     @GET("komoditas/get_komoditas")
     Observable<ListKomoditasResp> getAllKomoditasService();
 
-//    @FormUrlEncoded
-//    @POST("komoditas/update")
-//    Observable<ModifyResp> updateKomoditasService(
-//            @Field("nama") String nama,
-//            @Field("harga") int harga,
-//            @Field("stock") int stock,
-//            @Field("lokasi") String lokasi,
-//            @Field("type") int komoditasType,
-//            @Field("jumlah_pohon") int jmlPohon,
-//            @Field("id_komoditas") String idKomoditas,
-//            @Field("latitude") double latitude,
-//            @Field("longitude") double longitude,
-//            @Field("panjang") int panjang,
-//            @Field("lebar") int lebar
-//    );
+    @GET("komoditas/simulation")
+    Observable<ListSimulationResp> getSimulationService(
+            @Query("id_komoditas") String idKomoditas,
+            @Query("jml_komoditas") int jmlKomoditas
+    );
 }

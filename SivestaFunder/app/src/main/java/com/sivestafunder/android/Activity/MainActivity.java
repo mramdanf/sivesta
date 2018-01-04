@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements
         km.getPopularKomoditasApi(
                 new Komoditas.KomoditasModelInf() {
                     @Override
-                    public void getPopularKomoditasCallback(Bundle args) {
+                    public void komoditasModelApiCallback(Bundle args) {
                         HomeFragment hf = (HomeFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.fragment_container);
                         ListKomoditasResp respListKom = args.getParcelable(AppConst.LIST_OBJ_KOMODITAS);
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements
         fullKomoditas.getAllKomoditasApi(
                 new Komoditas.KomoditasModelInf() {
                     @Override
-                    public void getPopularKomoditasCallback(Bundle args) {
+                    public void komoditasModelApiCallback(Bundle args) {
                         CatalogFragment cf = (CatalogFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.fragment_container);
                         ListKomoditasResp respListKom = args.getParcelable(AppConst.LIST_OBJ_KOMODITAS);

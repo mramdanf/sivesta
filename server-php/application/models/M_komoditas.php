@@ -199,6 +199,50 @@ class M_komoditas extends CI_Model {
 		return $komoditas;
 	}
 
+	public function m_simulation($get)
+	{
+		$id_komoditas  = $get['id_komoditas'];
+		$jml_komoditas = $get['jml_komoditas'];
+
+		$komoditas = $this->get_kom_byid($id_komoditas);
+
+		if ($komoditas)
+		{
+			/*
+				{
+					"simulation": [
+						{
+							"year": "1",
+							"profit": "12%",
+							"net_profit": "Rp. 200.000"
+						}
+					]
+				}
+			*/
+
+			$response = array();
+			for ($i = 1; $i <= $komoditas['min_kontrak']; $i++) 
+			{ 
+				$simulation['year']            = $i;
+				$simulation['profit']          = $komoditas['profit'];
+				$simulation['harga_komoditas'] = utFormatRupiah($komoditas['harga']);
+
+				$sub_total                = ($jml_komoditas * $komoditas['harga']);
+				$simulation['net_profit'] = utFormatRupiah(($simulation['profit'] / 100) * $sub_total);
+
+				array_push($response, $simulation);
+			}
+
+			return $response;
+		}
+		else 
+		{
+			return FALSE;
+		}
+
+			
+	}
+
 }
 
 /* End of file m_komoditas.php */
