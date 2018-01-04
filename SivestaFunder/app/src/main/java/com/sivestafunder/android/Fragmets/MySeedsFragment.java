@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.sivestafunder.android.Activity.KomoditasDetailActivity;
+import com.sivestafunder.android.Activity.UpdateProgressInvestActivity;
 import com.sivestafunder.android.Adapters.ListMySeedsAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
 import com.sivestafunder.android.Helpers.AppConst;
@@ -85,10 +86,19 @@ public class MySeedsFragment extends Fragment implements
 
     @Override
     public void onItemClick(View childView, int position) {
-        Intent intent = new Intent(getActivity(), KomoditasDetailActivity.class);
-        intent.putExtra(AppConst.OBJ_KOMODITAS, kontrakList.get(position).getKomoditas());
-        intent.putExtra(AppConst.TAG_INTENT_SRC, this.getClass().getSimpleName());
-        startActivity(intent);
+        Kontrak kontrak = kontrakList.get(position);
+        if (kontrak.getStatusKontrak() == 1) {
+            Intent intentKomDetail = new Intent(getActivity(), KomoditasDetailActivity.class);
+            intentKomDetail.putExtra(AppConst.OBJ_KOMODITAS, kontrakList.get(position).getKomoditas());
+            intentKomDetail.putExtra(AppConst.TAG_INTENT_SRC, this.getClass().getSimpleName());
+
+            startActivity(intentKomDetail);
+        } else if (kontrak.getStatusKontrak() == 2) {
+            Intent progressIntent = new Intent(getActivity(), UpdateProgressInvestActivity.class);
+            progressIntent.putExtra(AppConst.OBJ_KONTRAK, kontrak);
+            startActivity(progressIntent);
+        }
+
     }
 
     @Override

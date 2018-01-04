@@ -1,6 +1,7 @@
 package com.sivestafunder.android.ApiEndPoint;
 
 import com.sivestafunder.android.ApiRespWrapper.ListNewSeeds;
+import com.sivestafunder.android.ApiRespWrapper.ListProgressResp;
 import com.sivestafunder.android.Models.Kontrak;
 import com.sivestafunder.android.Models.SimpleResp;
 
@@ -25,5 +26,10 @@ public interface KontrakEndPoint {
     Observable<ListNewSeeds> getKontrakNewSeedsService(
             @Query("id_funders") String idFunder,
             @Query("filter") String filter
+    );
+
+    @GET("kontrak/progres_investasi")
+    Observable<ListProgressResp> getProgresKontrakService(
+            @Query("id_kontrak") String idKontrak
     );
 }

@@ -72,14 +72,13 @@ public class KomoditasDetailActivity extends AppCompatActivity {
         mFunder = Utility.getFunderPrefs(this);
         populateKomoditasData();
 
-        if (i.hasExtra(AppConst.TAG_INTENT_SRC)) { // Intent cme from myseeds
+        if (i.hasExtra(AppConst.TAG_INTENT_SRC)) { // Intent come from myseeds
             btnInvestNow.setVisibility(View.GONE);
             btnGoSimulation.setVisibility(View.GONE);
         } else {
             btnInvestNow.setVisibility(View.VISIBLE);
             btnGoSimulation.setVisibility(View.VISIBLE);
         }
-
 
     }
 

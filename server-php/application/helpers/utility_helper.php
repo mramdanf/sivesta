@@ -247,7 +247,7 @@ function utLKontrakId()
 
 	$last_id = $last_id['last_id'];
 	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
-	$new_id = str_pad($new_id, 5, '0', STR_PAD_LEFT);
+	$new_id = str_pad($new_id, 3, '0', STR_PAD_LEFT);
 	$new_id = 'KN'.$new_id;
 	
 	return $new_id;
