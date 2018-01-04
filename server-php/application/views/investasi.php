@@ -38,9 +38,9 @@
                 foreach ($investasi as $key) {
                   if ($key->status_kontrak == 1) {
                     $status = 'Payment Pending';
-                  }else if (condition) {
+                  }else if ($key->status == 2) {
                     $status = 'Assigning Surveyor';
-                  }else if (condition) {
+                  }else if ($key->status == 3) {
                     $status = 'In Progress';
                   }else{
                     $status = 'Harvested';
