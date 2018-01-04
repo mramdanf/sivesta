@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements
                 new Funder(this)
                         .createAccountApi(mFunder, new Funder.FunderModelInf() {
                             @Override
-                            public void checkLoginApiCallback(Bundle args) {
+                            public void funderModelApiCallback(Bundle args) {
                                 String msg = args.getString(AppConst.TAG_MSG);
                                 if (msg.equals(AppConst.TAG_SUCCESS)) {
                                     CreateAccountFragment ca = (CreateAccountFragment) getSupportFragmentManager()
@@ -83,18 +83,12 @@ public class LoginActivity extends AppCompatActivity implements
 
     /* Funder Model - CheckLogin Callback */
     @Override
-    public void checkLoginApiCallback(Bundle args) {
-
+    public void funderModelApiCallback(Bundle args) {
         mFunder = args.getParcelable(AppConst.OBJ_FUNDER);
-        if (args.getString(AppConst.TAG_MSG).equals(AppConst.TAG_SUCCESS)) {
 
-            LoginFragment lf = (LoginFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.login_container);
-            lf.displayLoginResult(mFunder);
-
-        } else {
-            Toast.makeText(this, getString(R.string.login_failed_tex), Toast.LENGTH_SHORT).show();
-        }
+        LoginFragment lf = (LoginFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.login_container);
+        lf.displayLoginResult(mFunder);
     }
 
     private void setUpFragment(Fragment f) {

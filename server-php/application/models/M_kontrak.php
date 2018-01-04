@@ -11,10 +11,12 @@ class M_kontrak extends CI_Model {
 
 	public function m_create($kontrak)
 	{
+		$this->load->helper('utility_helper');
 		$this->load->model('M_komoditas');
 
 		$min_kontrak = $kontrak['komoditas']['min_kontrak'];
 
+		$in_kontrak['id_kontrak']        = utLKontrakId();
 		$in_kontrak['tgl_mulai_kontrak'] = date('Y-m-d');
 		$in_kontrak['tgl_kadaluarsa']    = date('Y-m-d', strtotime(' + '.$min_kontrak.' years'));
 		$in_kontrak['virtual_account']   = mt_rand();
@@ -29,13 +31,23 @@ class M_kontrak extends CI_Model {
 		return ($res) ? $kontrak : FALSE;
 	}
 
-	public function m_kontrak_newseeds($id_funder)
+	public function m_kontrak_newseeds($get)
 	{
+		$id_funder = $get['id_funders'];
+		$filter    = $get['filter'];
+
+		if ($filter == 'new_seeds')
+			$this->db->where('status_kontrak = 1 OR status_kontrak = 2'); // Pending, assigning
+		else if ($filter == 'in_progress')
+			$this->db->where('status_kontrak = 2'); // In Progres
+		else if ($filter == 'harvested')
+			$this->db->where('status_kontrak = 3'); // Harvested
+
 		$res = $this->db
-		            ->where('status_kontrak = 1 OR status_kontrak = 2')
 		            ->where('id_funders', $id_funder)
 		            ->get('tb_kontrak')
 		            ->result_array();
+
 		return $res;
 	}
 

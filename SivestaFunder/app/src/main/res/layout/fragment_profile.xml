@@ -105,7 +105,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Street"/>
+                    android:text="Alamat"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -121,30 +121,6 @@
                     android:text="Jl Bangbarung"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Location"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text=":"/>
-
-                <TextView
-                    android:id="@+id/prof_location"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

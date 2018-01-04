@@ -55,7 +55,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         setFullScreen();
 
         Intent intent = getIntent();
-        mArtikel = intent.getParcelableExtra(AppConst.OBJ_FUNDER);
+        mArtikel = intent.getParcelableExtra(AppConst.OBJ_ARTIKEL);
         populateNewsData();
 
         appbarArticleDetail.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

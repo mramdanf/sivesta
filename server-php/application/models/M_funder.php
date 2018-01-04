@@ -18,6 +18,13 @@ class M_funder extends CI_Model {
 		return $this->db->get('tb_funders');
 	}
 
+	public function get_details($post)
+	{
+		$query = "SELECT COUNT(id_komoditas) as jumlah_seed, join_at as tanggal_join FROM `tb_kontrak` WHERE id_funders = '".$post['id_funders']."'";
+		return $this->db->queyr($query)->result_array();
+	}
+
+
 	public function create_account($post)
 	{
 		$post['password'] = md5($post['password']);
@@ -25,6 +32,11 @@ class M_funder extends CI_Model {
 		$res = $this->db->insert('tb_funders', $post);
 
 		return $res;
+	}
+
+	public function update_account($post)
+	{
+		return $this->db->update('tb_funders', $post);
 	}
 	
 

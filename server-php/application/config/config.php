@@ -16,14 +16,15 @@
 | your installation, but due to security concerns the hostname will be set
 | to $_SERVER['SERVER_ADDR'] if available, or localhost otherwise.
 | The auto-detection mechanism exists only for convenience during
-| development and MUST NOT be used in production!
+| development  and MUST NOT be used in production!
 |
 | If you need to allow multiple domains, remember that this file is still
 | a PHP script and you can easily do that on your own.
 |
 */
+
 $config['base_url'] = 'http://localhost/sivesta/server-php/';
-// $config['base_url'] = 'http://10.99.226.213/sivesta/server-php/';
+// $config['base_url'] = 'http://10.99.226.56/sivesta/server-php/';
 // $config['base_url'] = 'http://172.20.35.26/sivesta/server-php/';
 // $config['base_url'] = 'http://192.168.1.7/sivesta/server-php/';
 

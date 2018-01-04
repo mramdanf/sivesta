@@ -1,6 +1,7 @@
 package com.sivestafunder.android.Models;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,12 +12,17 @@ import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 import com.sivestafunder.android.Helpers.Utility;
 
+import java.io.File;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by Ramdan Firdaus on 6/12/2017.
@@ -153,7 +159,7 @@ public class Funder implements Parcelable {
     private transient FunderModelInf mCallback;
 
     public interface FunderModelInf {
-        void checkLoginApiCallback(Bundle args);
+        void funderModelApiCallback(Bundle args);
     }
 
     /* Fungsi spesifik dari objek */
@@ -180,7 +186,7 @@ public class Funder implements Parcelable {
                         // Simpan data funder di prf
                         Utility.setFarmerPrefs(mContext, funder);
 
-                        mCallback.checkLoginApiCallback(args);
+                        mCallback.funderModelApiCallback(args);
                     }
 
                     @Override
@@ -188,7 +194,7 @@ public class Funder implements Parcelable {
                         e.printStackTrace();
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, e.getMessage());
-                        mCallback.checkLoginApiCallback(args);
+                        mCallback.funderModelApiCallback(args);
                     }
 
                     @Override
@@ -227,7 +233,7 @@ public class Funder implements Parcelable {
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
                         args.putParcelable(AppConst.OBJ_FUNDER, funder);
-                        mCallback.checkLoginApiCallback(args);
+                        mCallback.funderModelApiCallback(args);
                     }
 
                     @Override
@@ -235,7 +241,7 @@ public class Funder implements Parcelable {
                         e.printStackTrace();
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, e.getMessage());
-                        mCallback.checkLoginApiCallback(args);
+                        mCallback.funderModelApiCallback(args);
                     }
 
                     @Override
@@ -245,4 +251,48 @@ public class Funder implements Parcelable {
                 });
 
     }
+
+    public void updateProfileApi(Funder funder, String email, String password, FunderModelInf fInf) {
+        mCallback = fInf;
+        FunderEndPoint mFunderService = new RetrofitHelper()
+                .getFunderService(email, password);
+
+        Observable<SimpleResp> submitUpdate = mFunderService.updateProfileFunder(
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getName()),
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getEmail()),
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getPhone()),
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getAlamat())
+        );
+
+        submitUpdate
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SimpleResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull SimpleResp simpleResp) {
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
+                        mCallback.funderModelApiCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.funderModelApiCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 }

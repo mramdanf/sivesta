@@ -37,6 +37,7 @@ public class NewSeedFragment extends Fragment implements
 
     private Funder mFunder;
     private ListNewSeedsAdapter listNewSeedsAdapter;
+    private final String LOG_TAG = this.getClass().getSimpleName();
 
 
     public NewSeedFragment() {
@@ -50,6 +51,9 @@ public class NewSeedFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_new_seed, container, false);
         ButterKnife.bind(this, rootView);
 
+        mFunder = Utility.getFunderPrefs(getActivity());
+        getNewSeedFromApi();
+
         return rootView;
     }
 
@@ -57,18 +61,22 @@ public class NewSeedFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mFunder = Utility.getFunderPrefs(getActivity());
-        getNewSeedFromApi();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(LOG_TAG, "onresume");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(LOG_TAG, "On Start");
     }
 
     private void getNewSeedFromApi() {
-        new Kontrak().getKontrakNewSeeds(
+        /*new Kontrak().getKontrakMySeeds(
                 mFunder.getIdFunder(),
                 mFunder.getEmail(),
                 mFunder.getPassword(),
@@ -77,9 +85,8 @@ public class NewSeedFragment extends Fragment implements
                     public void kontrakModelInfCallback(Bundle args) {
                         ListNewSeeds listNewSeeds = args.getParcelable(AppConst.LIST_OBJ_KONTRAK);
                         if (listNewSeeds != null) {
-                            Log.d(NewSeedFragment.class.getSimpleName(), "size: " + listNewSeeds.getKontrakList().size());
+                            //Log.d(NewSeedFragment.class.getSimpleName(), "size: " + listNewSeeds.getKontrakList().size());
                             List<Kontrak> kontrakList = listNewSeeds.getKontrakList();
-                            Log.d(NewSeedFragment.class.getSimpleName(), "kontrak: " + String.valueOf(kontrakList.get(0).getTglMulaiKontrak()));
                             listNewSeedsAdapter = new ListNewSeedsAdapter(kontrakList, getActivity());
                             setUpRecyclerView();
                         } else {
@@ -88,7 +95,7 @@ public class NewSeedFragment extends Fragment implements
 
 
                     }
-                });
+                });*/
     }
 
     private void setUpRecyclerView() {

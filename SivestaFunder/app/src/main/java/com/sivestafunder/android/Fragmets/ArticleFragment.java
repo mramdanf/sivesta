@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.sivestafunder.android.Activity.NewsDetailActivity;
 import com.sivestafunder.android.Adapters.ListArtikelAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListArtikelResp;
+import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RecyclerItemClickListener;
 import com.sivestafunder.android.Models.Artikel;
 import com.sivestafunder.android.R;
@@ -36,6 +37,7 @@ public class ArticleFragment extends Fragment implements
     private ListArtikelAdapter listArtikelAdapter;
 
     private ArticleFragmentInf mCallback;
+    private List<Artikel> artikelList;
 
     @BindView(R.id.rec_article)
     RecyclerView recArticle;
@@ -83,7 +85,9 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onItemClick(View childView, int position) {
-        startActivity(new Intent(mContext, NewsDetailActivity.class));
+        Intent i = new Intent(getActivity(), NewsDetailActivity.class);
+        i.putExtra(AppConst.OBJ_ARTIKEL, artikelList.get(position));
+        startActivity(i);
     }
 
     @Override
@@ -100,7 +104,7 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void showFullArtikel(ListArtikelResp la) {
-        List<Artikel> artikelList = la.getArtikelList();
+        artikelList = la.getArtikelList();
         listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
         setUpRVArticles();
     }

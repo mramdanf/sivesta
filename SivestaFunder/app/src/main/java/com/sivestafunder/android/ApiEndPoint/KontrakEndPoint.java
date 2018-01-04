@@ -21,8 +21,9 @@ public interface KontrakEndPoint {
             @Body Kontrak kontrak
     );
 
-    @GET("kontrak/kontrak_new_seeds")
+    @GET("kontrak/kontrak_my_seeds")
     Observable<ListNewSeeds> getKontrakNewSeedsService(
-            @Query("id_funders") String idFunder
+            @Query("id_funders") String idFunder,
+            @Query("filter") String filter
     );
 }

@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sivestafunder.android.Activity.MainActivity;
 import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
@@ -92,9 +94,15 @@ public class LoginFragment extends Fragment {
 
     public void displayLoginResult(Funder f) {
         mProgressDialog.dismiss();
-        Intent i = new Intent(mContext, MainActivity.class);
-        i.putExtra(AppConst.OBJ_FUNDER, f);
-        startActivity(i);
-        getActivity().finish();
+        if (f != null) {
+            Utility.setFarmerPrefs(getActivity(), f);
+            Intent i = new Intent(mContext, MainActivity.class);
+            i.putExtra(AppConst.OBJ_FUNDER, f);
+            startActivity(i);
+            getActivity().finish();
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.login_failed_tex), Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

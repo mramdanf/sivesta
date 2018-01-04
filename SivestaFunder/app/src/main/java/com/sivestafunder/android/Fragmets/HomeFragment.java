@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(View childView, int position) {
                 Intent i = new Intent(getActivity(), NewsDetailActivity.class);
-                i.putExtra(AppConst.OBJ_FUNDER, mArtikelList.get(position));
+                i.putExtra(AppConst.OBJ_ARTIKEL, mArtikelList.get(position));
                 startActivity(i);
             }
 

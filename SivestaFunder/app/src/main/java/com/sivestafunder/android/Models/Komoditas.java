@@ -1,6 +1,5 @@
 package com.sivestafunder.android.Models;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,6 +7,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import com.sivestafunder.android.ApiEndPoint.KomoditasEndPoint;
 import com.sivestafunder.android.ApiRespWrapper.ListKomoditasResp;
+import com.sivestafunder.android.ApiRespWrapper.ListSimulationResp;
 import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 
@@ -237,7 +237,7 @@ public class Komoditas implements Parcelable {
     private transient KomoditasModelInf mCallback;
 
     public interface KomoditasModelInf {
-        void getPopularKomoditasCallback(Bundle args);
+        void komoditasModelApiCallback(Bundle args);
     }
 
     public Komoditas() {
@@ -264,7 +264,7 @@ public class Komoditas implements Parcelable {
                         Bundle args = new Bundle();
                         args.putParcelable(AppConst.LIST_OBJ_KOMODITAS, listKomoditasResp);
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
-                        mCallback.getPopularKomoditasCallback(args);
+                        mCallback.komoditasModelApiCallback(args);
 
                     }
 
@@ -273,7 +273,7 @@ public class Komoditas implements Parcelable {
                         e.printStackTrace();
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, e.getMessage());
-                        mCallback.getPopularKomoditasCallback(args);
+                        mCallback.komoditasModelApiCallback(args);
                     }
 
                     @Override
@@ -303,7 +303,7 @@ public class Komoditas implements Parcelable {
                         Bundle args = new Bundle();
                         args.putParcelable(AppConst.LIST_OBJ_KOMODITAS, listKomoditasResp);
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
-                        mCallback.getPopularKomoditasCallback(args);
+                        mCallback.komoditasModelApiCallback(args);
 
                     }
 
@@ -312,7 +312,46 @@ public class Komoditas implements Parcelable {
                         e.printStackTrace();
                         Bundle args = new Bundle();
                         args.putString(AppConst.TAG_MSG, e.getMessage());
-                        mCallback.getPopularKomoditasCallback(args);
+                        mCallback.komoditasModelApiCallback(args);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void getSimulation(String idKomoditas, int jmlKomoditas, KomoditasModelInf komInf) {
+        mCallback = komInf;
+        KomoditasEndPoint komoditasService = new RetrofitHelper()
+                .getKomoditasServiceNoAuth();
+        Observable<ListSimulationResp> getListSimulation = komoditasService
+                .getSimulationService(idKomoditas, jmlKomoditas);
+
+        getListSimulation
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListSimulationResp>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListSimulationResp listSimulationResp) {
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, (listSimulationResp.isStatus()) ? AppConst.TAG_SUCCESS : "");
+                        args.putParcelable(AppConst.LIST_OBJ_SIMULATION, listSimulationResp);
+                        mCallback.komoditasModelApiCallback(args);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Bundle args = new Bundle();
+                        args.putString(AppConst.TAG_MSG, e.getMessage());
+                        mCallback.komoditasModelApiCallback(args);
                     }
 
                     @Override
