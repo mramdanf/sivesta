@@ -57,6 +57,8 @@ class Investasi extends CI_Controller {
             $result = $this->upload->data();
             $image = $result['orig_name'];
         }
+        $status = array('status_kontrak'=>$this->input->post('status_kontrak'));
+        $this->Investasi->update_progress($value,$status)
 		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'));
 		// print_r($progress);die();
 		$this->ProgressInvestasi->insert($progress);

@@ -36,15 +36,37 @@
             <div class="box-body">
               <form action="<?php echo base_url('admin/Investasi/updateProgress/'.$investasi['id_kontrak']);?>" enctype="multipart/form-data" method="post">
                 <div class="form-group">
-                  <textarea class="textarea" name="keterangan" placeholder="Place some text here"
+                  <select name="status_kontrak" class="form-control" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
+                    <?php 
+                    if ($investasi['status_kontrak'] == 1) {
+                      ?>
+                      <option value="2"></option>
+                      <option value="3"></option>
+                      <option value="4"></option>
+                      <?php
+                    }elseif ($investasi['status_kontrak'] == 2) {
+                      ?>
+                      <option value="3"></option>
+                      <option value="4"></option>
+                      <?php
+                    }elseif ($investasi['status_kontrak'] == 3) {
+                      ?>
+                      <option value="4"></option>
+                      <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <textarea class="textarea" name="keterangan" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?> placeholder="Place some text here"
                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                 </div>
                  <div class="form-group" >
-                    <input type="file" class="form-control"  name="image" aria-label="Alamat" >
+                    <input type="file" class="form-control"  name="image" aria-label="Alamat" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
                   
                 </div>
                 <div class="box-footer clearfix">
-                  <input type="submit" value="Submit" class="pull-right btn btn-default">
+                  <input type="submit" value="Submit" class="pull-right btn btn-default" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
                 </div>
               </form>
             </div>
