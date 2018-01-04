@@ -40,18 +40,18 @@
                     <?php 
                     if ($investasi['status_kontrak'] == 1) {
                       ?>
-                      <option value="2"></option>
-                      <option value="3"></option>
-                      <option value="4"></option>
+                      <option value="2">Pembayaran diterima, mencari surveyor</option>
+                      <option value="3">Dalam Progress</option>
+                      <option value="4">Siap Panen</option>
                       <?php
                     }elseif ($investasi['status_kontrak'] == 2) {
                       ?>
-                      <option value="3"></option>
-                      <option value="4"></option>
+                      <option value="3">Dalam Progress</option>
+                      <option value="4">Siap Panen</option>
                       <?php
                     }elseif ($investasi['status_kontrak'] == 3) {
                       ?>
-                      <option value="4"></option>
+                      <option value="4">Siap Panen</option>
                       <?php
                     }
                     ?>
