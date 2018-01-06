@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Adapters.ListKomoditasAdapter;
@@ -70,13 +71,12 @@ public class CatalogFragment extends Fragment implements
 
         getActivity().setTitle("Catalog");
 
-        /*swiperCatalog.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swiperCatalog.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                progressDialog.show();
                 mCallback.reqFullListKomoditas();
             }
-        });*/
+        });
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.please_wait_tex));
@@ -89,7 +89,7 @@ public class CatalogFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //progressDialog.show();
+        progressDialog.show();
         mCallback.reqFullListKomoditas();
     }
 
@@ -114,11 +114,18 @@ public class CatalogFragment extends Fragment implements
     }
 
     public void showAllKomoditas(ListKomoditasResp l) {
+        if (l != null && !progressDialog.isShowing()) // Triggred by swiper
+            Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
+
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+
+        swiperCatalog.setRefreshing(false);
+
         mKomoditasList = l.getKomoditasList();
         mListKomoditasAdapter = new ListKomoditasAdapter(mKomoditasList, mContext, false);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 2);
         recGridKom.setLayoutManager(mLayoutManager);
-        recGridKom.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recGridKom.setItemAnimator(new DefaultItemAnimator());
         recGridKom.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {

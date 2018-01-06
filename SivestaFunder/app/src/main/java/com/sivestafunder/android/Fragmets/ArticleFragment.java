@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sivestafunder.android.Activity.NewsDetailActivity;
 import com.sivestafunder.android.Adapters.ListArtikelAdapter;
@@ -74,7 +75,6 @@ public class ArticleFragment extends Fragment implements
         swiperArtikel.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                progressDialog.show();
                 mCallback.reqFullListArticle();
             }
         });
@@ -121,7 +121,13 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void showFullArtikel(ListArtikelResp la) {
-        progressDialog.dismiss();
+
+        if (la != null && !progressDialog.isShowing()) // Triggred by swiper
+            Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
+
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+
         swiperArtikel.setRefreshing(false);
         artikelList = la.getArtikelList();
         listArtikelAdapter = new ListArtikelAdapter(artikelList, mContext);
