@@ -62,6 +62,8 @@ class M_kontrak extends CI_Model {
 		foreach ($res as $key => $value) 
 		{
 			$res[$key]['img_url'] = base_url('app_assets/img/progress_invest/'.$value['image']);
+			$res[$key]['posted_at'] = date('M d, Y', strtotime($value['posted_at']));
+			$res[$key]['striped_progress_text'] = strip_tags($value['keterangan']);
 		}
 		return $res;
 	}

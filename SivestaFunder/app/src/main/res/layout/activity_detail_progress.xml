@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/main.appbar"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -16,7 +16,7 @@
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/progress_collapsing"
+            android:id="@+id/detail_progress_collapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -27,7 +27,7 @@
             >
 
             <ImageView
-                android:id="@+id/img_progress_backdrop"
+                android:id="@+id/imgbackdrop_detail_progress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -38,7 +38,6 @@
                 />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/main.toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -52,20 +51,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:padding="5dp"
+        android:padding="8dp"
         android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rec_progres"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress_detail_postedat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/cal_spring"
+                android:drawablePadding="3dp"
+                fontPath="@string/alegreya_sans_bold"
+                tools:ignore="MissingPrefix"
+                android:text="Posted at: Jan 01, 2018"/>
+
+            <TextView
+                android:id="@+id/detail_progress_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"/>
+
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn_progress_selesai"
+        android:id="@+id/btn_finish_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

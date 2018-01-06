@@ -14,6 +14,10 @@ public class Progress implements Parcelable {
     private String textProgress;
     @SerializedName("img_url")
     private String imgUrl;
+    @SerializedName("striped_progress_text")
+    private String stripedProgressText;
+    @SerializedName("posted_at")
+    private String postedAt;
 
     public String getTextProgress() {
         return textProgress;
@@ -31,6 +35,22 @@ public class Progress implements Parcelable {
         this.imgUrl = imgUrl;
     }
 
+    public String getStripedProgressText() {
+        return stripedProgressText;
+    }
+
+    public void setStripedProgressText(String stripedProgressText) {
+        this.stripedProgressText = stripedProgressText;
+    }
+
+    public String getPostedAt() {
+        return postedAt;
+    }
+
+    public void setPostedAt(String postedAt) {
+        this.postedAt = postedAt;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -40,6 +60,7 @@ public class Progress implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.textProgress);
         dest.writeString(this.imgUrl);
+        dest.writeString(this.postedAt);
     }
 
     public Progress() {
@@ -48,6 +69,7 @@ public class Progress implements Parcelable {
     protected Progress(Parcel in) {
         this.textProgress = in.readString();
         this.imgUrl = in.readString();
+        this.postedAt = in.readString();
     }
 
     public static final Creator<Progress> CREATOR = new Creator<Progress>() {

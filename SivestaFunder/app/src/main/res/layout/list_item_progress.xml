@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/medium_top_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
@@ -15,16 +16,52 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
+            android:layout_marginEnd="5dp"
             android:layout_marginRight="@dimen/small_margin"
             android:src="@mipmap/ic_launcher"/>
 
-        <TextView
-            android:id="@+id/tv_prog_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Sudah tumbuh"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:drawableLeft="@drawable/comments"
+                android:drawablePadding="3dp"
+                fontPath="@string/alegreya_sans_bold"
+                tools:ignore="MissingPrefix"
+                android:text="Komentar"/>
+
+            <TextView
+                android:id="@+id/tv_prog_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Sudah tumbuh"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/progress_posted_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/cal_spring"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="3dp"
+                    android:drawablePadding="3dp"
+                    android:text="Jan 20, 2018"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
