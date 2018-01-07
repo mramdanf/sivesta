@@ -172,9 +172,11 @@ class M_komoditas extends CI_Model {
 
 	}
 
-	public function get_komoditas()
+	public function get_komoditas($limit = 0)
 	{
 		$kom = $this->db
+					->limit($limit)
+					->order_by('id_komoditas', 'DESC')
 		            ->get('tb_komoditas')
 		            ->result_array();
 

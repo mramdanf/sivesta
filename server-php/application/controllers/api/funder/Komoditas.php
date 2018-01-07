@@ -15,7 +15,17 @@ class Komoditas extends CI_Controller {
 
 	public function get_komoditas()
 	{
-		$komoditas = $this->m_komoditas->get_komoditas();
+		$limit = $this->input->get('limit');
+		$limit = (!empty($limit)) ? $limit : 0;
+
+		$komoditas = $this->m_komoditas->get_komoditas($limit);
+
+		utPrintResponse(self::HTTP_OK, 'komoditas', $komoditas);
+	}
+
+	public function get_new_komoditas()
+	{
+		$komoditas = $this->m_komoditas->get_komoditas(3);
 
 		utPrintResponse(self::HTTP_OK, 'komoditas', $komoditas);
 	}
