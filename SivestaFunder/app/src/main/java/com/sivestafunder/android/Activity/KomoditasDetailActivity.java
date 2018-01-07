@@ -111,7 +111,11 @@ public class KomoditasDetailActivity extends AppCompatActivity {
         tvKdLocation.setText(mKomoditas.getLokasi());
         tvKdProfit.setText(String.valueOf(mKomoditas.getProfit()));
         tvKdContract.setText(String.valueOf(mKomoditas.getMinKontrak()));
-        tvKdPlanted.setText(mKomoditas.getPlanted());
+
+        if (mKomoditas.getSupportedBy() > 0)
+            tvKdPlanted.setText("Planted " + String.valueOf(mKomoditas.getTotalPlanted()) + " supported by " + mKomoditas.getSupportedBy() + " peoples");
+        else
+            tvKdPlanted.setText("No planted yet");
         tvKdDeskripsi.setText(Html.fromHtml(mKomoditas.getDeskripsi()));
         Picasso
                 .with(this)

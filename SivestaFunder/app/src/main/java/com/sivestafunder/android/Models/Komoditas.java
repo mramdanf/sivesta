@@ -146,6 +146,22 @@ public class Komoditas implements Parcelable {
         this.deskripsi = deskripsi;
     }
 
+    public int getTotalPlanted() {
+        return totalPlanted;
+    }
+
+    public void setTotalPlanted(int totalPlanted) {
+        this.totalPlanted = totalPlanted;
+    }
+
+    public int getSupportedBy() {
+        return supportedBy;
+    }
+
+    public void setSupportedBy(int supportedBy) {
+        this.supportedBy = supportedBy;
+    }
+
     private String nama;
     private int harga;
     @SerializedName("stock")
@@ -167,6 +183,10 @@ public class Komoditas implements Parcelable {
     private String planted;
     @SerializedName("deskripsi")
     private String deskripsi;
+    @SerializedName("total_planted")
+    private int totalPlanted;
+    @SerializedName("supported_by")
+    private int supportedBy;
 
 
     @Override
@@ -192,6 +212,8 @@ public class Komoditas implements Parcelable {
         dest.writeInt(this.minKontrak);
         dest.writeString(this.planted);
         dest.writeString(this.deskripsi);
+        dest.writeInt(this.totalPlanted);
+        dest.writeInt(this.supportedBy);
     }
 
     public String getImgUrl() {
@@ -219,6 +241,8 @@ public class Komoditas implements Parcelable {
         this.minKontrak = in.readInt();
         this.planted = in.readString();
         this.deskripsi = in.readString();
+        this.totalPlanted = in.readInt();
+        this.supportedBy = in.readInt();
     }
 
     public static final Creator<Komoditas> CREATOR = new Creator<Komoditas>() {
