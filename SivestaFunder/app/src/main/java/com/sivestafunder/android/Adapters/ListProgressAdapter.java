@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Progress;
 import com.sivestafunder.android.R;
 import com.squareup.picasso.Picasso;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class ListProgressAdapter extends RecyclerView.Adapter<ListProgressAdapter.RecyclerViewHolder> {
 
+
     private Context mContext;
     private List<Progress> progressList;
 
@@ -37,6 +39,8 @@ public class ListProgressAdapter extends RecyclerView.Adapter<ListProgressAdapte
         ImageView imgProgress;
         @BindView(R.id.tv_prog_desc)
         TextView tvProgDesc;
+        @BindView(R.id.progress_posted_at)
+        TextView progressPostedAt;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -58,7 +62,9 @@ public class ListProgressAdapter extends RecyclerView.Adapter<ListProgressAdapte
                 .with(mContext)
                 .load(progress.getImgUrl())
                 .into(holder.imgProgress);
-        holder.tvProgDesc.setText(progress.getTextProgress());
+        holder.tvProgDesc.setText(Utility.getSafeSubstring(progress.getStripedProgressText(), 60));
+        holder.progressPostedAt.setText(progress.getPostedAt());
+
     }
 
     @Override

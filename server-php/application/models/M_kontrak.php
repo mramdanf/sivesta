@@ -28,7 +28,7 @@ class M_kontrak extends CI_Model {
 		$in_kontrak['created_date']      = date("Y-m-d");
 		
 
-		$this->plog($in_kontrak);
+		$kontrak['virtual_account'] = $in_kontrak['virtual_account'];
 
 		$res = $this->db->insert('tb_kontrak', $in_kontrak);
 
@@ -43,9 +43,9 @@ class M_kontrak extends CI_Model {
 		if ($filter == 'new_seeds')
 			$this->db->where('status_kontrak = 1 OR status_kontrak = 2'); // Pending, assigning
 		else if ($filter == 'in_progress')
-			$this->db->where('status_kontrak = 2'); // In Progres
+			$this->db->where('status_kontrak = 3'); // In Progres
 		else if ($filter == 'harvested')
-			$this->db->where('status_kontrak = 3'); // Harvested
+			$this->db->where('status_kontrak = 4'); // Harvested
 
 		$res = $this->db
 		            ->where('id_funders', $id_funder)
@@ -64,6 +64,8 @@ class M_kontrak extends CI_Model {
 		foreach ($res as $key => $value) 
 		{
 			$res[$key]['img_url'] = base_url('app_assets/img/progress_invest/'.$value['image']);
+			$res[$key]['posted_at'] = date('M d, Y', strtotime($value['posted_at']));
+			$res[$key]['striped_progress_text'] = strip_tags($value['keterangan']);
 		}
 		return $res;
 	}

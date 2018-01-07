@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface KomoditasEndPoint {
 
 
-    @GET("komoditas/get_komoditas")
+    @GET("komoditas/get_new_komoditas")
     Observable<ListKomoditasResp> getPopularKomoditasService();
 
     @GET("komoditas/get_komoditas")

@@ -172,9 +172,11 @@ class M_komoditas extends CI_Model {
 
 	}
 
-	public function get_komoditas()
+	public function get_komoditas($limit = 0)
 	{
 		$kom = $this->db
+					->limit($limit)
+					->order_by('id_komoditas', 'DESC')
 		            ->get('tb_komoditas')
 		            ->result_array();
 
@@ -182,7 +184,23 @@ class M_komoditas extends CI_Model {
 		{
 			$kom[$key]['img_url'] = base_url('app_assets/img/komoditas').'/'.$k['image'];
 			$kom[$key]['format_rupiah'] = utFormatRupiah($k['harga']);
-			$kom[$key]['planted'] = "Planted 100 supported by 10 people";
+			
+
+			$planted = "SELECT SUM(jumlah_benih) AS total_planted
+						FROM tb_kontrak
+						WHERE id_komoditas = '".$k['id_komoditas']."'";
+			
+			$planted = $this->db->query($planted)->row_array();
+			$planted = (!empty($planted['total_planted'])) ? $planted['total_planted'] : 0;
+			$kom[$key]['total_planted'] = $planted;
+
+			$supported = "SELECT COUNT(id_funders) AS count_supported
+						FROM tb_kontrak
+						WHERE id_komoditas = '".$k['id_komoditas']."'";
+			$supported = $this->db->query($supported)->row_array();
+			$supported = (!empty($supported['count_supported'])) ? $supported['count_supported'] : 0;
+			$kom[$key]['supported_by'] = $supported;
+
 
 		}
 

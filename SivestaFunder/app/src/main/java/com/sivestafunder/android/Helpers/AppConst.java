@@ -13,6 +13,7 @@ public interface AppConst {
     String OBJ_KOMODITAS = "obj_komoditas";
     String OBJ_KONTRAK = "obj_kontrak";
     String OBJ_ARTIKEL = "obj_artikel";
+    String OBJ_PROGRESS = "obj_progress";
     String VIEW_ID = "view_id";
     String LIST_OBJ_KOMODITAS = "list_obj_komoditas";
     String LIST_OBJ_ARTIKEL = "list_obj_artikel";
@@ -21,10 +22,11 @@ public interface AppConst {
     String LIST_OBJ_PROGRESS = "list_obj_progress";
     String TAG_MSG = "tag_msg";
     String TAG_SUCCESS = "tag_success";
-    String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";
-//    String BASE_URL_DEV = "http://192.168.1.7/sivesta/server-php/api/funder/";
+//    String BASE_URL = "http://jaban.in/jaban.in/sivesta/server-php/api/funder/";
+    String BASE_URL_DEV = "http://192.168.1.14/sivesta/server-php/api/funder/";
+//    String BASE_URL_DEV = "http://sivesta.jaban.in/api/funder/";
     String TAG_INTENT_SRC = "tag_intent_src";
 //    String BASE_URL_DEV = "http://10.99.226.56/sivesta/server-php/api/funder/";
-    String BASE_URL_DEV = "http://172.20.35.127/sivesta/server-php/api/funder/";
+//    String BASE_URL_DEV = "http://172.20.35.127/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
 }

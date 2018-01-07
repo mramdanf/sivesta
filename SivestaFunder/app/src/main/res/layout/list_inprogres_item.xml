@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/cal_spring"
                 android:drawablePadding="3dp"
+                android:layout_marginBottom="5dp"
                 android:text="Ordered : 10 Dec, 2017"/>
 
         </LinearLayout>

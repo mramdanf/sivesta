@@ -35,7 +35,10 @@
         <activity android:name=".Activity.SimulationActivity" />
         <activity android:name=".Activity.InvestNowActivity" />
         <activity android:name=".Activity.EditProfileActivity" />
-        <activity android:name=".Activity.UpdateProgressInvestActivity"
+        <activity
+            android:name=".Activity.UpdateProgressInvestActivity"
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
+        <activity android:name=".Activity.DetailProgressActivity"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme"></activity>
     </application>
 

@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 
 public class ListMySeedsAdapter extends RecyclerView.Adapter<ListMySeedsAdapter.RecyclerViewHolder> {
 
-
     private List<Kontrak> kontrakList;
     private Context mContext;
 
@@ -43,6 +42,8 @@ public class ListMySeedsAdapter extends RecyclerView.Adapter<ListMySeedsAdapter.
         TextView msOrderStatus;
         @BindView(R.id.ms_order_date)
         TextView msOrderDate;
+        @BindView(R.id.ns_virtual_account)
+        TextView nsVirtualAccount;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -63,7 +64,8 @@ public class ListMySeedsAdapter extends RecyclerView.Adapter<ListMySeedsAdapter.
         holder.msNamaKom.setText(kontrak.getKomoditas().getNama());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        holder.msOrderDate.setText("Ordered: "+String.valueOf(dateFormat.format(kontrak.getTglMulaiKontrak())));
+        holder.msOrderDate.setText("Ordered: " + String.valueOf(dateFormat.format(kontrak.getTglMulaiKontrak())));
+        holder.nsVirtualAccount.setText("Virtual Account: " + kontrak.getVirtualAccount());
 
         if (kontrak.getStatusKontrak() == 1) {
             holder.msOrderStatus.setText("Payment Pending");
@@ -73,6 +75,14 @@ public class ListMySeedsAdapter extends RecyclerView.Adapter<ListMySeedsAdapter.
             holder.msOrderStatus.setText("Assigning Surveyor");
             holder.msOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.man_user_48_green, 0);
             holder.msOrderStatus.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+        } else if (kontrak.getStatusKontrak() == 3) {
+            holder.msOrderStatus.setText("In Progress");
+            holder.msOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.checking, 0);
+            holder.msOrderStatus.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+        } else if (kontrak.getStatusKontrak() == 4) {
+            holder.msOrderStatus.setText("Harvested");
+            holder.msOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.harvest, 0);
+            holder.msOrderStatus.setTextColor(mContext.getResources().getColor(R.color.yellow));
         }
 
         Picasso

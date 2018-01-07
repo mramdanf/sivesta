@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
         ArticleFragment.ArticleFragmentInf,
         CatalogFragment.CataglogFragmentInf,
-        MySeedsFragment.MySeedsFragmentInf {
+        MySeedsFragment.MySeedsFragmentInf,
+        ProfileFragment.ProfileFragmentInf {
 
     private ProgressDialog mProgressDialog;
     private KomoditasEndPoint mKomoditasService;
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqListKomoditas() {
+        populateHeaderData();
         Komoditas km = new Komoditas();
         km.getPopularKomoditasApi(
                 new Komoditas.KomoditasModelInf() {
@@ -176,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqListArtikel() {
+        populateHeaderData();
         Artikel a = new Artikel();
         a.getArtikelFromApi(
                 new Artikel.ArtikelModelInterface() {
@@ -193,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqFullListArticle() {
+        populateHeaderData();
         Artikel fullArticle = new Artikel();
         fullArticle.getArtikelFromApi(
                 new Artikel.ArtikelModelInterface() {
@@ -201,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements
                         ListArtikelResp respListArtikel = args.getParcelable(AppConst.LIST_OBJ_ARTIKEL);
                         ArticleFragment af = (ArticleFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.fragment_container);
+                        Log.d(LOG_TAG, "INVOKED");
                         af.showFullArtikel(respListArtikel);
                     }
                 }
@@ -209,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqListMySeeds(String filter) {
+        populateHeaderData();
         new Kontrak().getKontrakMySeeds(
                 mLoggedInFunder.getIdFunder(),
                 mLoggedInFunder.getEmail(),
@@ -227,6 +233,18 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void mySeedsFragmentClickListener(Bundle args) {
+        int clickedItemId = args.getInt(AppConst.VIEW_ID);
+
+        switch (clickedItemId) {
+            case R.id.tv_view_seeds:
+                bottomNavigationView.setSelectedItemId(R.id.act_catalog);
+                setUpFragment(new CatalogFragment(), false);
+                break;
+        }
+    }
+
+    @Override
     public void homeFragmentClickListener(Bundle args) {
         int viewId = args.getInt(AppConst.VIEW_ID);
         switch (viewId) {
@@ -242,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqFullListKomoditas() {
+        populateHeaderData();
         Komoditas fullKomoditas = new Komoditas();
         fullKomoditas.getAllKomoditasApi(
                 new Komoditas.KomoditasModelInf() {
@@ -256,6 +275,28 @@ public class MainActivity extends AppCompatActivity implements
         );
     }
 
+    @Override
+    public void reqUserProfile() {
+        new Funder(this)
+                .checkLoginApi(
+                        mLoggedInFunder.getEmail(),
+                        mLoggedInFunder.getPassword(),
+                        new Funder.FunderModelInf() {
+                            @Override
+                            public void funderModelApiCallback(Bundle args) {
+                                String msg = args.getString(AppConst.TAG_MSG);
+                                if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                    Funder retFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                                    ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
+                                            .findFragmentById(R.id.fragment_container);
+                                    pf.populateUserData(retFunder);
+
+                                }
+                            }
+                        }
+                );
+    }
+
     @OnClick(R.id.btn_logout)
     public void doLogout() {
         new Funder(this).logout();
@@ -268,9 +309,24 @@ public class MainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 2) {
 
-            ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_container);
-            pf.populateUserData();
+            new Funder(this)
+                    .checkLoginApi(
+                            mLoggedInFunder.getEmail(),
+                            mLoggedInFunder.getPassword(),
+                            new Funder.FunderModelInf() {
+                                @Override
+                                public void funderModelApiCallback(Bundle args) {
+                                    String msg = args.getString(AppConst.TAG_MSG);
+                                    if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                        Funder retFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                                        ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
+                                                .findFragmentById(R.id.fragment_container);
+                                        pf.populateUserData(retFunder);
+
+                                    }
+                                }
+                            }
+                    );
         }
     }
 
@@ -314,13 +370,32 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void populateHeaderData() {
-        tvUserFullName.setText(mLoggedInFunder.getName());
-        Picasso
-                .with(this)
-                .load(mLoggedInFunder.getProfilePic())
-                .error(R.drawable.user_default)
-                .transform(new CircleTransform())
-                .into(imgviewProfilePic);
+        new Funder(this)
+                .checkLoginApi(
+                        mLoggedInFunder.getEmail(),
+                        mLoggedInFunder.getPassword(),
+                        new Funder.FunderModelInf() {
+                            @Override
+                            public void funderModelApiCallback(Bundle args) {
+                                Funder funder = args.getParcelable(AppConst.OBJ_FUNDER);
+                                if (funder != null) {
+                                    tvPlantedInfo.setText(
+                                            "You have " + funder.getPlanted()
+                                                    + " seeds planted, "
+                                                    + funder.getHarvestSoon()
+                                                    + " harvest soon"
+                                    );
+                                    tvUserFullName.setText(funder.getName());
+                                    Picasso
+                                            .with(MainActivity.this)
+                                            .load(funder.getProfilePic())
+                                            .error(R.drawable.user_default)
+                                            .transform(new CircleTransform())
+                                            .into(imgviewProfilePic);
+                                }
+                            }
+                        }
+                );
     }
 
     private void toggleBtnProfile(int show) {
