@@ -45,7 +45,7 @@ class Investasi extends CI_Controller {
 	}
 	public function updateProgress($value='')
 	{
-		$config['upload_path'] = 'app_assets/img/progres_invest';
+		$config['upload_path'] = 'app_assets/img/progress_invest';
         $config['allowed_types'] = 'png|jpg|jpeg';
         // load library upload
         $this->load->library('upload', $config);
@@ -59,7 +59,7 @@ class Investasi extends CI_Controller {
         }
         $status = array('status_kontrak'=>$this->input->post('status_kontrak'));
         $this->Investasi->update_progress($value,$status);
-		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'));
+		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'),'created_date'=>date("Y-m-d"));
 		// print_r($progress);die();
 		$this->ProgressInvestasi->insert($progress);
 		redirect('admin/Investasi','refresh');

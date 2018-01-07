@@ -62,7 +62,8 @@ class Komoditas extends CI_Controller {
 			'deskripsi' => $this->input->post('deskripsi'),
 			'min_kontrak' => $this->input->post('min_kontrak'),
 			'profit' => $this->input->post('persentase'),
-			'id_petani'=>$this->input->post('id_petani')
+			'id_petani'=>$this->input->post('id_petani'),
+			'created_date' => date("Y-m-d")
 			// 'latitude' => $this->input->post('latitude'),
 			// 'longitude' => $this->input->post('longitude'),
 			 );

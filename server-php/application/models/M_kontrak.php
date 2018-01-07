@@ -25,6 +25,8 @@ class M_kontrak extends CI_Model {
 		$in_kontrak['status_kontrak']    = $kontrak['status_kontrak'];
 		$in_kontrak['biaya_total']       = $kontrak['biaya_total'];
 		$in_kontrak['jumlah_benih']      = $kontrak['jumlah_benih'];
+		$in_kontrak['created_date']      = date("Y-m-d");
+		
 
 		$this->plog($in_kontrak);
 
