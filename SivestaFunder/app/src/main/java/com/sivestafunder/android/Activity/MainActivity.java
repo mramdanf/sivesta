@@ -233,6 +233,18 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void mySeedsFragmentClickListener(Bundle args) {
+        int clickedItemId = args.getInt(AppConst.VIEW_ID);
+
+        switch (clickedItemId) {
+            case R.id.tv_view_seeds:
+                bottomNavigationView.setSelectedItemId(R.id.act_catalog);
+                setUpFragment(new CatalogFragment(), false);
+                break;
+        }
+    }
+
+    @Override
     public void homeFragmentClickListener(Bundle args) {
         int viewId = args.getInt(AppConst.VIEW_ID);
         switch (viewId) {
@@ -265,7 +277,24 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void reqUserProfile() {
+        new Funder(this)
+                .checkLoginApi(
+                        mLoggedInFunder.getEmail(),
+                        mLoggedInFunder.getPassword(),
+                        new Funder.FunderModelInf() {
+                            @Override
+                            public void funderModelApiCallback(Bundle args) {
+                                String msg = args.getString(AppConst.TAG_MSG);
+                                if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                    Funder retFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                                    ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
+                                            .findFragmentById(R.id.fragment_container);
+                                    pf.populateUserData(retFunder);
 
+                                }
+                            }
+                        }
+                );
     }
 
     @OnClick(R.id.btn_logout)
@@ -280,9 +309,24 @@ public class MainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 2) {
 
-            ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_container);
-            pf.populateUserData();
+            new Funder(this)
+                    .checkLoginApi(
+                            mLoggedInFunder.getEmail(),
+                            mLoggedInFunder.getPassword(),
+                            new Funder.FunderModelInf() {
+                                @Override
+                                public void funderModelApiCallback(Bundle args) {
+                                    String msg = args.getString(AppConst.TAG_MSG);
+                                    if (msg.equals(AppConst.TAG_SUCCESS)) {
+                                        Funder retFunder = args.getParcelable(AppConst.OBJ_FUNDER);
+                                        ProfileFragment pf = (ProfileFragment) getSupportFragmentManager()
+                                                .findFragmentById(R.id.fragment_container);
+                                        pf.populateUserData(retFunder);
+
+                                    }
+                                }
+                            }
+                    );
         }
     }
 

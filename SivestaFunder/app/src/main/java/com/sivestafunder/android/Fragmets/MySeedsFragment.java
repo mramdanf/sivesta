@@ -7,16 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Activity.UpdateProgressInvestActivity;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,11 +45,18 @@ public class MySeedsFragment extends Fragment implements
     RecyclerView recMySeeds;
     @BindView(R.id.spinner_filter)
     Spinner spinnerFilter;
+    @BindView(R.id.img_no_data)
+    ImageView imgNoData;
+    @BindView(R.id.tv_myseeds_nodata)
+    TextView tvMyseedsNodata;
+    @BindView(R.id.wrapper_no_data)
+    LinearLayout wrapperNoData;
 
     private List<Kontrak> kontrakList;
     private ListMySeedsAdapter listMySeedsAdapter;
     private MySeedsFragmentInf mCallback;
     private ProgressDialog mProgressDialog;
+    private int mFilterType;
     private final String LOG_TAG = this.getClass().getSimpleName();
 
 
@@ -58,6 +67,7 @@ public class MySeedsFragment extends Fragment implements
 
     public interface MySeedsFragmentInf {
         void reqListMySeeds(String filter);
+        void mySeedsFragmentClickListener(Bundle args);
     }
 
     @Override
@@ -119,6 +129,7 @@ public class MySeedsFragment extends Fragment implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mProgressDialog.show();
+        mFilterType = position;
         switch (position) {
             case 0:
                 mCallback.reqListMySeeds("new_seeds");
@@ -137,12 +148,25 @@ public class MySeedsFragment extends Fragment implements
 
     }
 
+    @OnClick(R.id.tv_view_seeds)
+    public void onViewClicked(View view) {
+        Bundle args = new Bundle();
+        args.putInt(AppConst.VIEW_ID, view.getId());
+        mCallback.mySeedsFragmentClickListener(args);
+    }
+
     public void showMySeedsList(ListNewSeeds listNewSeeds) {
         mProgressDialog.dismiss();
         if (listNewSeeds != null) {
+
             kontrakList = listNewSeeds.getKontrakList();
-            listMySeedsAdapter = new ListMySeedsAdapter(kontrakList, getActivity());
-            setUpRecyclerView();
+            if (kontrakList.size() > 0) {
+                showRecycler();
+                listMySeedsAdapter = new ListMySeedsAdapter(kontrakList, getActivity());
+                setUpRecyclerView();
+            } else {
+                showNoData();
+            }
         }
     }
 
@@ -152,6 +176,28 @@ public class MySeedsFragment extends Fragment implements
         recMySeeds.setItemAnimator(new DefaultItemAnimator());
         recMySeeds.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
         recMySeeds.setAdapter(listMySeedsAdapter);
+    }
+
+    private void showRecycler() {
+        recMySeeds.setVisibility(View.VISIBLE);
+        wrapperNoData.setVisibility(View.GONE);
+    }
+
+    private void showNoData() {
+        recMySeeds.setVisibility(View.GONE);
+        wrapperNoData.setVisibility(View.VISIBLE);
+
+        switch (mFilterType) {
+            case 0:
+                tvMyseedsNodata.setText("There are no new seeds");
+                break;
+            case 1:
+                tvMyseedsNodata.setText("There are no in progress seeds");
+                break;
+            case 2:
+                tvMyseedsNodata.setText("There are no harvested seeds");
+                break;
+        }
     }
 
 

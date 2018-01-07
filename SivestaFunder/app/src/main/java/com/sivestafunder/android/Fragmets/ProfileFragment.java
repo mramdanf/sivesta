@@ -69,7 +69,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        populateUserData();
+        mFunder = Utility.getFunderPrefs(getActivity());
+
+        progressDialog.show();
+        mCallback.reqUserProfile();
 
     }
 
@@ -83,32 +86,17 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void populateUserData() {
+    public void populateUserData(Funder fullDataFunder) {
 
-        mFunder = Utility.getFunderPrefs(getActivity());
+        progressDialog.dismiss();
 
-        tvProfStreet.setText(mFunder.getAlamat());
-        tvProfEmail.setText(mFunder.getEmail());
-        tvProfContact.setText(mFunder.getPhone());
-
-        progressDialog.show();
-        new Funder(getActivity())
-                .checkLoginApi(
-                        mFunder.getEmail(),
-                        mFunder.getPassword(),
-                        new Funder.FunderModelInf() {
-                            @Override
-                            public void funderModelApiCallback(Bundle args) {
-                                progressDialog.dismiss();
-                                Funder fullDataFunder = args.getParcelable(AppConst.OBJ_FUNDER);
-                                if (fullDataFunder != null) {
-                                    tvProfStreet.setText(fullDataFunder.getAlamat());
-                                    tvProfEmail.setText(fullDataFunder.getEmail());
-                                    tvProfContact.setText(fullDataFunder.getPhone());
-                                    tvUserPlanted.setText(String.valueOf(fullDataFunder.getPlanted()) + " seed(s)\nplanted");
-                                    tvUserParticipated.setText(String.valueOf(fullDataFunder.getParticipated()) + " month(s)\nparticipated");
-                                }
-                            }
-                        });
+        tvProfStreet.setText(fullDataFunder.getAlamat());
+        tvProfEmail.setText(fullDataFunder.getEmail());
+        tvProfContact.setText(fullDataFunder.getPhone());
+        tvUserPlanted.setText(String.valueOf(fullDataFunder.getPlanted()) + " seed(s)\nplanted");
+        tvUserParticipated.setText(String.valueOf(fullDataFunder.getParticipated()) + " month(s)\nparticipated");
+        tvProfStreet.setText(fullDataFunder.getAlamat());
+        tvProfEmail.setText(fullDataFunder.getEmail());
+        tvProfContact.setText(fullDataFunder.getPhone());
     }
 }

@@ -16,9 +16,45 @@
         android:entries="@array/filter_myseeds"
         android:prompt="@string/choose_filter"/>
 
+    <LinearLayout
+        android:id="@+id/wrapper_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/funder_sprout"/>
+
+        <TextView
+            android:id="@+id/tv_myseeds_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="There are no new seeds"/>
+
+        <TextView
+            android:id="@+id/tv_view_seeds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:textSize="12sp"
+            android:text="VIEW SEEDS"/>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rec_my_seeds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </LinearLayout>
