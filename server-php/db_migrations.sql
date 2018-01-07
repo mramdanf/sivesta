@@ -17,3 +17,13 @@ ALTER TABLE `tb_kontrak` CHANGE `status_kontrak` `status_kontrak` ENUM('1','2','
 
 # Change lengt id_kontrak
 ALTER TABLE `tb_kontrak` CHANGE `id_kontrak` `id_kontrak` VARCHAR(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+# add column posted_at in tb_progres_investasi
+# nambah kompleksitas krn di android akan ditambahkan
+# view detail dari update
+ALTER TABLE `tb_progres_investasi` ADD `posted_at` DATE NULL ;
+
+# add column joined_at in tb_funders
+# Digunakan untuk menghitung berapa lama funder
+# teregister di sistem
+ALTER TABLE `tb_funders` ADD `joined_at` DATE NULL ;

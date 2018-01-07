@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sivestafunder.android.Adapters.ListSimulationAdapter;
@@ -20,6 +21,7 @@ import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Komoditas;
 import com.sivestafunder.android.Models.Simulation;
 import com.sivestafunder.android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -47,6 +49,8 @@ public class SimulationActivity extends AppCompatActivity implements
     TextView simTotalBiaya;
     @BindView(R.id.rec_simulation)
     RecyclerView recSimulation;
+    @BindView(R.id.sim_img_komoditas)
+    ImageView simImgKomoditas;
 
     private int countJmlItem;
     private Komoditas mKomoditas;
@@ -134,6 +138,10 @@ public class SimulationActivity extends AppCompatActivity implements
         simHargaKom.setText(mKomoditas.getHargaText() + "/Units");
         simProfitKom.setText(String.valueOf(mKomoditas.getProfit()) + " %");
         simMinKontrak.setText(String.valueOf(mKomoditas.getMinKontrak()) + " year(s)");
+        Picasso
+                .with(this)
+                .load(mKomoditas.getImgUrl())
+                .into(simImgKomoditas);
     }
 
     private void calculateJmlTotal() {

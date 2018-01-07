@@ -1,7 +1,6 @@
 package com.sivestafunder.android.Fragmets;
 
 
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sivestafunder.android.Activity.EditProfileActivity;
 import com.sivestafunder.android.Helpers.AppConst;
-import com.sivestafunder.android.Helpers.CircleTransform;
 import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +23,10 @@ import butterknife.ButterKnife;
  */
 public class ProfileFragment extends Fragment {
 
+    @BindView(R.id.tv_user_planted)
+    TextView tvUserPlanted;
+    @BindView(R.id.tv_user_participated)
+    TextView tvUserParticipated;
     private Funder mFunder;
 
     @BindView(R.id.prof_street)
@@ -89,6 +89,8 @@ public class ProfileFragment extends Fragment {
                                     tvProfStreet.setText(fullDataFunder.getAlamat());
                                     tvProfEmail.setText(fullDataFunder.getEmail());
                                     tvProfContact.setText(fullDataFunder.getPhone());
+                                    tvUserPlanted.setText(String.valueOf(fullDataFunder.getPlanted()) + " seed(s)\nplanted");
+                                    tvUserParticipated.setText(String.valueOf(fullDataFunder.getParticipated()) + " month(s)\nparticipated");
                                 }
                             }
                         });

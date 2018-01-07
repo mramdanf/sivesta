@@ -44,6 +44,8 @@ public class Funder implements Parcelable {
     private int planted;
     @SerializedName("harvest_soon")
     private int harvestSoon;
+    @SerializedName("participated")
+    private int participated;
 
     /* ============= SETTER GETTRE =================== */
     public String getName() {
@@ -126,6 +128,14 @@ public class Funder implements Parcelable {
         this.harvestSoon = harvestSoon;
     }
 
+    public int getParticipated() {
+        return participated;
+    }
+
+    public void setParticipated(int participated) {
+        this.participated = participated;
+    }
+
     /* ====================== PARSCALABLE =========================== */
     @Override
     public int describeContents() {
@@ -144,6 +154,7 @@ public class Funder implements Parcelable {
         dest.writeString(this.idFunder);
         dest.writeInt(this.planted);
         dest.writeInt(this.harvestSoon);
+        dest.writeInt(this.participated);
     }
 
     protected Funder(Parcel in) {
@@ -157,6 +168,7 @@ public class Funder implements Parcelable {
         this.idFunder = in.readString();
         this.planted = in.readInt();
         this.harvestSoon = in.readInt();
+        this.participated = in.readInt();
     }
 
     public Funder(Context context) {
