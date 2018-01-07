@@ -95,7 +95,7 @@ public class LoginFragment extends Fragment {
     public void displayLoginResult(Funder f) {
         mProgressDialog.dismiss();
         if (f != null) {
-            Utility.setFarmerPrefs(getActivity(), f);
+            Utility.setFundersPrefs(getActivity(), f);
             Intent i = new Intent(mContext, MainActivity.class);
             i.putExtra(AppConst.OBJ_FUNDER, f);
             startActivity(i);

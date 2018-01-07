@@ -65,6 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         newFunder.setEmail(etProfileEmail.getText().toString());
         newFunder.setPhone(etProfilePhone.getText().toString());
         newFunder.setAlamat(etProfileAddress.getText().toString());
+        newFunder.setIdFunder(mLoggedInFunder.getIdFunder());
 
         mProgresDialog.show();
         new Funder(this)
@@ -80,7 +81,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 if (msg.equals(AppConst.TAG_SUCCESS)) {
                                     newFunder.setPassword(mLoggedInFunder.getPassword());
                                     newFunder.setIdFunder(mLoggedInFunder.getIdFunder());
-                                    Utility.setFarmerPrefs(EditProfileActivity.this, newFunder);
+                                    Utility.setFundersPrefs(EditProfileActivity.this, newFunder);
                                     Toast.makeText(EditProfileActivity.this, "Profile berhasil diupdate.", Toast.LENGTH_LONG).show();
 
                                 } else {

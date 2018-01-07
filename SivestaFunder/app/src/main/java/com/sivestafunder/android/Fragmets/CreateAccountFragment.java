@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.sivestafunder.android.Activity.MainActivity;
 import com.sivestafunder.android.Helpers.AppConst;
+import com.sivestafunder.android.Helpers.Utility;
 import com.sivestafunder.android.Models.Funder;
 import com.sivestafunder.android.R;
 
@@ -107,9 +108,9 @@ public class CreateAccountFragment extends Fragment {
 
     public void showCreateAccountResult(Funder f) {
         mProgressDialog.dismiss();
-        Intent i = new Intent(getActivity(), MainActivity.class);
-        i.putExtra(AppConst.OBJ_FUNDER, f);
-        startActivity(i);
-        getActivity().finish();
+
+        Bundle args = new Bundle();
+        args.putInt(AppConst.VIEW_ID, AppConst.SHOW_LOGIN);
+        mCallback.createAccountClickListener(args);
     }
 }

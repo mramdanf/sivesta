@@ -29,4 +29,5 @@ public interface AppConst {
 //    String BASE_URL_DEV = "http://10.99.226.56/sivesta/server-php/api/funder/";
 //    String BASE_URL_DEV = "http://172.20.35.127/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
+    int SHOW_LOGIN = 12;
 }

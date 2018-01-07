@@ -1,7 +1,6 @@
 package com.sivestafunder.android.Models;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,16 +11,12 @@ import com.sivestafunder.android.Helpers.AppConst;
 import com.sivestafunder.android.Helpers.RetrofitHelper;
 import com.sivestafunder.android.Helpers.Utility;
 
-import java.io.File;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -219,7 +214,7 @@ public class Funder implements Parcelable {
                         args.putString(AppConst.TAG_MSG, AppConst.TAG_SUCCESS);
 
                         // Simpan data funder di prf
-                        Utility.setFarmerPrefs(mContext, funder);
+                        Utility.setFundersPrefs(mContext, funder);
 
                         mCallback.funderModelApiCallback(args);
                     }
@@ -296,7 +291,8 @@ public class Funder implements Parcelable {
                 RequestBody.create( okhttp3.MultipartBody.FORM, funder.getName()),
                 RequestBody.create( okhttp3.MultipartBody.FORM, funder.getEmail()),
                 RequestBody.create( okhttp3.MultipartBody.FORM, funder.getPhone()),
-                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getAlamat())
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getAlamat()),
+                RequestBody.create( okhttp3.MultipartBody.FORM, funder.getIdFunder())
         );
 
         submitUpdate

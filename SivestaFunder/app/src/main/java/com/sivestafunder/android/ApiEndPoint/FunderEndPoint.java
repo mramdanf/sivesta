@@ -36,7 +36,8 @@ public interface FunderEndPoint {
             @Part("nama") RequestBody name,
             @Part("email") RequestBody email,
             @Part("telepon") RequestBody phone,
-            @Part("alamat") RequestBody address
+            @Part("alamat") RequestBody address,
+            @Part("id_funders") RequestBody idFunders
 
             );
 }

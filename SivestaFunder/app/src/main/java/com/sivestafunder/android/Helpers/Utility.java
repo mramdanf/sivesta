@@ -60,7 +60,7 @@ public class Utility {
         editor.apply();
     }
 
-    public static void setFarmerPrefs(Context c, Funder f) {
+    public static void setFundersPrefs(Context c, Funder f) {
         SharedPreferences prfs = c.getSharedPreferences(AppConst.PRF_FUNDER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prfs.edit();
         editor.putString(AppConst.PRF_TAG_EMAIL, f.getEmail());

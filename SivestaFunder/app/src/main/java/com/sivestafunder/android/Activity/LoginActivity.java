@@ -78,6 +78,9 @@ public class LoginActivity extends AppCompatActivity implements
                             }
                         });
                 break;
+            case AppConst.SHOW_LOGIN:
+                setUpFragment(new LoginFragment());
+                break;
         }
     }
 

@@ -28,6 +28,7 @@ class M_funder extends CI_Model {
 	public function create_account($post)
 	{
 		$post['password'] = md5($post['password']);
+		$post['joined_at'] = date('Y-m-d');
 		$post['id_funders'] = utLFunderId();
 		$res = $this->db->insert('tb_funders', $post);
 
@@ -36,7 +37,10 @@ class M_funder extends CI_Model {
 
 	public function update_account($post)
 	{
-		return $this->db->update('tb_funders', $post);
+		log_message('error', print_r($post, true));
+		$id_funders = $post['id_funders'];
+		unset($post['id_funders']);
+		return $this->db->update('tb_funders', $post, array('id_funders'=>$id_funders));
 	}
 	
 
