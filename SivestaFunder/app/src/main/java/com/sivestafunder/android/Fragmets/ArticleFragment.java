@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class ArticleFragment extends Fragment implements
     private ArticleFragmentInf mCallback;
     private List<Artikel> artikelList;
     private ProgressDialog progressDialog;
+    private final String LOG_TAG = this.getClass().getSimpleName();
 
     @BindView(R.id.rec_article)
     RecyclerView recArticle;
@@ -86,7 +88,6 @@ public class ArticleFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressDialog.show();
         mCallback.reqFullListArticle();
     }
 
@@ -122,11 +123,7 @@ public class ArticleFragment extends Fragment implements
 
     public void showFullArtikel(ListArtikelResp la) {
 
-        if (la != null && !progressDialog.isShowing()) // Triggred by swiper
-            Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
-
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
+        Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
 
         swiperArtikel.setRefreshing(false);
         artikelList = la.getArtikelList();

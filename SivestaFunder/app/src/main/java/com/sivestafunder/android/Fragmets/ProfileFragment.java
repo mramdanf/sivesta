@@ -2,6 +2,7 @@ package com.sivestafunder.android.Fragmets;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,16 +38,21 @@ public class ProfileFragment extends Fragment {
     TextView tvProfEmail;
 
     private ProgressDialog progressDialog;
+    private ProfileFragmentInf mCallback;
 
     public ProfileFragment() {
         // Required empty public constructor
+    }
+
+    public interface ProfileFragmentInf {
+        void reqUserProfile();
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -65,6 +71,16 @@ public class ProfileFragment extends Fragment {
 
         populateUserData();
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (ProfileFragmentInf) context;
+        } catch (ClassCastException c) {
+            throw new ClassCastException(context + " Activity should implement ProfileFragmentInf");
+        }
     }
 
     public void populateUserData() {

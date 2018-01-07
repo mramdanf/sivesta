@@ -106,6 +106,8 @@ public class HomeFragment extends Fragment {
     @OnClick(R.id.more_btn_artikel) public void moreArtikelClickHandle(View v) {
         Bundle args = new Bundle();
         args.putInt(AppConst.VIEW_ID, v.getId());
+
+
         mCallback.homeFragmentClickListener(args);
 
     }

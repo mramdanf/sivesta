@@ -89,7 +89,6 @@ public class CatalogFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressDialog.show();
         mCallback.reqFullListKomoditas();
     }
 
@@ -114,11 +113,8 @@ public class CatalogFragment extends Fragment implements
     }
 
     public void showAllKomoditas(ListKomoditasResp l) {
-        if (l != null && !progressDialog.isShowing()) // Triggred by swiper
-            Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
 
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
+        Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
 
         swiperCatalog.setRefreshing(false);
 
