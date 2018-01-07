@@ -30,6 +30,7 @@ class M_funder extends CI_Model {
 		$post['password'] = md5($post['password']);
 		$post['joined_at'] = date('Y-m-d');
 		$post['id_funders'] = utLFunderId();
+		$post['created_at'] = date("Y-m-d");
 		$res = $this->db->insert('tb_funders', $post);
 
 		return $res;

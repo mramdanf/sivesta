@@ -67,8 +67,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAMCeS6DNEtveBUpeAGm4c962Cwlx4UPlc&sensor=false&libraries=places'></script>
-<script src="<?php echo base_url();?>assets/geolocation/locationpicker.jquery.js"></script>
+<!-- <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAMCeS6DNEtveBUpeAGm4c962Cwlx4UPlc&sensor=false&libraries=places'></script> -->
+<!-- <script src="<?php echo base_url();?>assets/geolocation/locationpicker.jquery.js"></script> -->
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
