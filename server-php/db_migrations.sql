@@ -35,3 +35,6 @@ ALTER TABLE `tb_kontrak` ADD `created_date` DATE NULL ;
 # rename colum posted_at in tb_progres_investasi
 # reason: ngikutin arif, miskom padahal udah gw bikin ini
 ALTER TABLE `tb_progres_investasi` CHANGE `posted_at` `created_date` DATE NULL DEFAULT NULL;
+
+# reason: nyamain sama arif
+ALTER TABLE `tb_funders` CHANGE `joined_at` `created_date` DATE NULL DEFAULT NULL;
