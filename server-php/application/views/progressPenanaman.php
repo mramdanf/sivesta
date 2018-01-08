@@ -51,6 +51,7 @@
                       <?php
                     }elseif ($investasi['status_kontrak'] == 3) {
                       ?>
+                      <option value="3">Dalam Progress</option>
                       <option value="4">Siap Panen</option>
                       <?php
                     }

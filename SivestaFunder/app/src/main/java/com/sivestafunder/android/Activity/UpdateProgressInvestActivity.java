@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.sivestafunder.android.Adapters.ListProgressAdapter;
 import com.sivestafunder.android.ApiRespWrapper.ListProgressResp;
@@ -41,6 +43,8 @@ public class UpdateProgressInvestActivity extends AppCompatActivity implements
     RecyclerView recProgres;
     @BindView(R.id.progress_collapsing)
     CollapsingToolbarLayout progressCollapsing;
+    @BindView(R.id.swiper_update_komoditas)
+    SwipeRefreshLayout swiperUpdateKomoditas;
     private Kontrak mKontrak;
     private Funder mLoggedinFunder;
 
@@ -73,9 +77,14 @@ public class UpdateProgressInvestActivity extends AppCompatActivity implements
         progressDialog.setMessage(getString(R.string.please_wait_tex));
         progressDialog.setCancelable(false);
 
+        swiperUpdateKomoditas.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateProgressList();
+            }
+        });
+
         populateProgressList();
-
-
     }
 
     private void populateProgressList() {
@@ -88,13 +97,15 @@ public class UpdateProgressInvestActivity extends AppCompatActivity implements
                         new Kontrak.KontrakModelInf() {
                             @Override
                             public void kontrakModelInfCallback(Bundle args) {
+                                swiperUpdateKomoditas.setRefreshing(false);
                                 progressDialog.dismiss();
                                 ListProgressResp resp = args.getParcelable(AppConst.LIST_OBJ_PROGRESS);
                                 if (resp != null) {
-                                    progressList = resp.getProgressList();
-                                    Log.d(LOG_TAG, "size: " + progressList.get(0).getTextProgress());
-                                    listProgressAdapter = new ListProgressAdapter(UpdateProgressInvestActivity.this, progressList);
-                                    setUpRecyclerView();
+                                    if (resp.getProgressList().size() > 0) {
+                                        progressList = resp.getProgressList();
+                                        listProgressAdapter = new ListProgressAdapter(UpdateProgressInvestActivity.this, progressList);
+                                        setUpRecyclerView();
+                                    }
                                 } else {
                                     Log.d(LOG_TAG, "size 0");
                                 }
@@ -115,7 +126,6 @@ public class UpdateProgressInvestActivity extends AppCompatActivity implements
     @Override
     public void onItemClick(View childView, int position) {
         Progress progress = progressList.get(position);
-        Log.d(LOG_TAG, "progress: " + progress.getPostedAt());
         Intent i = new Intent(this, DetailProgressActivity.class);
         i.putExtra(AppConst.OBJ_PROGRESS, progress);
         startActivity(i);

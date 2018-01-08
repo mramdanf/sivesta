@@ -59,7 +59,7 @@ class Investasi extends CI_Controller {
         }
         $status = array('status_kontrak'=>$this->input->post('status_kontrak'));
         $this->Investasi->update_progress($value,$status);
-		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'),'created_date'=>date("Y-m-d"));
+		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'),'created_date'=>date("Y-m-d H:m:s"));
 		// print_r($progress);die();
 		$this->ProgressInvestasi->insert($progress);
 		redirect('admin/Investasi','refresh');

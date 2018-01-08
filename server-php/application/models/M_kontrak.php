@@ -27,10 +27,19 @@ class M_kontrak extends CI_Model {
 		$in_kontrak['jumlah_benih']      = $kontrak['jumlah_benih'];
 		$in_kontrak['created_date']      = date("Y-m-d");
 		
-
 		$kontrak['virtual_account'] = $in_kontrak['virtual_account'];
 
 		$res = $this->db->insert('tb_kontrak', $in_kontrak);
+
+		// Substrct komoditas stock
+		if ($res)
+		{
+			$sub_stock = "UPDATE tb_komoditas SET stock = stock - ".$kontrak['jumlah_benih']." 
+						WHERE id_komoditas = '".$kontrak['komoditas']['id_komoditas']."'";
+			$sub_stock = $this->db->query($sub_stock);
+
+		}
+
 
 		return ($res) ? $kontrak : FALSE;
 	}
@@ -58,13 +67,14 @@ class M_kontrak extends CI_Model {
 	public function m_progres_investasi($id_kontrak)
 	{
 		$res = $this->db
+					->order_by('created_date', 'DESC')
 		            ->get_where('tb_progres_investasi', array('id_kontrak'=>$id_kontrak))
 		            ->result_array();
 		
 		foreach ($res as $key => $value) 
 		{
 			$res[$key]['img_url'] = base_url('app_assets/img/progress_invest/'.$value['image']);
-			$res[$key]['posted_at'] = date('M d, Y', strtotime($value['posted_at']));
+			$res[$key]['created_date'] = date('M d, Y', strtotime($value['created_date']));
 			$res[$key]['striped_progress_text'] = strip_tags($value['keterangan']);
 		}
 		return $res;

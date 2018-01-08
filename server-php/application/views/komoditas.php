@@ -1,4 +1,9 @@
-
+<style>
+  .img-thumbnail {
+    display: table;
+    margin: 0 auto;
+  }
+</style>
          <!-- Content Wrapper. Contains page content -->
          <div class="content-wrapper">
             <!-- Content Header (Page header) -->

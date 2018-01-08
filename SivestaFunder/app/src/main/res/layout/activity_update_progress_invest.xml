@@ -56,11 +56,19 @@
         android:layout_marginBottom="50dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rec_progres"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swiper_update_komoditas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_progres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 
     </android.support.v4.widget.NestedScrollView>
 

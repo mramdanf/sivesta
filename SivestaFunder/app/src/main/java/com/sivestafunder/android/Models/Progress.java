@@ -16,7 +16,7 @@ public class Progress implements Parcelable {
     private String imgUrl;
     @SerializedName("striped_progress_text")
     private String stripedProgressText;
-    @SerializedName("posted_at")
+    @SerializedName("created_date")
     private String postedAt;
 
     public String getTextProgress() {

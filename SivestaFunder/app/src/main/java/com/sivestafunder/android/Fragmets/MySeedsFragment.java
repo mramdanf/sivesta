@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sivestafunder.android.Activity.KomoditasDetailActivity;
 import com.sivestafunder.android.Activity.UpdateProgressInvestActivity;
@@ -51,6 +53,8 @@ public class MySeedsFragment extends Fragment implements
     TextView tvMyseedsNodata;
     @BindView(R.id.wrapper_no_data)
     LinearLayout wrapperNoData;
+    @BindView(R.id.swiper_my_seeds)
+    SwipeRefreshLayout swiperMySeeds;
 
     private List<Kontrak> kontrakList;
     private ListMySeedsAdapter listMySeedsAdapter;
@@ -67,6 +71,7 @@ public class MySeedsFragment extends Fragment implements
 
     public interface MySeedsFragmentInf {
         void reqListMySeeds(String filter);
+
         void mySeedsFragmentClickListener(Bundle args);
     }
 
@@ -82,6 +87,26 @@ public class MySeedsFragment extends Fragment implements
         mProgressDialog.setCancelable(false);
 
         spinnerFilter.setOnItemSelectedListener(this);
+
+        swiperMySeeds.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                switch (mFilterType) {
+                    case 0:
+                        mCallback.reqListMySeeds("new_seeds");
+                        break;
+                    case 1:
+                        mCallback.reqListMySeeds("in_progress");
+                        break;
+                    case 2:
+                        mCallback.reqListMySeeds("harvested");
+                        break;
+                }
+
+
+            }
+        });
 
         return rootView;
     }
@@ -156,7 +181,15 @@ public class MySeedsFragment extends Fragment implements
     }
 
     public void showMySeedsList(ListNewSeeds listNewSeeds) {
-        mProgressDialog.dismiss();
+
+        if (listNewSeeds != null && !mProgressDialog.isShowing())
+            Toast.makeText(getActivity(), "Data updated.", Toast.LENGTH_SHORT).show();
+
+        if (mProgressDialog.isShowing())
+            mProgressDialog.dismiss();
+
+        swiperMySeeds.setRefreshing(false);
+
         if (listNewSeeds != null) {
 
             kontrakList = listNewSeeds.getKontrakList();
@@ -199,6 +232,7 @@ public class MySeedsFragment extends Fragment implements
                 break;
         }
     }
+
 
 
 }

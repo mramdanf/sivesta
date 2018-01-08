@@ -102,7 +102,7 @@
           <!-- Messages: style can be found in dropdown.less-->
           
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
+          <!-- <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">10</span>
@@ -110,7 +110,7 @@
             <ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
-                <!-- inner menu: contains the actual data -->
+                inner menu: contains the actual data
                 <ul class="menu">
                   <li>
                     <a href="#">
@@ -142,26 +142,26 @@
               </li>
               <li class="footer"><a href="#">View all</a></li>
             </ul>
-          </li>
+          </li> -->
           <!-- Tasks: style can be found in dropdown.less -->
          
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
+          <!-- <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?php echo base_url();?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              User image
               <li class="user-header">
                 <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+          
                 <p>
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
-              <!-- Menu Body -->
+              Menu Body
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -174,9 +174,9 @@
                     <a href="#">Friends</a>
                   </div>
                 </div>
-                <!-- /.row -->
+                /.row
               </li>
-              <!-- Menu Footer-->
+              Menu Footer
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -186,7 +186,7 @@
                 </div>
               </li>
             </ul>
-          </li>
+          </li> -->
           <!-- Control Sidebar Toggle Button -->
           <!-- <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

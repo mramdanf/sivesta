@@ -27,3 +27,11 @@ ALTER TABLE `tb_progres_investasi` ADD `posted_at` DATE NULL ;
 # Digunakan untuk menghitung berapa lama funder
 # teregister di sistem
 ALTER TABLE `tb_funders` ADD `joined_at` DATE NULL ;
+
+# add column created_date in tb_kontrak
+# but forget the why reaseon
+ALTER TABLE `tb_kontrak` ADD `created_date` DATE NULL ;
+
+# rename colum posted_at in tb_progres_investasi
+# reason: ngikutin arif, miskom padahal udah gw bikin ini
+ALTER TABLE `tb_progres_investasi` CHANGE `posted_at` `created_date` DATE NULL DEFAULT NULL;
