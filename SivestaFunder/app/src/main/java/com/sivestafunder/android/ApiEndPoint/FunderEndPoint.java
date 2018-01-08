@@ -6,6 +6,7 @@ import com.sivestafunder.android.Models.SimpleResp;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -21,12 +22,9 @@ public interface FunderEndPoint {
     @POST("login")
     Observable<Funder> checkLogin();
 
-    @FormUrlEncoded
     @POST("account/create")
     Observable<SimpleResp> submitCreateAccount(
-        @Field("nama") String nama,
-        @Field("email") String email,
-        @Field("password") String password
+        @Body Funder funder
 
     );
 

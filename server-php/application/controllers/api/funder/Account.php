@@ -15,7 +15,10 @@ class Account extends CI_Controller {
 
 	public function create()
 	{
-		$res = $this->m_funder->create_account($this->input->post());
+		$data    = file_get_contents('php://input');
+		$funder = json_decode($data , true);
+
+		$res = $this->m_funder->create_account($funder);
 
 		if ($res)
 			utPrintResponse(self::HTTP_OK, 'msg', "Account successfully registered.");

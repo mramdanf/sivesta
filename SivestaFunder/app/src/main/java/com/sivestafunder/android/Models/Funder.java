@@ -245,9 +245,7 @@ public class Funder implements Parcelable {
         FunderEndPoint mFunderService = new RetrofitHelper()
                 .getFunderServiceNoAuth();
         Observable<SimpleResp> submitAccout = mFunderService.submitCreateAccount(
-                funder.getName(),
-                funder.getEmail(),
-                funder.getPassword()
+                funder
         );
         submitAccout
                 .subscribeOn(Schedulers.newThread())

@@ -24,13 +24,25 @@ class M_funder extends CI_Model {
 		return $this->db->queyr($query)->result_array();
 	}
 
-
+	/*
+	(
+	    [email] => raply@gmail.com
+	    [nama] => raply
+	    [password] => raply
+	    [harvest_soon] => 0
+	    [participated] => 0
+	    [planted] => 0
+	)
+	*/
 	public function create_account($post)
 	{
-		$post['password'] = md5($post['password']);
-		$post['id_funders'] = utLFunderId();
-		$post['created_date'] = date("Y-m-d");
-		$res = $this->db->insert('tb_funders', $post);
+		$dt_in['email'] = $post['email'];
+		$dt_in['nama'] = $post['nama'];
+		$dt_in['password'] = md5($post['password']);
+		$dt_in['id_funders'] = utLFunderId();
+		$dt_in['created_date'] = date("Y-m-d");
+
+		$res = $this->db->insert('tb_funders', $dt_in);
 
 		return $res;
 	}
