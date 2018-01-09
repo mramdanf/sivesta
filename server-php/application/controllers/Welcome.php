@@ -40,4 +40,14 @@ class Welcome extends CI_Controller {
 		$this->load->view('welcome_message',$data);
 		$this->load->view('footer');
 	}
+	public function sandbox($value='')
+	{
+		$this->load->model('admin/User_model');
+		$users = $this->User_model->create_funder();
+		// $users = User_model::where('username','dhani')->get();
+		print_r('success');
+		// foreach ($users as $key => $value) {
+  //           echo "Judul Artikel : ".$value->judul."<br>";
+  //       }
+	}
 }

@@ -42,36 +42,42 @@ function utCheckFunders($email, $password)
 	$CI =& get_instance();
 	
 	$CI->load->database();
+	$CI->load->model('admin/Funders');
+	$query = $CI->Funders->login($email,md5($password));
+	// $query = $query[0];
+	// $CI->db->where('email', $email);
+	// $CI->db->where('password', md5($password));
 
-	$CI->db->where('email', $email);
-	$CI->db->where('password', md5($password));
-
-	$query = $CI->db->get('tb_funders')->row_array();
+	// $query = $CI->db->get('tb_funders')->row_array();
 
 
 	if ($query)
 	{
-		$CI->load->helper('url');
-		$query['password'] = $password;
-		$query['profile_image_url'] 
-		 = base_url('app_assets/img/user') .'/'.$query['profile_image'];
+		foreach ($query as $key => $value) {
+			$CI->load->helper('url');
+			$query = $value;
+			$query['password'] = $password;
+			$query['profile_image_url'] 
+			 = base_url('app_assets/img/user') .'/'.$value->profile_image;
 
-		$planted 
-			= "SELECT COUNT(id_kontrak) as jml_planted FROM tb_kontrak WHERE id_funders = '".$query['id_funders']."' AND status_kontrak != 1";
-		$planted = $CI->db->query($planted)->row_array();
-		$planted = $planted['jml_planted'];
+			$planted 
+				= "SELECT COUNT(id_kontrak) as jml_planted FROM tb_kontrak WHERE id_funders = '".$value->id_funders."' AND status_kontrak != 1";
+			$planted = $CI->db->query($planted)->row_array();
+			$planted = $planted['jml_planted'];
 
-		$harvest_soon = "SELECT COUNT(id_kontrak) jml_harvest_soon FROM tb_kontrak WHERE id_funders = '".$query['id_funders']."' and status_kontrak = 3";
-		$harvest_soon = $CI->db->query($harvest_soon)->row_array();
-		$harvest_soon = $harvest_soon['jml_harvest_soon'];
+			$harvest_soon = "SELECT COUNT(id_kontrak) jml_harvest_soon FROM tb_kontrak WHERE id_funders = '".$value->id_funders."' and status_kontrak = 3";
+			$harvest_soon = $CI->db->query($harvest_soon)->row_array();
+			$harvest_soon = $harvest_soon['jml_harvest_soon'];
 
-		$query['planted']      = $planted;
-		$query['harvest_soon'] = $harvest_soon;
+			$query['planted']      = $planted;
+			$query['harvest_soon'] = $harvest_soon;
 
-		$d1 = $query['joined_at'];
-		$d2 = date('Y-m-d');
+			$d1 = $value->created_date;
+			$d2 = date('Y-m-d');
 
-		$query['participated'] = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30)); // 8
+			$query['participated'] = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30)); // 8
+		}
+		
 
 	}
 
