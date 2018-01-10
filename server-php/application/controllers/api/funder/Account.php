@@ -10,7 +10,7 @@ class Account extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('m_funder');
-		$this->load->model('admin/Funders');
+		$this->load->model('Funders_class');
 		$this->load->helper('utility_helper');
 	}
 
@@ -20,7 +20,7 @@ class Account extends CI_Controller {
 		$funder = json_decode($data , true);
 		$funder['id_funders'] = utLFunderId();
 		
-		$res = $this->Funders->create_account($funder);
+		$res = $this->Funders_class->create_account($funder);
 
 		if ($res)
 			utPrintResponse(self::HTTP_OK, 'msg', "Account successfully registered.");
