@@ -48,7 +48,8 @@ class M_kontrak extends CI_Model {
 	{
 		$id_funder = $get['id_funders'];
 		$filter    = $get['filter'];
-
+		// print_r($get);die();
+		$this->db->where('id_funders', $id_funder);
 		if ($filter == 'new_seeds')
 			$this->db->where('status_kontrak = 1 OR status_kontrak = 2'); // Pending, assigning
 		else if ($filter == 'in_progress')
@@ -57,7 +58,6 @@ class M_kontrak extends CI_Model {
 			$this->db->where('status_kontrak = 4'); // Harvested
 
 		$res = $this->db
-		            ->where('id_funders', $id_funder)
 		            ->get('tb_kontrak')
 		            ->result_array();
 

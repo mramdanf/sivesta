@@ -48,7 +48,8 @@ class Kontrak extends CI_Controller {
 	{
 		$this->load->model('M_komoditas');
 		$res = $this->M_kontrak->m_kontrak_newseeds($this->input->get());
-
+		// print_r($this->input->get());die();
+		// print_r($res);die();
 		if (count($res) >= 0)
 		{
 			foreach ($res as $key => $value) 
