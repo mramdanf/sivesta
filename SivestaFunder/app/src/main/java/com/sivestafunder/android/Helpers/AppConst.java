@@ -26,7 +26,7 @@ public interface AppConst {
 //    String BASE_URL_DEV = "http://192.168.1.14/sivesta/server-php/api/funder/";
 //    String BASE_URL_DEV = "http://sivesta.jaban.in/api/funder/";
     String TAG_INTENT_SRC = "tag_intent_src";
-    String BASE_URL_DEV = "http://10.99.226.128/sivesta/server-php/api/funder/";
+    String BASE_URL_DEV = "http://10.99.226.155/sivesta/server-php/api/funder/";
 //    String BASE_URL_DEV = "http://172.20.35.127/sivesta/server-php/api/funder/";
     int LIST_CLICK_ID = 11;
     int SHOW_LOGIN = 12;

@@ -25,12 +25,15 @@ class Kontrak extends CI_Controller {
 		$data    = file_get_contents('php://input');
 		$kontrak = json_decode($data , true);
 		$kontrak['id_kontrak'] = utKontrakId();
+
+		// log_message('error', print_r($kontrak, true));
+
 		$res = $this->Investasi_class->create_kontrak($kontrak);
 		// $res = $this->M_kontrak->m_create($kontrak);
 
 		if ($res)
 		{	
-			$res = $res[0];
+			$res = $res;
 			$res['msg']     = 'Kontrak berhasil dibuat.';
 			$res['status']  = TRUE;
 

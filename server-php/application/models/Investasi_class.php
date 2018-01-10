@@ -28,19 +28,21 @@ class Investasi_class extends Eloquent
 
     public function create_kontrak($value)
     {
+        $min_kontrak = $value['komoditas']['min_kontrak'];
+
     	$kontrak = new Investasi_class;
-        $kontrak->id_kontrak = $value['id_kontrak'];
-    	$kontrak->id_funders = $value['id_funders'];
-    	$kontrak->id_komoditas = $value['id_komoditas'];
-    	$kontrak->status_kontrak = 1;
-    	$kontrak->tgl_kadaluarsa = $value['tgl_kadaluarsa'];
-        $kontrak->tgl_mulai_kontrak = $value['tgl_mulai_kontrak'];
-        $kontrak->biaya_total = $value['biaya_total'];
-        $kontrak->jumlah_benih =$value['jumlah_benih'];
-        $kontrak->virtual_account = $value['virtual_account'];
-    	$kontrak->created_date = date('Y-d-m');
+        $kontrak->id_kontrak        = $value['id_kontrak'];
+    	$kontrak->id_funders        = $value['funder']['id_funders'];
+    	$kontrak->id_komoditas      = $value['komoditas']['id_komoditas'];
+    	$kontrak->status_kontrak    = 1;
+    	$kontrak->tgl_kadaluarsa    = date('Y-m-d', strtotime(' + '.$min_kontrak.' years'));
+        $kontrak->tgl_mulai_kontrak = date('Y-m-d');
+        $kontrak->biaya_total       = $value['biaya_total'];
+        $kontrak->jumlah_benih      = $value['jumlah_benih'];
+        $kontrak->virtual_account   = $value['virtual_account'] = mt_rand();
+    	$kontrak->created_date      = date('Y-d-m');
     	$result = $kontrak->Save();
-    	return $result;
+    	return ($result) ? $value : FALSE;
     }
     public function getListKontrak($value='')
     {

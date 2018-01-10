@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements
     public void reqListKomoditas() {
         populateHeaderData();
         Komoditas km = new Komoditas();
-        km.getPopularKomoditasApi(
+        km.getNewKomoditas(
                 new Komoditas.KomoditasModelInf() {
                     @Override
                     public void komoditasModelApiCallback(Bundle args) {

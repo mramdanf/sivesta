@@ -268,7 +268,7 @@ public class Komoditas implements Parcelable {
     }
 
     /* Fungsi spesifik dari objek */
-    public void getPopularKomoditasApi(KomoditasModelInf komInf) {
+    public void getNewKomoditas(KomoditasModelInf komInf) {
         mCallback = komInf;
         KomoditasEndPoint mKomoditasService = new RetrofitHelper()
                 .getKomoditasServiceNoAuth();

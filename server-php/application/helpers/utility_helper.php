@@ -75,7 +75,11 @@ function utCheckFunders($email, $password)
 			$d1 = $value->created_date;
 			$d2 = date('Y-m-d');
 
-			$query['participated'] = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30)); // 8
+			if (date('Y-d') == date('Y-m', strtotime($d1)))
+				$query['participated'] = 0;
+			else
+				$query['participated'] = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30));
+
 		}
 		
 
