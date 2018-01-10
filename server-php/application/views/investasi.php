@@ -48,8 +48,8 @@
                   ?>
                   <tr>
                   <td><?php echo $i;?></td>
-                  <td><?php echo $key->nama_komoditas ;?></td>
-                  <td><?php echo $key->nama_funder;?></td>
+                  <td><?php echo $key->komoditas->nama ;?></td>
+                  <td><?php echo $key->funder->nama;?></td>
                   <td><?php echo $key->biaya_total;?></td>
                   <td><?php echo date("d M Y",strtotime($key->tgl_mulai_kontrak))." s/d ".date("d M Y",strtotime($key->tgl_kadaluarsa));?></td>
                   <td><?php echo $status; ?></td>

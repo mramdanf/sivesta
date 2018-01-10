@@ -9,11 +9,16 @@ class Artikel extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('m_artikel');
+		$this->load->model('Investasi_class');
+		$this->load->model('Funders_class');
+		$this->load->model('ProgressKomoditas_class');
+		$this->load->model('Komoditas_class');
+		$this->load->model('Artikel_class');
 		$this->load->helper('utility_helper');
 	}
 	public function index()
 	{
-		$data['artikel'] = $this->m_artikel->gets();
+		$data['artikel'] = $this->Artikel_class->getData();
 		// print_r($data);die();
 		$this->load->view('header');
 		$this->load->view('sidebar');
@@ -30,7 +35,8 @@ class Artikel extends CI_Controller {
 	public function delete($value='')
 	{
 		$where = array('id_artikel'=>$value);
-		$this->m_artikel->delete($where);
+		// print_r($where);die();
+		$this->Artikel_class->deletes($where);
 		redirect('api/funder/Artikel','refresh');
 	}
 	public function add($value='')
@@ -52,7 +58,7 @@ class Artikel extends CI_Controller {
         }
 		$artikel = array('id_artikel'=>utArtikelId(),'judul' => $this->input->post('judul'),'penulis' => $this->input->post('penulis'),'konten' => $this->input->post('konten'),'tgl_posting' => date("Y-m-d"),'image'=>$image);
 		// print_r($artikel);die();
-		$this->m_artikel->insert($artikel);
+		$this->Artikel_class->insert($artikel);
 		redirect('api/funder/Artikel','refresh');
 	}
 	public function gets()

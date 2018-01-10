@@ -9,6 +9,10 @@ class Kontrak extends CI_Controller {
 		$this->load->helper('utility_helper');
 		utCredFunders();
 		$this->load->model('M_kontrak');
+		$this->load->model('Investasi_class');
+		$this->load->model('Funders_class');
+		$this->load->model('ProgressKomoditas_class');
+		$this->load->model('Komoditas_class');
 	}
 
 	public function index()
@@ -20,11 +24,13 @@ class Kontrak extends CI_Controller {
 	{
 		$data    = file_get_contents('php://input');
 		$kontrak = json_decode($data , true);
-
-		$res = $this->M_kontrak->m_create($kontrak);
+		$kontrak['id_kontrak'] = utKontrakId();
+		$res = $this->Investasi_class->create_kontrak($kontrak);
+		// $res = $this->M_kontrak->m_create($kontrak);
 
 		if ($res)
-		{
+		{	
+			$res = $res[0];
 			$res['msg']     = 'Kontrak berhasil dibuat.';
 			$res['status']  = TRUE;
 

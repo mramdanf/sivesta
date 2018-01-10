@@ -42,43 +42,19 @@ function utCheckFunders($email, $password)
 	$CI =& get_instance();
 	
 	$CI->load->database();
-	$CI->load->model('Funders_class');
-	$query = $CI->Funders_class->login($email,md5($password));
-	// $query = $query[0];
-	// $CI->db->where('email', $email);
-	// $CI->db->where('password', md5($password));
 
-	// $query = $CI->db->get('tb_funders')->row_array();
+	$CI->db->where('email', $email);
+	$CI->db->where('password', md5($password));
+
+	$query = $CI->db->get('tb_funders')->row_array();
 
 
 	if ($query)
 	{
-		foreach ($query as $key => $value) {
-			$CI->load->helper('url');
-			$query = $value;
-			$query['password'] = $password;
-			$query['profile_image_url'] 
-			 = base_url('app_assets/img/user') .'/'.$value->profile_image;
-
-			$planted 
-				= "SELECT COUNT(id_kontrak) as jml_planted FROM tb_kontrak WHERE id_funders = '".$value->id_funders."' AND status_kontrak != 1";
-			$planted = $CI->db->query($planted)->row_array();
-			$planted = $planted['jml_planted'];
-
-			$harvest_soon = "SELECT COUNT(id_kontrak) jml_harvest_soon FROM tb_kontrak WHERE id_funders = '".$value->id_funders."' and status_kontrak = 3";
-			$harvest_soon = $CI->db->query($harvest_soon)->row_array();
-			$harvest_soon = $harvest_soon['jml_harvest_soon'];
-
-			$query['planted']      = $planted;
-			$query['harvest_soon'] = $harvest_soon;
-
-			$d1 = $value->created_date;
-			$d2 = date('Y-m-d');
-
-			$query['participated'] = (int)abs((strtotime($d1) - strtotime($d2))/(60*60*24*30)); // 8
-		}
-		
-
+		$CI->load->helper('url');
+		$query['password'] = $password;
+		$query['profile_image_url'] 
+		 = base_url('app_assets/img/user') .'/'.$query['profile_image'];
 	}
 
 	return $query;
@@ -199,36 +175,7 @@ function utPetaniId()
 	
 	return $new_id;
 }
-function utArtikelId()
-{
-	$ci =& get_instance();
-	$last_id = $ci->db
-	            ->select('MAX(id_artikel) last_id')
-	            ->get('tb_artikel')
-	            ->row_array();
 
-	$last_id = $last_id['last_id'];
-	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
-	$new_id = str_pad($new_id, 4, '0', STR_PAD_LEFT);
-	$new_id = 'A'.$new_id;
-	
-	return $new_id;
-}
-function utKontrakId()
-{
-	$ci =& get_instance();
-	$last_id = $ci->db
-	            ->select('MAX(id_kontrak) last_id')
-	            ->get('tb_kontrak')
-	            ->row_array();
-
-	$last_id = $last_id['last_id'];
-	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
-	$new_id = str_pad($new_id, 4, '0', STR_PAD_LEFT);
-	$new_id = 'I'.$new_id;
-	
-	return $new_id;
-}
 function utPrintResponse($http_code, $tag, $data)
 {
 	$response = array(
@@ -255,24 +202,8 @@ function utLFunderId()
 
 	$last_id = $last_id['last_id'];
 	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
-	$new_id = str_pad($new_id, 3, '0', STR_PAD_LEFT);
+	$new_id = str_pad($new_id, 5, '0', STR_PAD_LEFT);
 	$new_id = 'F'.$new_id;
-	
-	return $new_id;
-}
-
-function utLKontrakId()
-{
-	$ci =& get_instance();
-	$last_id = $ci->db
-	            ->select('MAX(id_kontrak) last_id')
-	            ->get('tb_kontrak')
-	            ->row_array();
-
-	$last_id = $last_id['last_id'];
-	$new_id = preg_replace('/[^0-9]/', '', $last_id) + 1;
-	$new_id = str_pad($new_id, 3, '0', STR_PAD_LEFT);
-	$new_id = 'KN'.$new_id;
 	
 	return $new_id;
 }

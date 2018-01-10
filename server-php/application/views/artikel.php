@@ -19,9 +19,9 @@
                         ?>
                         <div class="col-lg-3 col-md-3 col-xs-6">
                            <a href="#" class="d-block mb-4 h-100">
-                           <img class="img-thumbnail" style="height: 160px;" src="<?php echo $key['img_url']?>" alt="">
+                           <img class="img-thumbnail" style="height: 160px;" src="<?php echo base_url('app_assets/img/artikel/'.$key->image);?>" alt="">
                            </a>
-                           <p style="text-align: center;"><?php echo $key['judul']; ?></p>
+                           <p style="text-align: center;"><?php echo $key->judul; ?></p>
                            <span class="text-center" style="padding-right: 10px;padding-left: 10px;">
                               <a href="" data-href="<?php echo base_url();?>api/funder/Artikel/delete/<?php echo $key['id_artikel'];?>" data-toggle="modal" data-target="#confirm-delete" class="btn btn-sm btn-danger pull-left">Delete</a>
                               <a href="" class="btn btn-sm btn-info pull-right">Update</a>

@@ -1,31 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Illuminate\Database\Eloquent\Model as Eloquent;
-class Funders extends Eloquent
+class Funders_class extends Eloquent
 {
     protected $table = 'tb_funders';
+    protected $primaryKey = 'id_funders';
     public $timestamps = false;
 
-   	// protected $id_artikel = 'AS01';
-   	// protected $judul;
-   	// protected $konten;
-   	// protected $image;
-   	// protected $tgl_posting; 
 
     public function __construct()
 	{
 		parent::__construct();
 		// $this->load->helper('utility_helper');
 	}
-
-	public function set_id_artikel($value='')
-	{
-		# code...
-	}
-
     public function create_account($value)
     {
-    	$funder = new Funders;
+    	$funder = new Funders_class;
     	$funder->id_funders = $value['id_funders'];
     	$funder->nama = $value['nama'];
     	$funder->email = $value['email'];
@@ -34,12 +24,18 @@ class Funders extends Eloquent
     	$result = $funder->Save();
     	return $result;
     }
-    public function update_account($value='')
+    public function update_account($id,$value)
     {
-    	# code...
+    	$funder = Funders_class::where('id_kontrak',$id)->first();
+        $funder->nama = $value['nama'];
+        $funder->email = $value['email'];
+        $funder->password = md5($value['password']);
+        $funder->created_date = date('Y-d-m');
+        $result = $funder->Save();
+        return $result;
     }
     public function login($email,$password)
     {
-    	return Funders::where('email',$email)->where('password',$password)->get();
+    	return Funders_class::where('email',$email)->where('password',$password)->get();
     }
 }

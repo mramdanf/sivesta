@@ -8,36 +8,29 @@ class Investasi extends CI_Controller {
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('admin/Petani_m','Petani');
 		$this->load->model('admin/Komoditas_m','Komoditas');
-		$this->load->model('admin/Investasi_m','Investasi');
+		$this->load->model('admin/Investasi_m');
 		$this->load->model('admin/Progress_investasi_m','ProgressInvestasi');
 		$this->load->helper('utility_helper');
+		$this->load->model('Investasi_class');
+		$this->load->model('Funders_class');
+		$this->load->model('ProgressKomoditas_class');
+		$this->load->model('Komoditas_class');
 	}
 	
 	public function index()
 	{
-		$data['investasi'] = $this->Investasi->getData()->result();
-		// $data['komoditas'] = $this->Komoditas->get_union()->result();
-		// print_r($data);die();
+		$data['investasi'] = $this->Investasi_class->getListKontrak();
 		$this->load->view('header');
 		$this->load->view('sidebar');
 		$this->load->view('investasi',$data);
 		$this->load->view('footer');
 	}
-	public function tambah($value='')
-	{
-		$data['petani'] = $this->Petani->get_union()->result();
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('addKomoditas',$data);
-		$this->load->view('footer');
-	}
 	public function progress($value='')
 	{
-		$data['investasi'] = $this->Investasi->getById($value)->result_array()[0];
-		$data['progress'] = $this->ProgressInvestasi->getById($value);
+		$data['investasi'] = $this->Investasi_class->getKontrakId($value);
 		// $where['id_funder'] = $value;
 		// $data['funder'] = $this->M_funder->get_details($where);
-		// print_r($data);die();
+		// print_r($data['investasi']);die();
 		$this->load->view('header');
 		$this->load->view('sidebar');
 		$this->load->view('progressPenanaman',$data);
@@ -58,35 +51,12 @@ class Investasi extends CI_Controller {
             $image = $result['orig_name'];
         }
         $status = array('status_kontrak'=>$this->input->post('status_kontrak'));
-        $this->Investasi->update_progress($value,$status);
+        // print_r($status);die();
+        $this->Investasi_class->updateKontrak($value,$status);
 		$progress = array('id_kontrak'=>$value,'image'=>$image,'keterangan'=>$this->input->post('keterangan'),'created_date'=>date("Y-m-d H:m:s"));
 		// print_r($progress);die();
-		$this->ProgressInvestasi->insert($progress);
+		$this->ProgressKomoditas_class->insert($progress);
 		redirect('admin/Investasi','refresh');
 	}
-	public function add($value='')
-	{
-		// echo $this->input->post('pilihan');die();
-		$id_komoditas=utLKomoditasId();
-		$komoditas = array(
-			'id_komoditas' => $id_komoditas,
-			'nama' => $this->input->post('nama_komoditas'),
-			'harga' => $this->input->post('harga'),
-			'stock' => $this->input->post('stock'),
-			'lokasi' => $this->input->post('alamat'),
-			'min_kontrak' => $this->input->post('min_kontrak'),
-			'profit' => $this->input->post('persentase'),
-			'latitude' => $this->input->post('latitude'),
-			'longitude' => $this->input->post('longitude'),
-			 );
-		// print_r($komoditas);die();
-		if ($this->input->post('pilihan') == 'tahunan') {
-			$side = array('id_komoditas'=>$id_komoditas,'panjang'=>$this->input->post('panjang'),'lebar'=>$this->input->post('lebar'));
-			$this->Komoditas->insert($komoditas,$side,'tahunan');
-		}else{
-			$side = array('id_komoditas'=>$id_komoditas,'jumlah_phon'=>$this->input->post('jumlah'));
-			$this->Komoditas->insert($komoditas,$side,'perenial');
-		}
-		redirect('admin/Komoditas','refresh');
-	}
+	
 }

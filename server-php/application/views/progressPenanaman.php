@@ -31,43 +31,46 @@
               </div>
               <!-- /. tools -->
             </div>
-            
+            <?php 
+                    foreach ($investasi as $key) {
+
+            ?>
             
             <div class="box-body">
-              <form action="<?php echo base_url('admin/Investasi/updateProgress/'.$investasi['id_kontrak']);?>" enctype="multipart/form-data" method="post">
+              <form action="<?php echo base_url('admin/Investasi/updateProgress/'.$key->id_kontrak);?>" enctype="multipart/form-data" method="post">
                 <div class="form-group">
-                  <select name="status_kontrak" class="form-control" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
-                    <?php 
-                    if ($investasi['status_kontrak'] == 1) {
-                      ?>
-                      <option value="2">Pembayaran diterima, mencari surveyor</option>
-                      <option value="3">Dalam Progress</option>
-                      <option value="4">Siap Panen</option>
-                      <?php
-                    }elseif ($investasi['status_kontrak'] == 2) {
-                      ?>
-                      <option value="3">Dalam Progress</option>
-                      <option value="4">Siap Panen</option>
-                      <?php
-                    }elseif ($investasi['status_kontrak'] == 3) {
-                      ?>
-                      <option value="3">Dalam Progress</option>
-                      <option value="4">Siap Panen</option>
-                      <?php
-                    }
+                  <select name="status_kontrak" class="form-control" <?php if($key->status_kontrak == 4){echo "disabled='true'";} ?>>
+                    <?php
+                      if ($key->status_kontrak == 1) {
+                        ?>
+                        <option value="2">Pembayaran diterima, mencari surveyor</option>
+                        <option value="3">Dalam Progress</option>
+                        <option value="4">Siap Panen</option>
+                        <?php
+                      }elseif ($key->status_kontrak == 2) {
+                        ?>
+                        <option value="3">Dalam Progress</option>
+                        <option value="4">Siap Panen</option>
+                        <?php
+                      }elseif ($key->status_kontrak== 3) {
+                        ?>
+                        <option value="3">Dalam Progress</option>
+                        <option value="4">Siap Panen</option>
+                        <?php
+                      }
                     ?>
                   </select>
                 </div>
                 <div class="form-group">
-                  <textarea class="textarea" name="keterangan" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?> placeholder="Place some text here"
+                  <textarea class="textarea" name="keterangan" <?php if($key->status_kontrak == 4){echo "disabled='true'";} ?> placeholder="Place some text here"
                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                 </div>
                  <div class="form-group" >
-                    <input type="file" class="form-control"  name="image" aria-label="Alamat" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
+                    <input type="file" class="form-control"  name="image" aria-label="Alamat" <?php if($key->status_kontrak == 4){echo "disabled='true'";} ?>>
                   
                 </div>
                 <div class="box-footer clearfix">
-                  <input type="submit" value="Submit" class="pull-right btn btn-default" <?php if($investasi['status_kontrak'] == 4){echo "disabled='true'";} ?>>
+                  <input type="submit" value="Submit" class="pull-right btn btn-default" <?php if($key->status_kontrak == 4){echo "disabled='true'";} ?>>
                 </div>
               </form>
             </div>
@@ -99,17 +102,18 @@
               <table>
                 <tr>
                   <th style="width: 160px;">Nama Komoditas</th>
-                  <td><?php echo $investasi['nama_komoditas'];?></td>
+                  <td><?php echo $key->Komoditas->nama;?></td>
                 </tr>
                 <tr>
                   <th>Nama Funders</th>
-                  <td><?php echo $investasi['nama_funder'];?></td>
+                  <td><?php echo $key->funder->nama;?></td>
                 </tr>
                 <tr>
-                  <th>Lama Kontrak</th>
-                  <td>dhasidhasi</td>
+                  <th>Jumlah Benih</th>
+                  <td><?php echo $key->jumlah_benih;?></td>
                 </tr>
               </table>
+              
             </div>
             <!-- /.box-body -->
             <div class="box-footer no-border">
@@ -137,7 +141,7 @@
             <div class="box-body">
               <ul class="products-list product-list-in-box">
                 <?php 
-                if ($progress->num_rows() == 0 ) {
+                if (count($key->progressKomoditas) == 0 ) {
                   ?>
                   <li class="item">
                     <div class="product-img">
@@ -151,20 +155,21 @@
                   </li>
                   <?php
                 }else{
-                  foreach ($progress->result() as $key) {
+                  foreach ($key->progressKomoditas as $keys) {
                     ?>
                     <li class="item">
                       <div class="product-img">
-                        <img src="<?php echo base_url('app_assets/img/progress_invest/'.$key->image);?>" alt="Product Image">
+                        <img src="<?php echo base_url('app_assets/img/progress_invest/'.$keys->image);?>" alt="Product Image">
                       </div>
                       <div class="product-info">
                         <span class="product-description">
-                              <?php echo $key->keterangan;?>
+                              <?php echo $keys->keterangan;?>
                             </span>
                       </div>
                     </li>
                     <?php
                   }
+                }
                 }
                 ?>
                 <!-- /.item -->
